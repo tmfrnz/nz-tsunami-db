@@ -1,0 +1,377 @@
+[
+  {
+    "id":"id",
+    "column":"id",
+    "title":"ID",
+    "description":"Source identification number.",
+    "type":"id",
+    "default":1,
+    "filterable":0,
+    "searchable":1,
+    "group":"id"
+  },
+  {
+    "id":"date_from",
+    "title":"Date, earliest",
+    "description":"Earliest date.",
+    "descriptionMore":"More description (optional)",
+    "type":"date",
+    "group":"site",
+    "combo":1,
+    "comboType":"min",
+    "specificityColumn":"date_specificity",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"date_to",
+    "title":"Date, latest",
+    "description":"Latest date.",
+    "comboDescription":"Showing date range when uncertain",
+    "type":"date",
+    "group":"site",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Date (range)",
+    "comboTitleEqual":"Date",
+    "comboColumnId":"date_from",
+    "specificityColumn":"date_specificity",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto", 86400000],
+        "33%" : ["1900-01-01", 86400000],
+        "66%" : ["2000-01-01", 86400000],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "date_min",
+      "max" : "date_max"
+    },
+    "specified": 0
+  },
+  {
+    "id":"region",
+    "title":"Region",
+    "description":"region description TODO",
+    "type":"categorical",
+    "group":"site",
+    "filterable":1,
+    "searchable":1,
+    "sortable":1,
+    "table":1,
+    "default":1,
+    "separator": ":"
+  },
+  {
+    "id":"lat",
+    "column":"latitude",
+    "unit": "°",
+    "title":"Latitude",
+    "description":"Source location latitude using decimal degrees.",
+    "descriptionMore":"(4 decimal places)",
+    "placeholders":{
+      "min" : "South",
+      "max" : "North"
+    },
+    "addons":{
+      "min" : "S",
+      "max" : "N"
+    },
+    "query":{
+      "min" : "south",
+      "max" : "north"
+    },
+    "type":"spatial",
+    "group":"site",
+    "blanks":1,
+    "filterable":1
+  },
+  {
+    "id":"lng",
+    "column":"longitude",
+    "unit": "°",
+    "title":"Longitude",
+    "description":"Source location longitude using decimal degrees.",
+    "descriptionMore":"(4 decimal places)",
+    "placeholders":{
+      "min" : "West",
+      "max" : "East"
+    },
+    "addons":{
+      "min" : "W",
+      "max" : "E"
+    },
+    "query":{
+      "min" : "west",
+      "max" : "east"
+    },
+    "type":"spatial",
+    "group":"site",
+    "blanks":1,
+    "filterable":1
+  },
+  {
+    "id":"source_class",
+    "title":"Source cause",
+    "description":"TODO",
+    "descriptionMore": "TODO: more description",
+    "type":"ordinal",
+    "default":1,
+    "multiple": 1,
+    "separator": ",",
+    "group":"class",
+    "values":{
+      "values":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","0"],
+      "labels":[
+        "Earthquake",
+        "Questionable Earthquake",
+        "Earthquake and Landslide",
+        "Volcano and Earthquake",
+        "Volcano, Earthquake, and Landslide",
+        "Volcano",
+        "Volcano and Landslide",
+        "Landslide",
+        "Meteo-tsunami",
+        "Explosion",
+        "Astronomical",
+        "Earthquake shaking induced seiche",
+        "Storm",
+        "Gas emission",
+        "Unknown"
+      ]
+    }
+  },
+  {
+    "id":"class",
+    "title":"Source class",
+    "description":"Source class/proximity to nearest NZ coast, incl. Chatham Islands",
+    "descriptionMore": "TODO: more description",
+    "type":"ordinal",
+    "default":0,
+    "colorable":0,
+    "multiple": 1,
+    "separator": ",",
+    "group":"class",
+    "values":{
+      "values":["LOCAL","REGIONAL","DISTANT","UNKNOWN"],
+      "labels":["Local","Regional","Distant","Unknown"],
+      "description":[
+        "Local: < 1h travel time",
+        "Regional: 1-3h travel time",
+        "Distant: > 3h travel time",
+        "Unknown"
+      ]
+    }
+  },
+  {
+    "id":"magn_moment_lower",
+    "title":"Magnitude local, lower",
+    "description":"Magnitude local description",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"magn_moment_upper",
+    "title":"Magnitude moment, upper",
+    "description":"Magnitude moment description",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Magnitude moment",
+    "comboTitleEqual":"Magnitude moment",
+    "comboColumnId":"magn_moment_lower",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_moment_min",
+      "max" : "magn_moment_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"magn_local_lower",
+    "title":"Magnitude local, lower",
+    "description":"Magnitude local description",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"magn_local_upper",
+    "title":"Magnitude local, upper",
+    "description":"Magnitude local description",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Magnitude local",
+    "comboTitleEqual":"Magnitude local",
+    "comboColumnId":"magn_local_lower",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_local_min",
+      "max" : "magn_local_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"magn_surface_wave",
+    "title":"Magnitude surface wave",
+    "description":"Magnitude surface wave description",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"metrics",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_surface_wave_min",
+      "max" : "magn_surface_wave_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"magn_mantle",
+    "title":"Magnitude mantle",
+    "description":"Magnitude mantle description",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"metrics",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_mantle_min",
+      "max" : "magn_mantle_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"magn_non-specific",
+    "title":"Magnitude non-specific",
+    "description":"Magnitude non-specific description",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"metrics",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_non-specific_min",
+      "max" : "magn_non-specific_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"depth_lower",
+    "title":"Depth, lower (km)",
+    "description":"Depth description",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"depth_upper",
+    "title":"Depth, upper (km)",
+    "description":"Depth description",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Depth (range, km)",
+    "comboTitleEqual":"Depth (km)",
+    "comboColumnId":"depth_lower",
+    "blanks":1,
+    "single":1,
+    "filterable":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "depth_min",
+      "max" : "depth_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"related-records",
+    "title":"Records",
+    "description":"Records related to source event",
+    "type":"reverse",
+    "blanks":1,
+    "filterable":0,
+    "group":"other",
+    "table":0,
+    "sortable":0
+  }
+]

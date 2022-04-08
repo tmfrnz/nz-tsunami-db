@@ -1,0 +1,118 @@
+{
+  "mapConfig" : "app/config/mapConfig.json",
+  "layersConfig" : "app/config/layersConfig.json",
+  "columnGroups" : "app/config/columnGroups.json",
+  "columns" : "app/config/columns.json",
+  "sourceColumnGroups" : "app/config/sourceColumnGroups.json",
+  "sourceColumns" : "app/config/sourceColumns.json",
+  "labels" : "app/config/labels.json",
+  "navitems" : [
+    {
+      "id":"db",
+      "route":"db",
+      "title":"Explore Data",
+      "type":"component"
+    },
+    {
+      "id":"about",
+      "title":"About",
+      "type":"group",
+      "navitems":[
+        {
+          "id":"about",
+          "title":"About",
+          "format":"xml",
+          "path": "//content.niwa.co.nz/content/resource_by_name/About%20ptdb"
+        },
+        {
+          "id":"attributes",
+          "title":"Framework and Attributes",
+          "format":"markdown",
+          "content":"# Framework and Attributes \n\n> The framework for the New Zealand Palaeotsunami Database (Database) is based on a series of key data attributes which help to clarify the nature of the published and unpublished data. These attributes are defined below."
+        },
+        {
+          "id":"usage",
+          "title":"Data Usage",
+          "format":"xml",
+          "path": "//content.niwa.co.nz/content/resource_by_name/Data%20Usage%20ptdb"
+        },
+        {
+          "id":"contact",
+          "title":"Contact",
+          "format":"xml",
+          "path": "//content.niwa.co.nz/content/resource_by_name/Contact%20ptdb"
+        },
+        {
+          "id":"basemap",
+          "title":"Basemap",
+          "format":"markdown",
+          "hideInNav":true,
+          "content":"# Basemap attribution \n\n The custom basemap was designed and created by [dumpark](http://www.dumpark.com) using layers made available by: \n\n - **[LINZ Data Service](https://data.linz.govt.nz)**: New Zealand regions, coastline and islands, lakes, rivers, artificial surfaces, highways, labels, geographic names (Creative Commons Attribution 3.0 New Zealand licence) \n - **[Natural Earth](http://www.naturalearthdata.com/downloads/)**: Bathymetry, countries \n - **[NOAA](https://www.ngdc.noaa.gov/mgg/global)**: Hillshade (Amante, C. and B.W. Eakins, 2009. ETOPO1 1 Arc-Minute Global Relief Model: Procedures, Data Sources and Analysis. NOAA Technical Memorandum NESDIS NGDC-24. National Geophysical Data Center, NOAA. doi:10.7289/V5C8276M) \n - **[Esri](https://www.arcgis.com/home/item.html?id=0fd0c5b7a647404d8934516aa997e6d9)**: World Ocean Reference (Sources: Esri, DeLorme, HERE, GEBCO, NOAA, National Geographic, Geonames.org, and other contributors)"
+        }
+      ]
+    },
+    {
+      "id":"learn",
+      "title":"Learn more",
+      "type":"group",
+      "navitems":[
+        {
+          "id":"palaeotsunami",
+          "title":"What is a Palaeotsunami?",
+          "path": "//content.niwa.co.nz/content/resource_by_name/What%20is%20a%20palaeotsunami",
+          "format":"xml"
+        },
+        {
+          "id":"sources",
+          "title":"Tsunami Sources",
+          "format":"xml",
+          "path": "//content.niwa.co.nz/content/resource_by_name/Tsunami%20Sources"
+        },
+        {
+          "id":"travel",
+          "title":"Tsunami Travel",
+          "format":"xml",
+          "path": "//content.niwa.co.nz/content/resource_by_name/Tsunami%20travel%20times"
+        }
+      ]
+    },
+    {
+      "id":"share",
+      "title":"Share",
+      "type":"modal"
+    }
+  ],
+  "records":{
+    "model": "geojson",
+    "path" : "app/data/gns_records_2.csv",
+    "layerOptions":{
+      "type":"point",
+      "wrap" : true,
+      "style" : {
+        "color":"red",
+        "weight": 1,
+        "opacity" : 1,
+        "fillOpacity" : 0.3,
+        "radius":6
+      }
+    }
+  },
+  "sources":{
+    "model": "geojson",
+    "path" : "app/data/gns_sources.csv",
+    "layerOptions":{
+      "type":"point",
+      "wrap" : true,
+      "style" : {
+        "color":"red",
+        "weight": 1,
+        "opacity" : 1,
+        "fillOpacity" : 0.8,
+        "radius":3
+      }
+    }
+  },
+  "references":{
+    "path" : "app/data/references.csv"
+  }
+}

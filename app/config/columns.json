@@ -1,0 +1,667 @@
+[
+  {
+    "id":"id",
+    "column":"id",
+    "title":"ID",
+    "description":"Record identification number.",
+    "type":"id",
+    "default":1,
+    "filterable":0,
+    "searchable":1,
+    "group":"id"
+  },
+  {
+    "id":"date_from",
+    "title":"Date, earliest",
+    "description":"Earliest date.",
+    "descriptionMore":"More description (optional)",
+    "type":"date",
+    "group":"site",
+    "combo":1,
+    "comboType":"min",
+    "specificityColumn":"date_specificity",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"date_to",
+    "title":"Date, latest",
+    "description":"Latest date.",
+    "comboDescription":"Showing date range when uncertain",
+    "type":"date",
+    "group":"site",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Date (range)",
+    "comboTitleEqual":"Date",
+    "comboColumnId":"date_from",
+    "specificityColumn":"date_specificity",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto", 86400000],
+        "33%" : ["1800-01-01", 86400000],
+        "67%" : ["2000-01-01", 86400000],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "date_min",
+      "max" : "date_max"
+    },
+    "specified": 0
+  },
+  {
+    "id":"placename",
+    "column":"placename",
+    "title":"Placename",
+    "description":"Placename",
+    "type":"categorical",
+    "group":"site",
+    "filterable":1,
+    "searchable":1,
+    "sortable":1,
+    "table":1,
+    "default":1
+  },
+  {
+    "id":"lat",
+    "column":"latitude",
+    "unit": "°",
+    "query":{
+      "min" : "south",
+      "max" : "north"
+    },
+    "title":"Latitude",
+    "description":"Site location latitude using decimal degrees.",
+    "descriptionMore":"(4 decimal places)",
+    "hint":"Alternatively you can set the filter area by drawing a rectangle on the map.",
+    "placeholders":{
+      "min" : "South",
+      "max" : "North"
+    },
+    "addons":{
+      "min" : "S",
+      "max" : "N"
+    },
+    "type":"spatial",
+    "group":"site",
+    "blanks":1
+  },
+  {
+    "id":"lng",
+    "column":"longitude",
+    "unit": "°",
+    "query":{
+      "min" : "west",
+      "max" : "east"
+    },
+    "title":"Longitude",
+    "description":"Site location longitude using decimal degrees.",
+    "descriptionMore":"(4 decimal places)",
+    "hint":"Alternatively you can set the filter area by drawing a rectangle on the map.",
+    "placeholders":{
+      "min" : "West",
+      "max" : "East"
+    },
+    "addons":{
+      "min" : "W",
+      "max" : "E"
+    },
+    "type":"spatial",
+    "group":"site",
+    "blanks":1
+  },
+  {
+    "id":"validity",
+    "title":"Validity",
+    "description":"Validity - Definite/Probable/Questionable/Very doubtful/Erroneous.",
+    "descriptionMore": "TODO: description",
+    "type":"ordinal",
+    "default":1,
+    "colorable":1,
+    "group":"class",
+    "values":{
+      "values":["4","3","2","1","0"],
+      "labels":["Definite","Probable","Questionable/unlikely","Very doubtful/highly unlikely","Erroneous/definitely not"],
+      "descriptions":[
+        "Definite: description TODO",
+        "Probable: description TODO",
+        "Questionable/unlikely: description TODO",
+        "Very doubtful/highly unlikely: description TODO",
+        "Erroneous/definitely not: description TODO"
+      ],
+      "colors":["#2EA563","#FFA700","#E34E4F","#8165B9","#969696"]
+    }
+  },
+  {
+    "id":"is_tsunami_observed",
+    "title":"Tsunami observed?",
+    "description":"TODO: description",
+    "type":"binary",
+    "group":"class",
+    "filterable":1,
+    "values": {
+      "true": "Observed",
+      "false": "Not observed"
+    }
+  },
+  {
+    "id":"is_seiche_observed",
+    "title":"Seiche observed?",
+    "description":"TODO: description",
+    "type":"binary",
+    "group":"class",
+    "filterable":1,
+    "values": {
+      "true": "Observed",
+      "false": "Not observed"
+    }
+  },
+  {
+    "id":"time_arrival_from",
+    "title":"Time of arrival, earliest",
+    "description":"Earliest time of arrival.",
+    "descriptionMore":"More description (optional)",
+    "type":"date",
+    "group":"tg-time",
+    "combo":1,
+    "comboType":"min",
+    "specificityColumn":"time_arrival_specificity",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"time_arrival_to",
+    "title":"Time of arrival, latest",
+    "description":"Latest time of arrival.",
+    "comboDescription":"Showing date range when uncertain",
+    "type":"date",
+    "group":"tg-time",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Time of arrival (range)",
+    "comboTitleEqual":"Time of arrival",
+    "comboColumnId":"time_arrival_from",
+    "specificityColumn":"time_arrival_specificity",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto", 86400000],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "time_arrival_min",
+      "max" : "time_arrival_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"time_elapsed",
+    "title":"Time elapsed (h)",
+    "description":"Time elapsed (h)",
+    "type":"quantitative",
+    "group":"tg-time",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "time_elapsed_min",
+      "max" : "time_elapsed_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"surge_duration_lower",
+    "title":"Surge duration (h), lower",
+    "description":"Earliest time of arrival.",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"tg-time",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":0
+  },
+  {
+    "id":"surge_duration_upper",
+    "title":"Surge duration (h), upper",
+    "description":"Surge duration.",
+    "comboDescription":"Showing date range when uncertain",
+    "type":"quantitative",
+    "group":"tg-time",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Surge duration (range, h)",
+    "comboTitleEqual":"Surge duration (h)",
+    "comboColumnId":"surge_duration_lower",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "surge_duration_min",
+      "max" : "surge_duration_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"max_effective_peak-trough_lower",
+    "title":"Max Eff. Peak/Trough (m), lower",
+    "description":"Max Eff. Peak/Trough.",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"tg-metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"max_effective_peak-trough_upper",
+    "title":"Max Eff. Peak/Trough (m), upper",
+    "description":"Max Eff. Peak/Trough.",
+    "comboDescription":"Showing range when uncertain",
+    "type":"quantitative",
+    "group":"tg-metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Max Eff. Peak/Trough (range, m)",
+    "comboTitleEqual":"Max Eff. Peak/Trough (m)",
+    "comboColumnId":"max_effective_peak-trough_lower",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "plot":1,
+    "plotMax":5,
+    "plotColor":"#007FAD",
+    "unit": "m",
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "max_effective_peak-trough_min",
+      "max" : "max_effective_peak-trough_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"max_effective_zeropeak",
+    "title":"Max effective zero peak",
+    "description":"Max effective zero peak",
+    "type":"quantitative",
+    "group":"tg-metrics",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "max_effective_zeropeak_min",
+      "max" : "max_effective_zeropeak_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"is_first_motion_up",
+    "title":"First motion?",
+    "description":"TODO: description",
+    "type":"categorical",
+    "group":"tg-metrics",
+    "filterable":1,
+    "colorable":1,
+    "values": {
+      "values":["true","false","null"],
+      "labels":["Up","Down","Unknown"],
+      "colors":["#2EA563","#E34E4F","#969696"]
+    }
+  },
+  {
+    "id":"obs_time_first_arrival_from",
+    "title":"Observed time of arrival, earliest",
+    "description":"TODO",
+    "type":"date",
+    "group":"obs-time",
+    "combo":1,
+    "comboType":"min",
+    "specificityColumn":"obs_time_first_arrival_specificity",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"obs_time_first_arrival_to",
+    "title":"Observed time of arrival, latest",
+    "description":"TODO",
+    "comboDescription":"Showing date range when uncertain",
+    "type":"date",
+    "group":"obs-time",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Observed time of arrival (range)",
+    "comboTitleEqual":"Observed time of arrival",
+    "comboColumnId":"obs_time_first_arrival_from",
+    "specificityColumn":"obs_time_first_arrival_specificity",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto", 86400000],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "obs_time_first_arrival_min",
+      "max" : "obs_time_first_arrival_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"time_arrival_expected_from",
+    "title":"Expected time of arrival, earliest",
+    "description":"TODO",
+    "type":"date",
+    "group":"obs-time",
+    "combo":1,
+    "comboType":"min",
+    "specificityColumn":"time_arrival_expected_specificity",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":0
+  },
+  {
+    "id":"time_arrival_expected_to",
+    "title":"Expected time of arrival, latest",
+    "description":"TODO",
+    "comboDescription":"Showing date range when uncertain",
+    "type":"date",
+    "group":"obs-time",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Expected time of arrival (range)",
+    "comboTitleEqual":"Expected time of arrival",
+    "comboColumnId":"time_arrival_expected_from",
+    "specificityColumn":"time_arrival_expected_specificity",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto", 86400000],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "time_arrival_expected_min",
+      "max" : "time_arrival_expected_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"obs_observed_time_lapsed_lower",
+    "title":"obs_observed_time_lapsed_lower (h), lower",
+    "description":"TODO",
+    "descriptionMore":"TODO (optional)",
+    "type":"quantitative",
+    "group":"obs-time",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"obs_observed_time_lapsed_upper",
+    "title":"obs_observed_time_lapsed (h), upper",
+    "description":"TODO",
+    "comboDescription":"TODO (optional)",
+    "type":"quantitative",
+    "group":"obs-time",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"obs_observed_time_lapsed (range, h)",
+    "comboTitleEqual":"obs_observed_time_lapsed (h)",
+    "comboColumnId":"obs_observed_time_lapsed_lower",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "obs_observed_time_lapsed_min",
+      "max" : "obs_observed_time_lapsed_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"traveltime_firstarrival_lower",
+    "title":"traveltime_firstarrival (h), lower",
+    "description":"TODO",
+    "descriptionMore":"TODO (optional)",
+    "type":"quantitative",
+    "group":"obs-time",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":0
+  },
+  {
+    "id":"traveltime_firstarrival_upper",
+    "title":"traveltime_firstarrival (h), upper",
+    "description":"TODO",
+    "comboDescription":"TODO (optional)",
+    "type":"quantitative",
+    "group":"obs-time",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"traveltime_firstarrival (range, h)",
+    "comboTitleEqual":"traveltime_firstarrival (h)",
+    "comboColumnId":"traveltime_firstarrival_lower",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "traveltime_firstarrival_min",
+      "max" : "traveltime_firstarrival_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"obs_surge_duration_min_lower",
+    "title":"obs_surge_duration_min (h), lower",
+    "description":"TODO",
+    "descriptionMore":"TODO (optional)",
+    "type":"quantitative",
+    "group":"obs-time",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":0
+  },
+  {
+    "id":"obs_surge_duration_min_upper",
+    "title":"obs_surge_duration_min (h), upper",
+    "description":"TODO",
+    "comboDescription":"TODO (optional)",
+    "type":"quantitative",
+    "group":"obs-time",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"obs_surge_duration_min (range, h)",
+    "comboTitleEqual":"obs_surge_duration_min (h)",
+    "comboColumnId":"obs_surge_duration_min_lower",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "obs_surge_duration_min_min",
+      "max" : "obs_surge_duration_min_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"obs_water_elevation_shore_lower",
+    "title":"Obs. max Eff. Peak/Trough (m), lower",
+    "description":"Obs. max Eff. Peak/Trough.",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"obs-metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"obs_water_elevation_shore_upper",
+    "title":"obs_water_elevation_shore (m), upper",
+    "description":"obs_water_elevation_shore.",
+    "comboDescription":"Showing range when uncertain",
+    "type":"quantitative",
+    "group":"obs-metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"obs_water_elevation_shore (range, m)",
+    "comboTitleEqual":"obs_water_elevation_shore (m)",
+    "comboColumnId":"obs_water_elevation_shore_lower",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "unit": "m",
+    "plot":1,
+    "plotMax":10,
+    "plotColor":"#50C6DD",
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "obs_water_elevation_shore_min",
+      "max" : "obs_water_elevation_shore_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"obs_max_peak-trough_lower",
+    "title":"Obs. max Eff. Peak/Trough (m), lower",
+    "description":"Obs. max Eff. Peak/Trough.",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"obs-metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":0
+  },
+  {
+    "id":"obs_max_peak-trough_upper",
+    "title":"Obs. max Eff. Peak/Trough (m), upper",
+    "description":"Obs. max Eff. Peak/Trough.",
+    "comboDescription":"Showing range when uncertain",
+    "type":"quantitative",
+    "group":"obs-metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Obs. max Eff. Peak/Trough (range, m)",
+    "comboTitleEqual":"Obs. max Eff. Peak/Trough (m)",
+    "comboColumnId":"obs_max_peak-trough_lower",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "unit": "m",
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "obs_max_peak-trough_min",
+      "max" : "obs_max_peak-trough_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"trigger_event_id",
+    "title":"Source event",
+    "description":"Source event",
+    "type":"index",
+    "multiples":0,
+    "blanks":1,
+    "filterable":0,
+    "group":"other",
+    "table":1,
+    "sortable":0
+  }
+]

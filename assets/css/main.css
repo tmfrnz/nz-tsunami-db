@@ -1,0 +1,48 @@
+@import url("./bootstrap.css");
+@import url("./leaflet.css");
+@import url("./leaflet.rrose.css");
+@import url("./leaflet.draw-src.css");
+@import url("./select2.css");
+@import url("./nouislider.css");
+@import url("./icons.css");
+@import url("../../app/components/app/app.css");
+@import url("../../app/components/app/nav/nav.css");
+@import url("../../app/components/app/filters/filters.css");
+@import url("../../app/components/app/record/record.css");
+@import url("../../app/components/app/out/out.css");
+@import url("../../app/components/app/out/map/map.css");
+@import url("../../app/components/app/out/map/mapControl/mapControl.css");
+@import url("../../app/components/app/out/map/mapPlot/mapPlot.css");
+@import url("../../app/components/app/out/table/table.css");
+@import url("../../app/components/app/page/page.css");
+
+.lt-ie9 #application {
+  display:none;
+}
+
+#application.loading nav .loading-animation,
+#application.updating nav .loading-animation,
+#application.map-loading nav .loading-animation {
+  display:block;
+}
+nav .loading-animation {  
+  background: url('../img/loading.gif') no-repeat top left;  
+  float:left;
+  width: 30px;
+  height: 30px; 
+  display:none;  
+  position: relative;
+  top: 15px;
+}
+
+#page .loading-animation {  
+  background: url(../img/loading-white.gif) no-repeat top left;
+  display: block;
+  position: absolute;
+  top: 100px;
+  height: 50px;
+  width: 50px;
+  z-index: 99999;
+  left: 50%;
+  margin-left:-25px;
+}

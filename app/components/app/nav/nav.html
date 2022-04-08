@@ -1,0 +1,40 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="navbar-header">    
+    <a class="navbar-brand home-link" href="#"><%= t.app.title %></a>
+  </div>
+  <div class="loading-animation"></div>
+  <div id="navbar" class="hidden-xs">          
+    <ul class="nav navbar-nav">
+      <% _.each(navitems,function(item){ %>                  
+      <li class="<%= item.class %>" > 
+        <a class="nav-link" 
+           href="#" 
+           data-route='<%= item.route %>' 
+           data-type='<%= item.type %>' 
+           data-id='<%= item.id %>'>
+          <%= item.title %>
+        </a>
+        <% if (!!item.navitems) { %>
+        <div class="nav-subnav show-on-active">
+        <ul class="nav navbar-nav ">
+          <% _.each(item.navitems,function(childItem){ %>                  
+            <% if(!childItem.hideInNav) { %>                  
+          <li class="<%= childItem.class %>" > 
+            <a class="nav-link" 
+               href="#" 
+               data-route='<%= childItem.route %>' 
+               data-type='<%= childItem.type %>' 
+               data-id='<%= childItem.id %>'>
+              <%= childItem.title %>
+            </a>              
+          </li>
+            <% } %>                  
+          <% }) %>                  
+        </ul>
+        </div>
+        <% } %>            
+      </li>
+      <% }) %>
+    </ul>
+  </div>
+</nav>

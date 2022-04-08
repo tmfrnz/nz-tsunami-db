@@ -1,0 +1,76 @@
+<%= content %>
+<div class="row">
+  <div class="col-sm-12">
+    <% _.each(columnGroups,function(group){ %>
+    <div class="group <%= group.classes %>">          
+      <h2><%= group.title %></h2>
+      <hr>
+      <% if(group.hint) { %>      
+      <p class="hint"><%= group.hint %></p>
+      <% } %>
+      <div class="record-columns"> 
+      <% _.each(group.groupColumns,function(column){ %>
+      <% if (column) { %>   
+        <div class="record-column"> 
+          <h3 id="<%= column.id %>">
+            <%= column.get("title") %> 
+          </h3>
+          <p><%= column.get("description") %> <%= column.get("descriptionMore") %></p>
+          <p class="hint"><%= t.pages.attributes.db_column_hint %>: <code><%= column.getQueryColumn() %></code></p>
+          <% if(column.get('showOnPage').values) { %>   
+          <h4><%= t.pages.attributes.values %></h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th><%= t.pages.attributes.label %></th>
+                  <% if(column.get('showOnPage').valueDescription) { %>
+                  <th><%= t.pages.attributes.description %></th>
+                  <% } %>                    
+                  <th><%= t.pages.attributes.db_value %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% _.each(column.getValues().labels,function(label,i){ %>
+                <% if(column.getValues().values[i] !== "null") { %>
+                <tr>
+                  <td><%= label %></td>
+                  <% if(column.get('showOnPage').valueDescription) { %>
+                  <td><%= column.getValues().descriptions[i] %></td>                    
+                  <% } %>                    
+                  <td><code><%= column.getValues().values[i] %></code></td>
+                </tr>
+                <% } %>
+                <% }) %>
+              </tbody>                
+            </table>                
+          </div>             
+          <% } %>
+          <% if(column.id === "proxies") { %>   
+          <h4><%= t.pages.attributes.values %></h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th><%= t.pages.attributes.proxy %></th>                  
+                  <th><%= t.pages.attributes.description %></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% _.each(proxies,function(proxy){ %>
+                <tr>
+                  <td><%= proxy.id %></td>               
+                  <td><%= proxy.getDescription() %></code></td>
+                </tr>
+                <% }) %>
+              </tbody>                
+            </table>                
+          </div>         
+        <% } %>  
+        </div> 
+      <% } %>
+      <% }) %>
+    </div>                  
+    <% }) %>       
+  </div>
+</div>

@@ -1,0 +1,33 @@
+[
+  {
+    "id":"id",
+    "title":"Record",
+    "hint":"",
+    "filter":false
+  },
+  {
+    "id":"site",
+    "section":"general",
+    "title":"Time & location",
+    "hint":"TODO"
+  },
+  {
+    "id":"class",
+    "section":"general",
+    "title":"Classification",
+    "hint":"Attributes related to the record's classification"
+  },
+  {
+    "id":"metrics",
+    "section":"general",
+    "title":"Measurements",
+    "hint":"TODO"
+  },
+  {
+    "id":"other",
+    "section":"other",
+    "title":"Related",
+    "hint":"Source events and references",
+    "filter":false
+  }
+]

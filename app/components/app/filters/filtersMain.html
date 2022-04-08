@@ -1,0 +1,28 @@
+<div class="filter-top">
+  <div class="filter-top-icon">
+    <span class="icon-icon_filter"></span>
+  </div>
+  <h4><%= t.filters.name%></h4>
+  <h1><%= t.filters.title[type] %></h1>
+  <div class="filter-top-menu">
+    <%= menu %>
+  </div>
+  <div class="pull-right filter-top-buttons">
+    <div class="btn btn-primary btn-round query-reset visible-filtered"></div>
+    <div class="btn btn-info btn-round expand-all hidden-expanded">
+      <%= t.filters.all_filters %><span class="icon-icon_filter-open"></span>
+    </div>
+    <div class="btn btn-info btn-round expand-all visible-expanded ">
+      <%= t.filters.default_filters %><span class="icon-icon_filter-close"></span>
+    </div>
+  </div>
+</div>
+<div class="filter-main">
+  <form>
+    <div class="form-search"></div>
+    <div class="form-groups"></div>
+    <button type="submit" class="sr-only btn btn-info btn-round btn-query-submit query-submit pull-right">
+      <%= t.filters.button_submit %>
+    </button>
+  </form>
+</div>

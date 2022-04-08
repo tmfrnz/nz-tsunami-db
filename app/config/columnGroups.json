@@ -1,0 +1,71 @@
+[
+  {
+    "id":"id",
+    "title":"Record",
+    "hint":"",
+    "filter":false
+  },
+  {
+    "id":"site",
+    "section":"general",
+    "title":"Time & Location",
+    "hint":"Attributes related to the record's time and location"
+  },
+  {
+    "id":"class",
+    "section":"general",
+    "title":"Classification",
+    "hint":"Attributes related to the record's classification"
+  },
+  {
+    "id":"source",
+    "section":"general",
+    "title":"Source Material",
+    "hint":"Attributes related to the record's source material",
+    "filter":false
+  },
+  {
+    "id":"tg-time",
+    "section":"tide-gauge-records",
+    "title":"Tide Gauge: Time & Duration",
+    "hint":"Attributes related to the record's time and duration as per tide gauge"
+  },
+  {
+    "id":"tg-metrics",
+    "section":"tide-gauge-records",
+    "title":"Tide Gauge: Measurements",
+    "hint":"Attributes related to the record's measurements as per tide gauge"
+  },
+  {
+    "id":"tg-sources",
+    "section":"tide-gauge-records",
+    "title":"Tide Gauge: Data Sources",
+    "hint":"Attributes related to the record's measurements as per tide gauge",
+    "filter":false
+  },
+  {
+    "id":"obs-time",
+    "section":"observations",
+    "title":"Obs: Time & Duration",
+    "hint":"Attributes related to the record's time and duration as observed"
+  },
+  {
+    "id":"obs-metrics",
+    "section":"observations",
+    "title":"Obs: Measurements",
+    "hint":"Attributes related to the record's measurements as observed"
+  },
+  {
+    "id":"obs-impacts",
+    "section":"observations",
+    "title":"Obs: Impacts",
+    "hint":"Attributes related to the record's impacts as observed"
+  },
+  {
+    "id":"other",
+    "section":"other",
+    "title":"Related",
+    "hint":"Source events and references",
+    "filter":false
+  }
+]

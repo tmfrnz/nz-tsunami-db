@@ -1,0 +1,25 @@
+<div class="record-column">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="column-title">
+        <%= title %>
+        <% if(tooltip !== "") {%><a
+          data-toggle="tooltip"
+          data-placement="top"
+          title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
+          data-html="true"
+          href="#"
+          class="nav-link toggle-tooltip"
+          data-page-anchor="<%= id %>"
+          data-id="attributes">
+         <span class="icon-icon_info" aria-hidden="true"></span>
+       </a><% } %>
+      </div>
+      <div class="related-title">
+        <a href="#" class="select-record" data-recordid="<%= source.get('id') %>" data-recordtype="source">
+          <%= source.get('id') %>: <%= source.getColumnValue('region', true) %> (<%= source.getColumnValue('magn_moment_lower', true) %>)
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
