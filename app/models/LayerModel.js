@@ -287,7 +287,13 @@ define([
 //          console.log("layerModel.brintofront " + this.id)
 
           this.getMapLayer(function(mapLayer){
-            mapLayer.bringToFront()
+            if (
+              mapLayer._map
+              && mapLayer._map.hasLayer
+              && mapLayer._map.hasLayer(mapLayer)
+            ) {
+              mapLayer.bringToFront()
+            }
           })
         }
       }
@@ -362,7 +368,7 @@ define([
 
     // LAYER STYLES
     initStyles:function(){
-
+      // console.log('initStyles', this.attributes.id)
 
 
       // type styles

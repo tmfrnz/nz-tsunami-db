@@ -1,6 +1,6 @@
-<select id="select-color-attribute" 
+<select class="select-color-attribute <%= classes %>"
         class="form-control">
-  <% _.each(options,function(option){ %> 
+  <% _.each(options,function(option){ %>
   <option value="<%= option.value %>" <% if (option.selected) { %>selected<% } %> >
     <%= option.label %>
   </option>

@@ -40,6 +40,8 @@ define([
 
       this.listenTo(this.model, "change:active",        this.handleActive);
       this.listenTo(this.model, "change:view",          this.handleViewUpdate);
+      this.listenTo(this.model, "change:outShowRecords",this.handleViewUpdate);
+      this.listenTo(this.model, "change:outShowSources",this.handleViewUpdate);
       this.listenTo(this.model, "change:outColorColumn",this.updateViews);
       this.listenTo(this.model, "change:outPlotColumns",this.updateViews);
       this.listenTo(this.model, "change:outType",       this.updateViews);
@@ -174,7 +176,11 @@ define([
       }
     },
     updateMapControlView:function(){
-      this.views.control.model.set({outColorColumn:this.model.getOutColorColumn()})
+      this.views.control.model.set({
+        outColorColumn: this.model.getOutColorColumn(),
+        outShowRecords: this.model.getShowRecords(),
+        outShowSources: this.model.getShowSources(),
+      })
     },
     updateViews:function(){
 //      console.log("OutView.updateOutType")
@@ -266,7 +272,6 @@ define([
         layerGroups[id] = layerGroup
         layerGroup.addTo(_map)
       })
-      // console.log('layerGroups', layerGroups)
       this.model.setLayerGroups(layerGroups)
 
       // set default layer group
@@ -275,6 +280,7 @@ define([
       },this)
       // set specific layer groups
       _.each(config.layerGroups,function(conditions,id){
+        // console.log('initLayerGroups', id, conditions)
         if (id !== "default") {
           _.each(this.model.getLayers().where(conditions), function(layerModel){
             layerModel.setLayerGroup(this.model.getLayerGroup(id))
@@ -339,6 +345,22 @@ define([
       } else {
         this.zoomToDefault()
       }
+      // show/hide records layer
+      if (this.model.getLayerGroup('records')) {
+        if (this.model.getShowRecords() == '1') {
+          this.model.getLayerGroup('records').addTo(_map)
+        } else {
+          this.model.getLayerGroup('records').remove()
+        }
+      }
+      if (this.model.getLayerGroup('sources')) {
+        if (this.model.getShowSources() == '1') {
+          this.model.getLayerGroup('sources').addTo(_map)
+        } else {
+          this.model.getLayerGroup('sources').remove()
+        }
+      }
+
       this.updateViews()
       this.triggerMapViewUpdated()
 
@@ -648,6 +670,20 @@ define([
       e.preventDefault()
 
       this.$el.trigger('mapOptionToggled',{
+        option: $(e.currentTarget).attr("data-option")
+      })
+    },
+    toggleShowRecordsClick:function(e){
+      e.preventDefault()
+
+      this.$el.trigger('mapShowRecordsToggled',{
+        option: $(e.currentTarget).attr("data-option")
+      })
+    },
+    toggleShowSourcesClick:function(e){
+      e.preventDefault()
+
+      this.$el.trigger('mapShowSourcesToggled',{
         option: $(e.currentTarget).attr("data-option")
       })
     },

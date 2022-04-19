@@ -223,16 +223,29 @@ define([
         query = query !== null && typeof query !=='undefined' ? $.deparam(query) : {}
         // set default output options if not set
         if (typeof query.out === "undefined" || query.out === null || query.out === ""
+          || typeof query.maprecords === "undefined" || query.maprecords === null || query.maprecords === ""
+          || typeof query.mapsources === "undefined" || query.mapsources === null || query.mapsources === ""
           || typeof query.map === "undefined" || query.map === null || query.map === ""
-          || typeof query.colorby === "undefined" || query.colorby === null || query.colorby === "" ) {
+          || typeof query.colorby === "undefined" || query.colorby === null || query.colorby === ""
+          || typeof query.sourcecolorby === "undefined" || query.sourcecolorby === null || query.sourcecolorby === ""
+        ) {
           if (typeof query.out === "undefined" || query.out === null || query.out === ""){
             _.extend(query,{out:"map"})
           }
           if (typeof query.map === "undefined" || query.map === null || query.map === ""){
             _.extend(query,{map:"control"})
           }
+          if (typeof query.maprecords === "undefined" || query.maprecords === null || query.maprecords === ""){
+            _.extend(query,{maprecords:"1"})
+          }
+          if (typeof query.mapsources === "undefined" || query.mapsources === null || query.mapsources === ""){
+            _.extend(query,{mapsources:"1"})
+          }
           if (typeof query.colorby === "undefined" || query.colorby === null || query.colorby === ""){
             _.extend(query,{colorby:"validity"})
+          }
+          if (typeof query.sourcecolorby === "undefined" || query.sourcecolorby === null || query.sourcecolorby === ""){
+            _.extend(query,{sourcecolorby:"magn_moment_lower"})
           }
           this.update({
             route:"db",

@@ -14,6 +14,12 @@ define([
     getOutType:function(){
       return this.attributes.outType
     },
+    getOutMapShowRecords:function(){
+      return this.attributes.outMapShowRecords
+    },
+    getOutMapShowSources:function(){
+      return this.attributes.outMapShowSources
+    },
     getOutMapType:function(){
       return this.attributes.outMapType
     },

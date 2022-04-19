@@ -92,6 +92,8 @@ define([
       mapLayerSelect: "mapLayerSelect",
       mapPopupClosed:"mapPopupClosed",
       mapOptionToggled:"mapOptionToggled",
+      mapShowRecordsToggled:"mapShowRecordsToggled",
+      mapShowSourcesToggled:"mapShowSourcesToggled",
 
       geoQuerySubmit:"geoQuerySubmit",
       geoQueryDelete:"geoQueryDelete",
@@ -244,7 +246,7 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
           var activeRecordSourceIds = _.reduce(
             activeRecords.models,
             function(memo, record) {
-              return _.union(memo, [parseInt(record.get('trigger_event_id'))]);
+              return _.union(memo, [record.get('trigger_event_id').toString()]);
             },
             [],
           );
@@ -537,10 +539,8 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
 
               // update Records
               that.updateRecordCollections()
-
               that.views.out.model.set({
                 outMapType:           that.model.getOutMapType(),
-                queryLength:          Object.keys(that.model.getRecordQuery()).length,
                 sourceQueryLength:    Object.keys(that.model.getSourceQuery()).length,
                 geoQuery:             that.model.getGeoQuery(),
                 recordsUpdated :      that.model.getRecordsUpdated(),
@@ -548,10 +548,13 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
                 recordId :            that.model.getSelectedRecordId(),
                 sourceId :            that.model.getSelectedSourceId(),
                 outColorColumn:       that.model.getOutColorColumn(),
+                outColorSourceColumn: that.model.getOutColorSourceColumn(),
+                outMapShowRecords:    that.model.getOutMapShowRecords(),
+                outMapShowSources:    that.model.getOutMapShowSources(),
+                queryLength:          Object.keys(that.model.getRecordQuery()).length,
                 outPlotColumns:       that.model.getOutPlotColumns(),
                 tableSortColumn:      that.model.getOutTableSortColumn(),
                 tableSortOrder:       that.model.getOutTableSortOrder(),
-                outColorSourceColumn: that.model.getOutColorSourceColumn(),
                 tableSourceSortColumn:that.model.getOutSourceTableSortColumn(),
                 tableSourceSortOrder: that.model.getOutSourceTableSortOrder(),
               })
@@ -723,6 +726,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
           success: function(data) {
             that.model.set('sourcesLoaded', true)
             var dataObjects = $.csv.toObjects(data);
+            // console.log("success loading sources data", data, dataObjects)
             console.log("success loading sources data")
             var sources = {
               type: "FeatureCollection",
@@ -754,7 +758,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
     configureRecords : function(recordData) {
       var recordConfig = this.model.get("config").records
       if (typeof recordConfig !== "undefined") {
-        console.log("configureRecords", recordData)
+        console.log("configureRecords")
 
         var that = this
         waitFor(
@@ -777,7 +781,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
                     {},
                     recordConfig.layerOptions,
                     {
-                      id:record.id,
+                      id: 'r' + record.id,
                       eventContext : that.$el,
                       isRecordLayer:true
                     }
@@ -787,7 +791,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
                 layer.setData({
                   geometry:feature.geometry,
                   type:feature.type,
-                  properties:{id:record.id}
+                  properties:{ id: 'r' + record.id }
                 })
                 record.setLayer(layer)
               } else {
@@ -800,7 +804,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
             // reorganise attributes (move properties up)
             that.model.setRecords(recordCollection)
             that.model.recordsConfigured(true)
-console.log("done... configureRecords", recordCollection)
+console.log("done... configureRecords")
           }
         )
       }
@@ -808,7 +812,7 @@ console.log("done... configureRecords", recordCollection)
     configureSources : function(sourceData) {
       var sourceConfig = this.model.get("config").sources
       if (typeof sourceConfig !== "undefined") {
-        console.log("configureSources", sourceConfig)
+        console.log("configureSources")
 
         var that = this
         waitFor(
@@ -826,26 +830,32 @@ console.log("done... configureRecords", recordCollection)
               source.set('type', 'source');
               // console.log("configureRecords - record", record)
               if (typeof feature.geometry !== "undefined" && feature.geometry !== null) {
+                // console.log('configureSources, before new that.layerModels[sourceConfig.model]', source.id)
+
                 layer = new that.layerModels[sourceConfig.model](
                   _.extend(
                     {},
                     sourceConfig.layerOptions,
                     {
-                      id: source.id,
+                      id: 's' + source.id,
                       eventContext : that.$el,
                       isSourceLayer:true,
                     }
                   )
                 )
+                // console.log('configureSources, after new that.layerModels[sourceConfig.model]', source.id)
                 that.model.getLayers().add(layer)
+                // console.log('configureSources, after that.model.getLayers().add(layer)', source.id)
                 layer.setData({
                   geometry:feature.geometry,
                   type:feature.type,
                   properties:{
-                    id: source.id
+                    id: 's' + source.id
                   }
                 })
+                // console.log('configureSources, after layer.setData', source.id)
                 source.setLayer(layer)
+                // console.log('configureSources, after source.setLayer', source.id)
               } else {
                 source.setLayer(false)
               }
@@ -863,7 +873,7 @@ console.log("done... configureRecords", recordCollection)
                 that.model.getRecords().setSources(that.model.getSources())
                 that.model.getSources().setChildren(that.model.getRecords())
                 that.model.sourcesConfigured(true)
-                console.log("done... configureSources", sourceCollection)
+                console.log("done... configureSources")
               }
             )
           }
@@ -944,7 +954,7 @@ console.log("configureReferences")
           return _.extend (
               {},
               reference,
-              {id:parseInt(reference.id)}
+              {id:reference.id}
             )
         }),
         { config : refConfig }
@@ -1078,10 +1088,10 @@ console.log("done... configureReferences")
     sourceSelect : function(e,args){
       console.log("sourceSelect", args)
 
-      if (this.model.getSelectedSourceId() !== parseInt(args.id)){
+      if (this.model.getSelectedSourceId() !== args.id){
         this.model.getRouter().update({
           route:"db",
-          path: 's' + args.id
+          path:args.id
         })
       } else {
         args.closeSelected = typeof args.closeSelected !== "undefined" ? args.closeSelected : true
@@ -1093,7 +1103,7 @@ console.log("done... configureReferences")
     recordSelect : function(e,args){
       console.log("recordSelect", args)
 
-      if (this.model.getSelectedRecordId() !== parseInt(args.id)){
+      if (this.model.getSelectedRecordId() !== args.id){
         this.model.getRouter().update({
           route:"db",
           path:args.id
@@ -1199,13 +1209,13 @@ console.log("plotColumnsSelected")
 
         if (this.model.getLayers().get(layerId).get("isRecordLayer")) {
           this.$el.trigger('recordSelect', {
-            id: parseInt(layerId),
+            id: layerId,
             closeSelected: true
           })
         }
         if (this.model.getLayers().get(layerId).get("isSourceLayer")) {
           this.$el.trigger('sourceSelect', {
-            id: parseInt(layerId),
+            id: layerId,
             closeSelected: true
           })
         }
@@ -1317,6 +1327,32 @@ console.log("plotColumnsSelected")
         false, // replace
         true // extend
       )
+    },
+    mapShowRecordsToggled:function(e,args){
+      // if (window.__ga__ && ga.loaded) { ga('send', 'event', 'Map option', this.model.getOutMapType() !== args.option ? args.option : 'none', '')}
+      if (this.model.getOutMapShowRecords() !== args.value) {
+        this.model.getRouter().queryUpdate(
+          {
+            maprecords: args.value
+          },
+          true, // trigger
+          false, // replace
+          true // extend
+        )
+      }
+    },
+    mapShowSourcesToggled:function(e,args){
+      // if (window.__ga__ && ga.loaded) { ga('send', 'event', 'Map option', this.model.getOutMapType() !== args.option ? args.option : 'none', '')}
+      if (this.model.getOutMapShowSources() !== args.value) {
+        this.model.getRouter().queryUpdate(
+          {
+            mapsources: args.value
+          },
+          true, // trigger
+          false, // replace
+          true // extend
+        )
+      }
     },
 
     // record events

@@ -16,8 +16,9 @@ define([
 
   return Backbone.View.extend({
     events : {
-      "change #select-color-attribute" : "colorColumnChanged",
+      "change .select-color-attribute" : "colorColumnChanged",
       "click .nav-link" : "handleNavLink",
+      "change .layer-checkbox" : "handleLayerToggled",
     },
     initialize : function () {
       this.handleActive()
@@ -25,6 +26,8 @@ define([
       this.render()
       this.listenTo(this.model, "change:active",        this.handleActive);
       this.listenTo(this.model, "change:outColorColumn", this.updateOutColorColumn);
+      this.listenTo(this.model, "change:outShowRecords", this.update);
+      this.listenTo(this.model, "change:outShowSources", this.update);
       $(window).on("resize", _.debounce(_.bind(this.resize, this), 100));
     },
     resize: function(){
@@ -32,7 +35,9 @@ define([
     },
     render: function () {
       this.$el.html(_.template(template)({
-        t:this.model.getLabels()
+        t:this.model.getLabels(),
+        showSources: this.model.getShowSources(),
+        showRecords: this.model.getShowRecords()
       }))
       return this
     },
@@ -41,7 +46,9 @@ define([
     },
     update : function(){
       var outColumn = this.model.getOutColorColumn()
-      this.$('#color-attribute-selector').html(_.template(templateColorSelect)({
+
+      this.$('.color-attribute-selector-records').html(_.template(templateColorSelect)({
+        classes: 'select-color-attribute-records',
         options:_.sortBy(
           _.map(
             this.model.get("columnCollection").byAttribute("colorable").byAttribute("multiples",0).models,
@@ -57,14 +64,14 @@ define([
         )
       }))
 
-      this.$('#select-color-attribute').select2({
+      this.$('.select-color-attribute-records').select2({
         theme: "mapcontrol",
         minimumResultsForSearch: Infinity
       })
 
       if (this.model.getOutColorColumn()) {
         var values = this.model.getOutColorColumn().getValues()
-        this.$('#color-attribute-key').html(_.template(templateColorKey)({
+        this.$('#type-records .color-attribute-key').html(_.template(templateColorKey)({
           t:this.model.getLabels(),
           title: outColumn.get("title"),
           tooltip: outColumn.get("description"),
@@ -82,6 +89,12 @@ define([
           })
         }))
       }
+      var showSources = this.model.getShowSources();
+      var showRecords = this.model.getShowRecords();
+      console.log('mapcontrol update', showRecords, showRecords == '1')
+      $('.layer-checkbox-records').prop('checked', showRecords == '1');
+      $('.layer-checkbox-sources').prop('checked', showSources == '1');
+
       this.initTooltips()
     },
     updateOutColorColumn:function(){
@@ -91,6 +104,21 @@ define([
     colorColumnChanged:function(e){
       e.preventDefault()
       this.$el.trigger('colorColumnChanged',{column:$(e.target).val()})
+    },
+    handleLayerToggled:function(e){
+      e.preventDefault()
+      var showSources = this.model.getShowSources();
+      var showRecords = this.model.getShowRecords();
+      var $target = $(e.target);
+      var isChecked = $target.is(':checked');
+      var type = $target.attr('data-type');
+      var value = isChecked ? '1' : '0';
+      if (type === 'records' && showRecords !== value) {
+        this.$el.trigger('mapShowRecordsToggled', {value: value})
+      }
+      if (type === 'sources' && showSources !== value) {
+        this.$el.trigger('mapShowSourcesToggled', {value: value})
+      }
     },
     // event handlers for model change events
     handleActive : function(){

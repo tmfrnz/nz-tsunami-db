@@ -41,6 +41,8 @@ define([
       this.listenTo(this.model, "change:mapView", this.updateMapViewMain);
       this.listenTo(this.model, "change:outType", this.updateOutType);
       this.listenTo(this.model, "change:outMapType", this.updateOutMapType);
+      this.listenTo(this.model, "change:outMapShowRecords", this.updateOutShowRecords);
+      this.listenTo(this.model, "change:outMapShowSources", this.updateOutShowSources);
       this.listenTo(this.model, "change:outColorColumn", this.updateOutColorColumn);
       this.listenTo(this.model, "change:outSourceColorColumn", this.updateOutSourceColorColumn);
       this.listenTo(this.model, "change:outPlotColumns", this.updateOutPlotColumns);
@@ -346,6 +348,7 @@ define([
             config:this.model.getMapConfig(),
             layerCollection:this.model.getLayers(),
             columnCollection: this.model.get("columnCollection"),
+            sourceColumnCollection: this.model.get("sourceColumnCollection"),
             active: false,
             popupLayers:[],
             selectedLayerId: "",
@@ -356,32 +359,26 @@ define([
     },
     updateMapView : function(){
       if (this.model.getOutType() === 'map' && typeof this.views.map !== 'undefined'){
-          // console.log('OutView.updateMapView 1', Date.now() - window.timeFromUpdate)
 
         this.updateMapViewMain()
-//          console.log('OutView.updateMapView 2', Date.now() - window.timeFromUpdate)
 
         this.updateOutMapType()
-//          console.log('OutView.updateMapView 3', Date.now() - window.timeFromUpdate)
 
         this.updateGeoQuery()
-//          console.log('OutView.updateMapView 4', Date.now() - window.timeFromUpdate)
 
         this.updateOutColorColumn()
+        // this.updateOutShowRecords()
+        // this.updateOutShowSources()
 
         this.updateOutSourceColorColumn()
-//          console.log('OutView.updateMapView 5', Date.now() - window.timeFromUpdate)
 
         this.updateOutPlotColumns()
-//          console.log('OutView.updateMapView 6', Date.now() - window.timeFromUpdate)
 
         this.views.map.model.setCurrentRecords(this.model.getRecords().byActive().hasLocation())
         this.views.map.model.setCurrentSources(this.model.getSources().byActive().hasLocation())
-//                  console.log('OutView.updateMapView 7', Date.now() - window.timeFromUpdate)
 
         this.views.map.model.setRecordsUpdated(this.model.getRecordsUpdated())
         this.views.map.model.setSourcesUpdated(this.model.getSourcesUpdated())
-//                  console.log('OutView.updateMapView 8', Date.now() - window.timeFromUpdate)
 
       }
     },
@@ -401,6 +398,17 @@ define([
     updateGeoQuery:function(){
       if (this.model.getOutType() === 'map' && typeof this.views.map !== 'undefined'){
         this.views.map.model.set("geoQuery",this.model.get('geoQuery'))
+      }
+    },
+    updateOutShowRecords:function(){
+      if (this.model.getOutType() === 'map' && typeof this.views.map !== 'undefined'){
+        console.log('updateOutShowRecords', this.model.getOutMapShowRecords())
+        this.views.map.model.set("outShowRecords",this.model.getOutMapShowRecords())
+      }
+    },
+    updateOutShowSources:function(){
+      if (this.model.getOutType() === 'map' && typeof this.views.map !== 'undefined'){
+        this.views.map.model.set("outShowSources",this.model.getOutMapShowSources())
       }
     },
     updateOutColorColumn:function(){

@@ -68,7 +68,7 @@ define([
             //   console.log(this.attributes.id, this.attributes[column.get('queryColumn')])
             // }
             if (column.get('id') === 'id') {
-              this.set(column.get('queryColumn'), parseInt(this.attributes.id))
+              this.set(column.get('queryColumn'), this.attributes.id)
             } else if (column.get('type') === 'date' && this.attributes[column.get('queryColumn')]) {
               this.set(column.get('queryColumn'), this.parseDate(this.attributes[column.get('queryColumn')]))
             } else if (

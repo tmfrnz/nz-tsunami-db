@@ -5,5 +5,35 @@
   <h3><%= t.out.map.control.marker_title %></h3>
   <p class="hint"><%= t.out.map.control.marker_hint %></p>
 </div>
-<div id="color-attribute-selector"></div>
-<div id="color-attribute-key"></div>
+<div id="type-records">
+  <label class="checkbox-inline">
+    <input
+      type="checkbox"
+      data-type="records"
+      value="records"
+      class="layer-checkbox layer-checkbox-records"
+      <% if (showRecords) { %>
+      checked
+      <% } %>
+    >
+    Records
+  </label>
+  <div class="color-attribute-selector color-attribute-selector-records"></div>
+  <div class="color-attribute-key color-attribute-key-records"></div>
+</div>
+<div id="type-sources">
+  <label class="checkbox-inline">
+    <input
+      type="checkbox"
+      data-type="sources"
+      value="sources"
+      class="layer-checkbox layer-checkbox-sources"
+      <% if (showSources) { %>
+      checked
+      <% } %>
+    >
+    Sources
+  </label>
+  <div class="color-attribute-selector color-attribute-selector-sources"></div>
+  <div class="color-attribute-key color-attribute-key-sources"></div>
+</div>

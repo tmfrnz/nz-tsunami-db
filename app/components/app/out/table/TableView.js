@@ -246,9 +246,9 @@ define([
       e.preventDefault()
       var id = $(e.currentTarget).attr("data-recordid");
       if (this.model.get('type') === 'sources') {
-        this.$el.trigger('sourceSelect',{id:id})
+        this.$el.trigger('sourceSelect',{id:'s' + id})
       } else {
-        this.$el.trigger('recordSelect',{id:id})
+        this.$el.trigger('recordSelect',{id:'r' + id})
       }
     },
     sortRecords:function(e){

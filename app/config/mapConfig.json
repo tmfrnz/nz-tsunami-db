@@ -3,8 +3,8 @@
   "attribution" : "<a class='nav-link basemap-info' href='#' data-route='page' date-type='page' data-id='basemap'>Basemap attribution</a>",
   "layerGroups" : {
     "base" : { "basemap" : true},
-    "records" : { "record" : true},
-    "sources" : { "source" : true},
+    "records" : { "isRecordLayer" : true},
+    "sources" : { "isSourceLayer" : true},
     "default" : true
   },
   "mapOptions" : {
@@ -37,6 +37,12 @@
       "opacity":0.4,
       "width":15,
       "height":25
+    },
+    "triangle": {
+      "color":"yellow",
+      "fillOpacity": 0.3,
+      "height":10,
+      "width":10
     },
     "circle": {
       "color": "black",

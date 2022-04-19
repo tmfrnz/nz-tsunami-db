@@ -83,6 +83,12 @@ define([
     getType : function(){
       return this.attributes.type
     },
+    getShowRecords:function(){
+      return this.attributes.outShowRecords
+    },
+    getShowSources:function(){
+      return this.attributes.outShowSources
+    },
     getOutColorColumn:function(){
       return this.attributes.outColorColumn
     },

@@ -88,6 +88,7 @@
     "layerOptions":{
       "type":"point",
       "wrap" : true,
+      "marker": "circle",
       "style" : {
         "color":"red",
         "weight": 1,
@@ -101,14 +102,15 @@
     "model": "geojson",
     "path" : "app/data/gns_sources.csv",
     "layerOptions":{
-      "type":"point",
+      "type":"triangle",
       "wrap" : true,
+      "marker": "triangleIcon",
+      "class": "source-marker",
       "style" : {
-        "color":"red",
-        "weight": 1,
-        "opacity" : 1,
-        "fillOpacity" : 0.8,
-        "radius":3
+        "color":"purple",
+        "fillOpacity": 0.3,
+        "height":12,
+        "width":12
       }
     }
   },

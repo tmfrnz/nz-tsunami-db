@@ -219,6 +219,12 @@ define([
     getOutMapType: function(){
       return this.attributes.route.query.map
     },
+    getOutMapShowRecords: function(){
+      return this.attributes.route.query.maprecords
+    },
+    getOutMapShowSources: function(){
+      return this.attributes.route.query.mapsources
+    },
     getOutColor: function(){
       return this.attributes.route.query.colorby
     },
@@ -516,8 +522,8 @@ define([
       return this.getRecord(this.getSelectedRecordId())
     },
     getSelectedRecordId:function(){
-      return (this.attributes.route.route === 'db' && this.attributes.route.path !== "") && !this.attributes.route.path.startsWith('s')
-        ? parseInt(this.attributes.route.path)
+      return (this.attributes.route.route === 'db' && this.attributes.route.path !== "") && this.attributes.route.path.startsWith('r')
+        ? this.attributes.route.path.replace('r', '')
         : ''
     },
     recordsConfigured : function(val){
@@ -544,7 +550,7 @@ define([
 		// path is "s[id]", e.g. s123
     getSelectedSourceId:function(){
       return (this.attributes.route.route === 'db' && this.attributes.route.path !== "") && this.attributes.route.path.startsWith('s')
-        ? parseInt(this.attributes.route.path.replace('s', ''))
+        ? this.attributes.route.path.replace('s', '')
         : ''
     },
     sourcesConfigured : function(val){
@@ -610,7 +616,7 @@ define([
       }
     },
     getOutColorColumn: function(){
-      return this.attributes.columnCollection.get(this.getOutColor())
+			return this.attributes.columnCollection.get(this.getOutColor())
     },
     setColumns: function(collection){
       this.set('columnCollection',collection)
