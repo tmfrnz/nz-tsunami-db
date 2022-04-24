@@ -66,6 +66,20 @@ define([
     getClassName : function(){
       return 'map-layer map-layer-'+this.id+' '+'map-layer-type-'+this.attributes.type
     },
+    getTriangleIcon: function(layerStyle) {
+      return L.divIcon({
+        html: _.template(templateTriangleIcon)({
+          fill: layerStyle.fillColor || layerStyle.fill || layerStyle.color,
+          fillOpacity: layerStyle.fillOpacity || layerStyle.opacity,
+          color: layerStyle.strokeColor || layerStyle.stroke || layerStyle.color,
+          height: layerStyle.height,
+          width: layerStyle.width,
+        }),
+        className: this.attributes.class ? "icon-triangle " + this.attributes.class : "icon-triangle",
+        iconSize: [layerStyle.width, layerStyle.height],
+        iconAnchor: [layerStyle.width / 2, layerStyle.height],
+      })
+    },
     pointToLayer : function(featureData,latLng){
       var layerStyle = typeof featureData.properties.style !== 'undefined'
         ? featureData.properties.style
@@ -74,18 +88,7 @@ define([
         console.log('no layerStyle', this.id, this.attributes)
       }
       if (this.attributes.marker === 'triangleIcon' && layerStyle) {
-        const divIcon = L.divIcon({
-          html: _.template(templateTriangleIcon)({
-            fill: layerStyle.fillColor || layerStyle.fill || layerStyle.color,
-            fillOpacity: layerStyle.fillOpacity || layerStyle.opacity,
-            color: layerStyle.strokeColor || layerStyle.stroke || layerStyle.color,
-            height: layerStyle.height,
-            width: layerStyle.width,
-          }),
-          className: this.attributes.class ? "icon-triangle " + this.attributes.class : "icon-triangle",
-          iconSize: [layerStyle.width, layerStyle.height],
-          iconAnchor: [layerStyle.width / 2, layerStyle.height],
-        });
+        const divIcon = this.getTriangleIcon(layerStyle);
         return L.marker(latLng, { icon: divIcon })
       } else {
         return new L.circleMarker(
@@ -94,6 +97,51 @@ define([
         )
       }
 
+    },
+    updateStyle:function(){
+      if (typeof this.attributes.layerGroup !== "undefined") {
+        // first update based on selected column/attribute
+        if (typeof this.attributes.columnColor !== "undefined") {
+          _.extend(this.attributes.layerStyle,{
+            fillColor:this.attributes.columnColor,
+            color:this.attributes.columnColor
+          })
+        }
+        var that = this
+        this.getMapLayer(function(mapLayer){
+          if (that.attributes.marker === 'triangleIcon' ) {
+            if (mapLayer.getLayers() && mapLayer.getLayers().length > 0) {
+              mapLayer.getLayers()[0].setIcon(that.getTriangleIcon(that.attributes.layerStyle))
+            }
+          } else {
+            if (that.isSelected()) {
+              //set Selected Style
+               mapLayer.setStyle(_.extend(
+                 {},
+                 that.attributes.layerStyle,
+                 {fillOpacity:0.9, weight:3}
+               ))
+            } else if (that.isMouseOver()){
+              //set Mouseover Style
+               mapLayer.setStyle(_.extend(
+                 {},
+                 that.attributes.layerStyle,
+                 {fillOpacity:0.6, weight:1.5}
+               ))
+            } else if(that.isAnySelected()){
+              //set Passive Style
+              mapLayer.setStyle(_.extend(
+                {},
+                that.attributes.layerStyle,
+                {opacity:1,fillOpacity:0.4,color:"#bbb",fillColor:"#eee",weight:1.2}
+              ));
+            } else {
+              //setDefaultStyle
+              mapLayer.setStyle(that.attributes.layerStyle);
+            }
+          }
+        });
+      }
     },
     coordsToLatLng: function (coords) {
       var longitude = coords[0];

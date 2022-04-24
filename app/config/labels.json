@@ -84,13 +84,13 @@
     "map": {
       "control": {
         "name": "Map settings",
-        "marker_title": "Map layers",
-        "marker_hint": "Configure layer visibility and layer colour attributes",
+        "marker_title": "Configure layers",
+        "marker_hint": "Toggle layers and select marker colour attributes",
         "marker_sources": "Sources",
         "marker_records": "Records"
       },
       "plot": {
-        "name_lat": "Latitude Plot",
+        "name_lat": "Latitude Plot (records)",
         "no_records_hint": "0 records with current zoom and filter settings",
         "all_records": "Show all records",
         "less_records": "Show less records",
