@@ -74,6 +74,7 @@ define([
           color: layerStyle.strokeColor || layerStyle.stroke || layerStyle.color,
           height: layerStyle.height,
           width: layerStyle.width,
+          strokeWidth: layerStyle.weight,
         }),
         className: this.attributes.class ? "icon-triangle " + this.attributes.class : "icon-triangle",
         iconSize: [layerStyle.width, layerStyle.height],
@@ -109,36 +110,36 @@ define([
         }
         var that = this
         this.getMapLayer(function(mapLayer){
+          //default style
+          var style = that.attributes.layerStyle;
+
+          // check  special styles
+          if (that.isSelected()) {
+            //set Selected Style
+             style = _.extend({}, style, { fillOpacity:0.9, weight:3 });
+          } else if (that.isMouseOver()) {
+            //set Mouseover Style
+             style = _.extend({}, style, { fillOpacity:0.6, weight:1.5 });
+          } else if(that.isAnySelected()) {
+            //set Passive Style
+            style = _.extend(
+              {},
+              style,
+              {
+                opacity:1,
+                fillOpacity:0.4,
+                color:"#bbb",
+                fillColor:"#eee",
+                weight:1.2,
+              }
+            );
+          }
           if (that.attributes.marker === 'triangleIcon' ) {
             if (mapLayer.getLayers() && mapLayer.getLayers().length > 0) {
-              mapLayer.getLayers()[0].setIcon(that.getTriangleIcon(that.attributes.layerStyle))
+              mapLayer.getLayers()[0].setIcon(that.getTriangleIcon(style))
             }
           } else {
-            if (that.isSelected()) {
-              //set Selected Style
-               mapLayer.setStyle(_.extend(
-                 {},
-                 that.attributes.layerStyle,
-                 {fillOpacity:0.9, weight:3}
-               ))
-            } else if (that.isMouseOver()){
-              //set Mouseover Style
-               mapLayer.setStyle(_.extend(
-                 {},
-                 that.attributes.layerStyle,
-                 {fillOpacity:0.6, weight:1.5}
-               ))
-            } else if(that.isAnySelected()){
-              //set Passive Style
-              mapLayer.setStyle(_.extend(
-                {},
-                that.attributes.layerStyle,
-                {opacity:1,fillOpacity:0.4,color:"#bbb",fillColor:"#eee",weight:1.2}
-              ));
-            } else {
-              //setDefaultStyle
-              mapLayer.setStyle(that.attributes.layerStyle);
-            }
+            mapLayer.setStyle(style);
           }
         });
       }
