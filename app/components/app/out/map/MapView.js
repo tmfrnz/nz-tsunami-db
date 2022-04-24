@@ -131,6 +131,8 @@ define([
           model: new MapControlModel({
             labels: this.model.getLabels(),
             columnCollection:this.model.get("columnCollection"),
+            outShowRecords: this.model.getShowRecords(),
+            outShowSources: this.model.getShowSources(),
             active: false
           })
         });
@@ -259,6 +261,25 @@ define([
       this.model.mapConfigured(true)
       this.$el.trigger('mapConfigured')
     },
+    checkLayers : function(){
+      console.log('checkLayers')
+      var _map = this.model.getMap()
+      // show/hide records layer
+      if (this.model.getLayerGroup('records')) {
+        if (this.model.getShowRecords() == '1') {
+          this.model.getLayerGroup('records').addTo(_map)
+        } else {
+          this.model.getLayerGroup('records').remove()
+        }
+      }
+      if (this.model.getLayerGroup('sources')) {
+        if (this.model.getShowSources() == '1') {
+          this.model.getLayerGroup('sources').addTo(_map)
+        } else {
+          this.model.getLayerGroup('sources').remove()
+        }
+      }
+    },
     initLayerGroups: function (){
       // console.log('MapView.initLayerGroups')
 
@@ -291,7 +312,9 @@ define([
         }
       },this)
 
+      this.checkLayers()
     },
+
 
 
     updateMapView : function(){
@@ -345,21 +368,7 @@ define([
       } else {
         this.zoomToDefault()
       }
-      // show/hide records layer
-      if (this.model.getLayerGroup('records')) {
-        if (this.model.getShowRecords() == '1') {
-          this.model.getLayerGroup('records').addTo(_map)
-        } else {
-          this.model.getLayerGroup('records').remove()
-        }
-      }
-      if (this.model.getLayerGroup('sources')) {
-        if (this.model.getShowSources() == '1') {
-          this.model.getLayerGroup('sources').addTo(_map)
-        } else {
-          this.model.getLayerGroup('sources').remove()
-        }
-      }
+      this.checkLayers()
 
       this.updateViews()
       this.triggerMapViewUpdated()

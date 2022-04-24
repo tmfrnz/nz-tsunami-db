@@ -349,6 +349,8 @@ define([
             layerCollection:this.model.getLayers(),
             columnCollection: this.model.get("columnCollection"),
             sourceColumnCollection: this.model.get("sourceColumnCollection"),
+            outShowRecords: this.model.getOutMapShowRecords(),
+            outShowSources: this.model.getOutMapShowSources(),
             active: false,
             popupLayers:[],
             selectedLayerId: "",
@@ -380,6 +382,8 @@ define([
         this.views.map.model.setRecordsUpdated(this.model.getRecordsUpdated())
         this.views.map.model.setSourcesUpdated(this.model.getSourcesUpdated())
 
+        this.views.map.model.set("outShowRecords",this.model.getOutMapShowRecords())
+        this.views.map.model.set("outShowSources",this.model.getOutMapShowSources())
       }
     },
     updateMapViewMain : function(){
