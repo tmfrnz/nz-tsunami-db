@@ -245,7 +245,7 @@ define([
             _.extend(query,{colorby:"validity"})
           }
           if (typeof query.sourcecolorby === "undefined" || query.sourcecolorby === null || query.sourcecolorby === ""){
-            _.extend(query,{sourcecolorby:"magn_moment_lower"})
+            _.extend(query,{sourcecolorby:"source_class"})
           }
           this.update({
             route:"db",

@@ -32,11 +32,21 @@
 
 
 #map-control h3 {
-      font-size: 16px;
+  font-size: 16px;
 }
 
 #map-control-marker-control {
   padding: 0 15px;
+  margin-bottom: 25px;
+}
+.map-control-layer {
+  margin-top: 15px;
+}
+.map-control-layer-label {
+  padding: 0 15px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-family: 'Titillium Web', sans-serif;
 }
 
 
@@ -46,7 +56,7 @@
 }
 
 .color-attribute-key {
-  padding: 10px 0 0 15px;
+  padding: 10px 0 20px 15px;
 }
 
 .color-attribute-key ul {
@@ -66,7 +76,12 @@
   width: 100% !important;
 }
 .select2-container--mapcontrol {
-  width: 100% !important;
+  width: 160px !important;
+}
+@media (min-width: 992px) {
+  .select2-container--mapcontrol  {
+    width: 200px !important;
+  }
 }
 .select2-container--mapcontrol .select2-selection--single .select2-selection__rendered {
   color: #fff;

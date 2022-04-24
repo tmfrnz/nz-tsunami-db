@@ -20,7 +20,7 @@
 }
 @media (min-width: 992px) {
   #map-container {
-    right: 200px;    
+    right: 200px;
   }
 }
 
@@ -51,7 +51,7 @@
 
 .leaflet-left .leaflet-control,
 .leaflet-top .leaflet-control {
-  margin:1px 0 0;    
+  margin:1px 0 0;
 }
 
 .leaflet-bar a.leaflet-disabled {
@@ -63,7 +63,7 @@
   border-radius: 0;
 }
 .leaflet-touch .leaflet-bar a,
-.leaflet-bar a, 
+.leaflet-bar a,
 .leaflet-bar a:hover {
     width: 30px;
     height: 30px;
@@ -80,7 +80,7 @@
   opacity: 0.33;
 }
 
-.leaflet-control-zoom-in, .leaflet-control-zoom-out {    
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
   text-indent: 0
 }
 
@@ -93,10 +93,10 @@ a.leaflet-control-zoom-in{
       display: none;
   }
 }
-.leaflet-touch .leaflet-bar, 
-.leaflet-bar, 
+.leaflet-touch .leaflet-bar,
+.leaflet-bar,
 .leaflet-control-layers {
-  border: none;  
+  border: none;
   border-radius: 0;
   box-shadow: none;
 }
@@ -129,16 +129,25 @@ a.leaflet-control-zoom-in{
   opacity:0;
 }*/
  .key-color {
-  width: 11px;
-    height: 11px;
-    display: inline-block;
-    margin-right: 5px;
-    -webkit-border-radius: 999px;
-    -moz-border-radius: 999px;
-    border-radius: 999px;
-    border: 1.5px solid;
-    vertical-align: middle;
-    margin-top: -2px;
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  margin-right: 5px;
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  border-radius: 999px;
+  border: 1.5px solid;
+  vertical-align: middle;
+  top: -2px;
+  position: relative;
+}
+ .key-icon-wrap {
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  vertical-align: middle;
+  top: 2px;
+  position: relative;
 }
 
 .key-label {
@@ -147,7 +156,7 @@ a.leaflet-control-zoom-in{
 
 /*leaflet label*/
 .leaflet-rrose-content .key-color {
-    margin-right: 8px;  
+    margin-right: 8px;
 }
 .leaflet-rrose{
   max-width:210px;
@@ -174,7 +183,7 @@ a.leaflet-control-zoom-in{
 }
 .leaflet-rrose-content{
   margin:8px 9px 7px 8px;
-  color: #868888; 
+  color: #868888;
 }
 .leaflet-rrose-tip-s {
     margin: 12px auto 0;
@@ -225,7 +234,7 @@ a.leaflet-control-zoom-in{
   z-index: 1001;
   -webkit-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);
-  box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);  
+  box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);
 }
 @media (min-width: 992px) {
   #map-options {
@@ -239,19 +248,19 @@ a.leaflet-control-zoom-in{
     z-index: 2000;
 }
 
-#map-options .toggle-option.btn-info:active, 
+#map-options .toggle-option.btn-info:active,
 #map-options .toggle-option.btn-info {
     display: block;
     border-radius: 0;
     padding: 0;
     background-color: #93C7DE;
-    border: none;  
+    border: none;
 }
-#map-options .toggle-option.btn-info:active:hover, 
+#map-options .toggle-option.btn-info:active:hover,
 #map-options .toggle-option.btn-info:hover {
     background-color: #80bace;
 }
-#map-options .toggle-option.btn-info.active:active, 
+#map-options .toggle-option.btn-info.active:active,
 #map-options .toggle-option.btn-info.active {
     background-color: #009DD6;
 }
@@ -266,19 +275,19 @@ a.leaflet-control-zoom-in{
   outline:none;
 }
 
-.leaflet-touch .leaflet-control-delete a, 
-.leaflet-control-delete a, 
+.leaflet-touch .leaflet-control-delete a,
+.leaflet-control-delete a,
 .leaflet-touch .leaflet-draw-toolbar a.leaflet-draw-draw-rectangle,
 .leaflet-draw-toolbar a.leaflet-draw-draw-rectangle {
     background-image: none;
     background-color: #036789;
     opacity:1;
 }
-.leaflet-control-delete a:hover, 
-.leaflet-touch .leaflet-control-delete a:hover, 
+.leaflet-control-delete a:hover,
+.leaflet-touch .leaflet-control-delete a:hover,
 .leaflet-draw-toolbar a.leaflet-draw-draw-rectangle:hover,
 .leaflet-touch .leaflet-draw-toolbar a.leaflet-draw-draw-rectangle:hover {
-  background-color: #0d5f7d;    
+  background-color: #0d5f7d;
   opacity: 1;
 }
 
@@ -306,7 +315,7 @@ a.leaflet-control-zoom-in{
     height: 30px;
 }
 .leaflet-draw-actions a:hover {
-    background-color: rgba(255,255,255,0.8);    
+    background-color: rgba(255,255,255,0.8);
     text-decoration: none;
 }
 .leaflet-draw-actions {

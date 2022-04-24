@@ -11,7 +11,10 @@ define([
     },
     getOutColorColumn:function(){
       return this.attributes.outColorColumn
-    },     
+    },
+    getOutSourceColorColumn:function(){
+      return this.attributes.outSourceColorColumn
+    },
     getShowRecords:function(){
       return this.attributes.outShowRecords
     },

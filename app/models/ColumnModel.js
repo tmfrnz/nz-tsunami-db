@@ -142,9 +142,20 @@ define([
     getColor:function(value){
       if(this.get("colorable") === 1) {
         value = value === null ? "null" : value
-        var index = this.attributes.values.values.indexOf(value)
-        return this.attributes.values.colors[index]
+        if(this.attributes.values.colors) {
+          var index = this.attributes.values.values.indexOf(value)
+          return this.attributes.values.colors[index]
+        } else if(this.attributes.values.colorGroups) {
+          var group = this.getColorGroup(value)
+          return group.color;
+        }
       }
+    },
+    getColorGroup:function(value){
+      var group = _.find(this.attributes.values.colorGroups, function(group) {
+        return group.values.indexOf(value) > -1;
+      })
+      return group || { label: "color group not found", color: "#000000"};
     }
   });
 

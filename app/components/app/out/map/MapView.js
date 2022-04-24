@@ -43,6 +43,7 @@ define([
       this.listenTo(this.model, "change:outShowRecords",this.handleViewUpdate);
       this.listenTo(this.model, "change:outShowSources",this.handleViewUpdate);
       this.listenTo(this.model, "change:outColorColumn",this.updateViews);
+      this.listenTo(this.model, "change:outSourceColorColumn",this.updateViews);
       this.listenTo(this.model, "change:outPlotColumns",this.updateViews);
       this.listenTo(this.model, "change:outType",       this.updateViews);
 
@@ -122,6 +123,7 @@ define([
     },
 
     initMapControlView : function(){
+      console.log("MapView.initMapControlView", this.model.getShowRecords());
       var componentId = '#map-control'
 
       if (this.$(componentId).length > 0) {
@@ -131,6 +133,7 @@ define([
           model: new MapControlModel({
             labels: this.model.getLabels(),
             columnCollection:this.model.get("columnCollection"),
+            sourceColumnCollection:this.model.get("sourceColumnCollection"),
             outShowRecords: this.model.getShowRecords(),
             outShowSources: this.model.getShowSources(),
             active: false
@@ -178,8 +181,10 @@ define([
       }
     },
     updateMapControlView:function(){
+      console.log("MapView.updateMapControlView", this.model.getOutSourceColorColumn())
       this.views.control.model.set({
         outColorColumn: this.model.getOutColorColumn(),
+        outSourceColorColumn: this.model.getOutSourceColorColumn(),
         outShowRecords: this.model.getShowRecords(),
         outShowSources: this.model.getShowSources(),
       })

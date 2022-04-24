@@ -281,7 +281,7 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
               column: 'id',
               value: recordSelected ? recordSelected.get('trigger_event_id') : null,
             },
-            colorColumn: that.model.getOutColorSourceColumn()
+            colorColumn: that.model.getOutSourceColorColumn()
           })
 
           // move to front
@@ -488,7 +488,7 @@ console.log('updateSource', Date.now() - window.timeFromUpdate)
               && that.model.referencesConfigured()
           },
           function(){
-console.log('updateOut', Date.now() - window.timeFromUpdate)
+console.log('updateOut', Date.now() - window.timeFromUpdate, that.model.getOutColorColumn(), that.model.getOutSourceColorColumn())
 // console.log("updateOut", that.model.getSources())
 
             that.views.out = that.views.out || new OutView({
@@ -516,6 +516,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
                 }
               })
             })
+            console.log('updateOut 2', Date.now() - window.timeFromUpdate)
             if (that.model.isComponentActive(componentId)) {
 
               if (that.model.getOutType() === 'map' && !that.model.mapReady()) {
@@ -539,6 +540,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
 
               // update Records
               that.updateRecordCollections()
+              console.log('updateOut 3', that.model.getOutColorColumn(), that.model.getOutSourceColorColumn())
               that.views.out.model.set({
                 outMapType:           that.model.getOutMapType(),
                 sourceQueryLength:    Object.keys(that.model.getSourceQuery()).length,
@@ -548,7 +550,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate)
                 recordId :            that.model.getSelectedRecordId(),
                 sourceId :            that.model.getSelectedSourceId(),
                 outColorColumn:       that.model.getOutColorColumn(),
-                outColorSourceColumn: that.model.getOutColorSourceColumn(),
+                outSourceColorColumn: that.model.getOutSourceColorColumn(),
                 outMapShowRecords:    that.model.getOutMapShowRecords(),
                 outMapShowSources:    that.model.getOutMapShowSources(),
                 queryLength:          Object.keys(that.model.getRecordQuery()).length,
@@ -1033,7 +1035,7 @@ console.log("done... configureReferences")
       this.model.getRouter().resetApp()
     },
     homeLink : function(e,args){
-      console.log('AppView.resetApp')
+      console.log('AppView.homeLink')
 
       this.model.getRouter().update({
         link:true,

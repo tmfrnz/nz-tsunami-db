@@ -229,7 +229,7 @@ define([
       return this.attributes.route.query.colorby
     },
     getOutSourceColor: function(){
-      return this.attributes.route.query.colorsourceby
+      return this.attributes.route.query.sourcecolorby
     },
     getOutPlotColumns: function(){
       return this.attributes.route.query.plot
@@ -647,7 +647,7 @@ define([
         return this.attributes.sourceColumnsInitialised
       }
     },
-    getOutColorSourceColumn: function(){
+    getOutSourceColorColumn: function(){
       return this.attributes.sourceColumnCollection.get(this.getOutSourceColor())
     },
     setSourceColumns: function(collection){

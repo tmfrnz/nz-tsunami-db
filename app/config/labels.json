@@ -84,8 +84,10 @@
     "map": {
       "control": {
         "name": "Map settings",
-        "marker_title": "Map marker",
-        "marker_hint": "Select marker colour attribute"
+        "marker_title": "Map layers",
+        "marker_hint": "Configure layer visibility and layer colour attributes",
+        "marker_sources": "Sources",
+        "marker_records": "Records"
       },
       "plot": {
         "name_lat": "Latitude Plot",

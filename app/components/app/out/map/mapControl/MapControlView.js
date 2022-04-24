@@ -5,18 +5,21 @@ define([
   'text!./mapControl.html',
   'text!./mapControlColorSelect.html',
   'text!./mapControlColorKey.html',
+  'text!templates/triangleIcon.html'
 ], function (
   $, _, Backbone,
   bootstrap,
   select2,
   template,
   templateColorSelect,
-  templateColorKey
+  templateColorKey,
+  templateTriangleIcon,
 ) {
 
   return Backbone.View.extend({
     events : {
-      "change .select-color-attribute" : "colorColumnChanged",
+      "change .select-color-attribute-records" : "colorColumnChanged",
+      "change .select-color-attribute-sources" : "sourceColorColumnChanged",
       "click .nav-link" : "handleNavLink",
       "change .layer-checkbox" : "handleLayerToggled",
     },
@@ -26,6 +29,7 @@ define([
       this.render()
       this.listenTo(this.model, "change:active",        this.handleActive);
       this.listenTo(this.model, "change:outColorColumn", this.updateOutColorColumn);
+      this.listenTo(this.model, "change:outSourceColorColumn", this.updateOutSourceColorColumn);
       this.listenTo(this.model, "change:outShowRecords", this.update);
       this.listenTo(this.model, "change:outShowSources", this.update);
       $(window).on("resize", _.debounce(_.bind(this.resize, this), 100));
@@ -34,6 +38,7 @@ define([
       this.update()
     },
     render: function () {
+      console.log('mapcontroilview render', this.model.getShowRecords())
       this.$el.html(_.template(template)({
         t:this.model.getLabels(),
         showSources: this.model.getShowSources(),
@@ -44,56 +49,118 @@ define([
     initTooltips:function(){
       this.$('[data-toggle="tooltip"]').tooltip()
     },
-    update : function(){
-      var outColumn = this.model.getOutColorColumn()
-
-      this.$('.color-attribute-selector-records').html(_.template(templateColorSelect)({
-        classes: 'select-color-attribute-records',
-        options:_.sortBy(
-          _.map(
-            this.model.get("columnCollection").byAttribute("colorable").byAttribute("multiples",0).models,
-            function(column){
-              return {
-                value:column.id,
-                label:column.get("title"),
-                selected:column.get("column") === outColumn.get("column")
-              }
-          },this), function(option) {
-            return option.label
+    getKeyCategorical: function(columnValues, iconTemplate) {
+      if (columnValues.colors) {
+        return _.map(columnValues.values,function(value,index){
+          var crgba = typeof columnValues.colors !== "undefined"
+            ? columnValues.colors[index].colorToRgb()
+            : [0,0,0]
+          return {
+            label: typeof columnValues.labels !== "undefined" ? columnValues.labels[index] : value,
+            color: typeof columnValues.colors !== "undefined" ? columnValues.colors[index] : "",
+            fillColor: 'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)'
           }
-        )
-      }))
+        })
+      } else if (columnValues.colorGroups) {
+        return _.map(columnValues.colorGroups, function(group){
+          var crgba = group.color.colorToRgb();
+          return {
+            label: group.label,
+            color: group.color,
+            fillColor: 'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)',
+            icon: iconTemplate && _.template(iconTemplate)({
+              fill: group.color,
+              color: group.color,
+            })
+          }
+        })
+      }
+    },
+    update : function(){
+      var showRecords = this.model.getShowRecords() !== '0';
+      var showSources = this.model.getShowSources() !== '0';
+      var outColumn = this.model.getOutColorColumn()
+      var outSourceColumn = this.model.getOutSourceColorColumn()
+      console.log('MCV update', showRecords)
 
-      this.$('.select-color-attribute-records').select2({
-        theme: "mapcontrol",
-        minimumResultsForSearch: Infinity
-      })
+      $('.layer-checkbox-records').prop('checked', showRecords == '1');
+      $('.layer-checkbox-sources').prop('checked', showSources == '1');
 
-      if (this.model.getOutColorColumn()) {
-        var values = this.model.getOutColorColumn().getValues()
-        this.$('#type-records .color-attribute-key').html(_.template(templateColorKey)({
+      if (outColumn && showRecords) {
+        this.$('.color-attribute-selector-records').show().html(_.template(templateColorSelect)({
+          classes: 'select-color-attribute-records',
+          options:_.sortBy(
+            _.map(
+              this.model.get("columnCollection").byAttribute("colorable").byAttribute("multiples",0).models,
+              function(column){
+                return {
+                  value:column.id,
+                  label:column.get("title"),
+                  selected:column.get("column") === outColumn.get("column"),
+                }
+            },this), function(option) {
+              return option.label
+            }
+          )
+        }))
+        this.$('.select-color-attribute-records').select2({
+          theme: "mapcontrol",
+          minimumResultsForSearch: Infinity
+        })
+        var columnValues = outColumn.getValues()
+        this.$('#type-records .color-attribute-key').show().html(_.template(templateColorKey)({
           t:this.model.getLabels(),
           title: outColumn.get("title"),
           tooltip: outColumn.get("description"),
           tooltip_more: outColumn.hasMoreDescription(),
           id:outColumn.id,
-          values:_.map(values.values,function(value,index){
-            var crgba = typeof values.colors !== "undefined"
-              ? values.colors[index].colorToRgb()
-              : [0,0,0]
-            return {
-              label: typeof values.labels !== "undefined" ? values.labels[index] : value,
-              color: typeof values.colors !== "undefined" ? values.colors[index] : "",
-              fillColor: 'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)'
-            }
-          })
+          values: this.getKeyCategorical(columnValues),
         }))
       }
-      var showSources = this.model.getShowSources();
-      var showRecords = this.model.getShowRecords();
-      console.log('mapcontrol update', showRecords, showRecords == '1')
-      $('.layer-checkbox-records').prop('checked', showRecords == '1');
-      $('.layer-checkbox-sources').prop('checked', showSources == '1');
+
+      if (outSourceColumn && showSources) {
+        this.$('.color-attribute-selector-sources').show().html(_.template(templateColorSelect)({
+          classes: 'select-color-attribute-sources',
+          options:_.sortBy(
+            _.map(
+              this.model.get("sourceColumnCollection").byAttribute("colorable").byAttribute("multiples",0).models,
+              function(column){
+                return {
+                  value:column.id,
+                  label:column.get("title"),
+                  selected:column.get("column") ===  outSourceColumn.get("column")
+                }
+            },this), function(option) {
+              return option.label
+            }
+          )
+        }))
+        this.$('.select-color-attribute-sources').select2({
+          theme: "mapcontrol",
+          minimumResultsForSearch: Infinity
+        })
+        var columnValues = outSourceColumn.getValues()
+        console.log('MCV', columnValues, outSourceColumn)
+        this.$('#type-sources .color-attribute-key').show().html(_.template(templateColorKey)({
+          t:this.model.getLabels(),
+          title: outSourceColumn.get("title"),
+          tooltip: outSourceColumn.get("description"),
+          tooltip_more: outSourceColumn.hasMoreDescription(),
+          id:outSourceColumn.id,
+          values: this.getKeyCategorical(columnValues, templateTriangleIcon),
+        }))
+      }
+
+
+
+      if (!outColumn || !showRecords) {
+        this.$('#type-records .color-attribute-key').hide()
+        this.$('.color-attribute-selector-records').hide()
+      }
+      if (!outSourceColumn || !showSources) {
+        this.$('#type-sources .color-attribute-key').hide()
+        this.$('.color-attribute-selector-sources').hide()
+      }
 
       this.initTooltips()
     },
@@ -101,9 +168,17 @@ define([
 //      this.views.control.set({outColorColumn:this.model.getOutColorColumn()})
       this.update()
     },
+    updateOutSourceColorColumn:function(){
+//      this.views.control.set({outColorColumn:this.model.getOutColorColumn()})
+      this.update()
+    },
     colorColumnChanged:function(e){
       e.preventDefault()
       this.$el.trigger('colorColumnChanged',{column:$(e.target).val()})
+    },
+    sourceColorColumnChanged:function(e){
+      e.preventDefault()
+      this.$el.trigger('sourceColorColumnChanged',{column:$(e.target).val()})
     },
     handleLayerToggled:function(e){
       e.preventDefault()

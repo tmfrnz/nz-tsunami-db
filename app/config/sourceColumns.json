@@ -125,6 +125,7 @@
     "type":"ordinal",
     "default":1,
     "multiple": 1,
+    "colorable":1,
     "separator": ",",
     "group":"class",
     "values":{
@@ -145,6 +146,38 @@
         "Storm",
         "Gas emission",
         "Unknown"
+      ],
+      "colorGroups": [
+        {
+          "values": ["1"],
+          "label": "Earthquake",
+          "color": "#D16800"
+        },
+        {
+          "values": ["6"],
+          "label": "Volcano",
+          "color": "#AA4E13"
+        },
+        {
+          "values": ["8"],
+          "label": "Landslide",
+          "color": "#69321E"
+        },
+        {
+          "values": ["0"],
+          "label": "Unknown",
+          "color": "#969696"
+        },
+        {
+          "values": ["3", "4", "5", "7"],
+          "label": "Multiple causes",
+          "color": "#412417"
+        },
+        {
+          "values": ["2", "9", "10", "11", "12", "13", "14"],
+          "label": "Other causes",
+          "color": "#022C5A"
+        }
       ]
     }
   },
@@ -155,13 +188,14 @@
     "descriptionMore": "TODO: more description",
     "type":"ordinal",
     "default":0,
-    "colorable":0,
+    "colorable":1,
     "multiple": 1,
     "separator": ",",
     "group":"class",
     "values":{
       "values":["LOCAL","REGIONAL","DISTANT","UNKNOWN"],
       "labels":["Local","Regional","Distant","Unknown"],
+      "colors":["#D16800","#AA4E13","69321E","#969696"],
       "description":[
         "Local: < 1h travel time",
         "Regional: 1-3h travel time",
