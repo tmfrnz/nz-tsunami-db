@@ -8,6 +8,7 @@ define([
   './mapPlot/mapPlotLat/MapPlotLatView', './mapPlot/MapPlotModel',
   'text!./map.html',
   'text!./mapPopupMultipeRecords.html',
+  'text!templates/triangleIcon.html'
 ], function(
   $, _, Backbone,
   leaflet,
@@ -17,7 +18,8 @@ define([
   MapControlView, MapControlModel,
   MapPlotLatView, MapPlotModel,
   template,
-  templatePopupMultiple
+  templatePopupMultiple,
+  templateTriangleIcon
 ){
   var MapView = Backbone.View.extend({
     events:{
@@ -123,7 +125,7 @@ define([
     },
 
     initMapControlView : function(){
-      console.log("MapView.initMapControlView", this.model.getShowRecords());
+      // console.log("MapView.initMapControlView", this.model.getShowRecords());
       var componentId = '#map-control'
 
       if (this.$(componentId).length > 0) {
@@ -181,7 +183,7 @@ define([
       }
     },
     updateMapControlView:function(){
-      console.log("MapView.updateMapControlView", this.model.getOutSourceColorColumn())
+      // console.log("MapView.updateMapControlView", this.model.getOutSourceColorColumn())
       this.views.control.model.set({
         outColorColumn: this.model.getOutColorColumn(),
         outSourceColorColumn: this.model.getOutSourceColorColumn(),
@@ -267,7 +269,7 @@ define([
       this.$el.trigger('mapConfigured')
     },
     checkLayers : function(){
-      console.log('checkLayers')
+      // console.log('checkLayers')
       var _map = this.model.getMap()
       // show/hide records layer
       if (this.model.getLayerGroup('records')) {
@@ -450,14 +452,16 @@ define([
       }
     },
     popupLayersUpdated:function(){
-//      console.log("MapView.popupLayers")
       var layers = this.model.get("popupLayers")
+      // console.log("MapView.popupLayers", layers)
       var map = this.model.getMap()
       map.closePopup()
       if(layers.length > 0){
         var anchorLayer = layers[0]
         var multiple_tooltip = new L.Rrose({
-          offset: new L.Point(0,-4),
+          offset: anchorLayer.recordType === 'source'
+            ? new L.Point(0,-12) // TODO use config instead
+            : new L.Point(0,-4),
           closeButton: false,
           autoPan: false
         }).setContent(this.getMultiplesPopupContent())
@@ -476,18 +480,25 @@ define([
     },
     getMultiplesPopupContent:function(){
       var layers = this.model.get("popupLayers")
+      var noNotShowing = layers.length > 20 ? layers.length - 20 : 0;
       return _.template(templatePopupMultiple)({
-        layers:_.map(layers,function(layer){
+        layers:_.map(layers.slice(0,20), function(layer){
           var crgba = layer.color.colorToRgb()
+          // TODO check config for icon rendering not recordType
           return {
             label:layer.label,
             color:layer.color,
             fillColor: 'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)',
             id:layer.id,
             selected:this.model.get("selectedLayerId") === layer.id,
-            mouseOver:this.model.get("mouseOverLayerId") === layer.id
+            mouseOver:this.model.get("mouseOverLayerId") === layer.id,
+            icon: layer.recordType === 'source' && templateTriangleIcon && _.template(templateTriangleIcon)({
+              fill: layer.color,
+              color: layer.color,
+            })
           }
-        },this)
+        },this),
+        noNotShowing: noNotShowing,
       })
     },
 
@@ -663,7 +674,7 @@ define([
     },
 
     layerSelect:function(e){
-//      console.log("MapView.layerSelect")
+      // console.log("MapView.layerSelect")
 
       e.preventDefault()
       this.$el.trigger('mapLayerSelect',{

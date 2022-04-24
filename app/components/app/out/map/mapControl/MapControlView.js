@@ -86,7 +86,7 @@ define([
       var showSources = this.model.getShowSources() !== '0';
       var outColumn = this.model.getOutColorColumn()
       var outSourceColumn = this.model.getOutSourceColorColumn()
-      console.log('MCV update', showRecords)
+      // console.log('MCV update', showRecords)
 
       $('.layer-checkbox-records').prop('checked', showRecords == '1');
       $('.layer-checkbox-sources').prop('checked', showSources == '1');
@@ -145,7 +145,7 @@ define([
           minimumResultsForSearch: Infinity
         })
         var columnValues = outSourceColumn.getValues()
-        console.log('MCV', columnValues, outSourceColumn)
+        // console.log('MCV', columnValues, outSourceColumn)
         this.$('#type-sources .color-attribute-key').show().html(_.template(templateColorKey)({
           t:this.model.getLabels(),
           title: outSourceColumn.get("title"),

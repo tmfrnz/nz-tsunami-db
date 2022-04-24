@@ -72,6 +72,9 @@ define([
         }
         // set color
         if (model.isActive() && args.colorColumn){
+          // console.log('set color', model.attributes.type, model.attributes.id, args.colorColumn.getColor(
+          //   model.getColumnValue(args.colorColumn.get("column"))
+          // ))
           model.setColor(
             args.colorColumn.getColor(
               model.getColumnValue(args.colorColumn.get("column"))
@@ -100,6 +103,12 @@ define([
     byHighlight: function(){
       return new RecordCollection(this.filter(function(model){
         return model.isHighlight()
+      }),this.options);
+    },
+    bySameLocation:function(referenceRecordId){
+      var refRecord = this.get(referenceRecordId)
+      return new RecordCollection(this.filter(function(model){
+        return model.passSameLocation(refRecord)
       }),this.options);
     },
     byXY:function(x,y){

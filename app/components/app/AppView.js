@@ -209,7 +209,7 @@ window.timeFromUpdate = Date.now()
           that.updateOut()
           that.updatePage()
           that.$el.removeClass('updating')
-console.log("AppView.update 2", Date.now() - window.timeFromUpdate);
+// console.log("AppView.update 2", Date.now() - window.timeFromUpdate);
         }
 
       })
@@ -294,7 +294,7 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
             that.model.setRecordsUpdated()
             that.model.setSourcesUpdated()
           }
-console.log('updateRecordCollections 2', Date.now() - window.timeFromUpdate)
+// console.log('updateRecordCollections 2', Date.now() - window.timeFromUpdate)
         }
       )
     },
@@ -347,7 +347,7 @@ console.log('updateFilters', Date.now() - window.timeFromUpdate)
                 otherType: 's',
               })
             });
-            console.log('updateFilters 2', Date.now() - window.timeFromUpdate)
+            // console.log('updateFilters 2', Date.now() - window.timeFromUpdate)
 
             if (that.model.isComponentActive(componentId)) {
               that.views.filters.model.setActive()
@@ -383,7 +383,7 @@ console.log('updateSourceFilters', Date.now() - window.timeFromUpdate)
                 otherType: 'r',
               })
             });
-            console.log('updateSourceFilters 2', Date.now() - window.timeFromUpdate)
+            // console.log('updateSourceFilters 2', Date.now() - window.timeFromUpdate)
 
             if (that.model.isComponentActive(componentId)) {
               that.views.sourcefilters.model.setActive()
@@ -488,7 +488,7 @@ console.log('updateSource', Date.now() - window.timeFromUpdate)
               && that.model.referencesConfigured()
           },
           function(){
-console.log('updateOut', Date.now() - window.timeFromUpdate, that.model.getOutColorColumn(), that.model.getOutSourceColorColumn())
+console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getOutColorColumn(), that.model.getOutSourceColorColumn())
 // console.log("updateOut", that.model.getSources())
 
             that.views.out = that.views.out || new OutView({
@@ -516,7 +516,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate, that.model.getOutCo
                 }
               })
             })
-            console.log('updateOut 2', Date.now() - window.timeFromUpdate)
+            // console.log('updateOut 2', Date.now() - window.timeFromUpdate)
             if (that.model.isComponentActive(componentId)) {
 
               if (that.model.getOutType() === 'map' && !that.model.mapReady()) {
@@ -540,7 +540,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate, that.model.getOutCo
 
               // update Records
               that.updateRecordCollections()
-              console.log('updateOut 3', that.model.getOutColorColumn(), that.model.getOutSourceColorColumn())
+              // console.log('updateOut 3', that.model.getOutColorColumn(), that.model.getOutSourceColorColumn())
               that.views.out.model.set({
                 outMapType:           that.model.getOutMapType(),
                 sourceQueryLength:    Object.keys(that.model.getSourceQuery()).length,
@@ -1164,42 +1164,6 @@ console.log("plotColumnsSelected")
         )
       }
     },
-    // select record from map marker
-    pointLayerClick : function(e,args){
-      // check if location a casestudy
-// console.log("pointLayerClick")
-      var layerId = args.id
-
-      if (layerId !== "") {
-        // for now only handle record layer clicks
-        if (this.model.getLayers().get(layerId).get("isRecordLayer")) {
-          //detect other records
-          var recordsOverlapping = this.model.getRecords().byXY(args.x,args.y)
-
-          this.$el.trigger('recordsPopup', {
-            records: recordsOverlapping.models
-          });
-          this.$el.trigger('recordSelect', {
-            id: layerId,
-            closeSelected: true//recordsOverlapping.length === 1 // only if single record
-          })
-
-        }
-        if (this.model.getLayers().get(layerId).get("isSourceLayer")) {
-          //detect other records
-          var recordsOverlapping = this.model.getSources().byXY(args.x,args.y)
-
-          this.$el.trigger('recordsPopup', {
-            records: recordsOverlapping.models
-          });
-          this.$el.trigger('sourceSelect', {
-            id: layerId,
-            closeSelected: true//recordsOverlapping.length === 1 // only if single record
-          })
-
-        }
-      }
-    },
     // select record from popup
     mapLayerSelect : function(e,args){
       // check if location a casestudy
@@ -1255,7 +1219,42 @@ console.log("plotColumnsSelected")
         this.recordHighlightOn(args.id, true)
       }
     },
+    // select record from map marker
+    pointLayerClick : function(e,args){
+      // check if location a casestudy
+      console.log("pointLayerClick", args)
+      var layerId = args.id
 
+      if (layerId !== "") {
+        // for now only handle record layer clicks
+        if (this.model.getLayers().get(layerId).get("isRecordLayer")) {
+          //detect other records
+          var recordsOverlapping = this.model.getRecords().byXY(args.x,args.y)
+
+          this.$el.trigger('recordsPopup', {
+            records: recordsOverlapping.models
+          });
+          this.$el.trigger('recordSelect', {
+            id: layerId,
+            closeSelected: true//recordsOverlapping.length === 1 // only if single record
+          })
+
+        }
+        if (this.model.getLayers().get(layerId).get("isSourceLayer")) {
+          //detect other records
+          var recordsSameLocation = this.model.getSources().bySameLocation(layerId.replace('s', ''))
+
+          this.$el.trigger('recordsPopup', {
+            records: recordsSameLocation.models
+          });
+          this.$el.trigger('sourceSelect', {
+            id: layerId,
+            closeSelected: true//recordsOverlapping.length === 1 // only if single record
+          })
+
+        }
+      }
+    },
     // hover record on map marker
     //
     // highlight marker on map
@@ -1270,10 +1269,20 @@ console.log("plotColumnsSelected")
           this.recordHighlightOn(layerId)
 
           //stick all other records in popup
-          var overlaps = this.model.getRecords().bySelected().byActive().byXY(args.x, args.y).models
+          var overlaps = this.model.getRecords().bySelected().byActive().byXY(args.x, args.y)
           // unset popup first to make sure new set is opened
           this.$el.trigger('recordsPopup', { records: [] });
-          this.$el.trigger('recordsPopup', { records: overlaps });
+          this.$el.trigger('recordsPopup', { records: overlaps.models });
+        }
+        if (this.model.getLayers().get(layerId).get("isSourceLayer")) {
+          this.recordHighlightOn(layerId)
+
+          //stick all other records in popup
+          var recordsSameLocation = this.model.getSources().bySelected().byActive().bySameLocation(layerId.replace('s', ''))
+
+          // unset popup first to make sure new set is opened
+          this.$el.trigger('recordsPopup', { records: [] });
+          this.$el.trigger('recordsPopup', { records: recordsSameLocation.models, type: 'sources' });
         }
       }
     },

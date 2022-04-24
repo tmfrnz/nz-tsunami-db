@@ -146,8 +146,9 @@ a.leaflet-control-zoom-in{
   height: 12px;
   margin-right: 5px;
   vertical-align: middle;
-  top: 2px;
+  top: -1px;
   position: relative;
+  display: inline-block;
 }
 
 .key-label {

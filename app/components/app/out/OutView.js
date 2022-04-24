@@ -432,7 +432,7 @@ define([
     },
 
     recordsPopup:function(){
-//      console.log("OutView.recordsPopup ")
+      // console.log("OutView.recordsPopup ", this.model.get("recordsPopup"))
       this.views.map.model.set({
         popupLayers:this.model.get("recordsPopup").length > 0
         ? _.map (this.model.get("recordsPopup"),function(record){
@@ -442,7 +442,8 @@ define([
               color: record.getColor(),
               label: this.model.getLabels().record.title[record.get('type')] + " " + record.id,
               selected:record.isSelected(),
-              mouseOver:record.id === this.model.get("recordMouseOverId")
+              mouseOver:record.id === this.model.get("recordMouseOverId"),
+              recordType: record.attributes.type,
             }
           },this)
         : []

@@ -196,7 +196,6 @@ define([
       }
     },
     getColumnValue:function(column, formatted){
-      console.log('getColumnValue', column, this.attributes[column])
       formatted = typeof formatted !== "undefined" ? formatted : false
       var columnModel = this.collection.options.columns.findWhere({column:column})
       if (formatted) {
@@ -207,10 +206,12 @@ define([
       } else if (
         this.attributes[column] !== null &&
         columnModel &&
-        columnModel.get("type") === "categorical" &&
+        (columnModel.get("type") === "categorical" || columnModel.get("type") === "ordinal") &&
+        columnModel.get('multiple') === 1 &&
         columnModel.get('separator') &&
         this.attributes[column].indexOf(columnModel.get('separator')) > -1
       ) {
+        // console.log('getColumnValue multipl', column, this.attributes[column])
         return "multiple";
       } else {
         return this.attributes[column];
@@ -481,6 +482,25 @@ define([
     passXY:function(x,y){
       if(this.attributes.active && this.getLayer()){
         return this.getLayer().includesXY(x,y)
+      } else {
+        return false
+      }
+    },
+    // TODO allow some buffer (in px)
+    // also consider mixinfg records and sources in same mouseover popup
+    passSameLocation:function(refRecord){
+      if (
+        refRecord
+        && refRecord.getLayer()
+        && refRecord.getLayer().attributes.mapLayer
+        && refRecord.getLayer().attributes.mapLayer.getLayers()[0]
+        && this.getLayer()
+        && this.getLayer().attributes.mapLayer
+        && this.getLayer().attributes.mapLayer.getLayers()[0]
+      ) {
+        var latLngRef = refRecord.getLayer().attributes.mapLayer.getLayers()[0].getLatLng()
+        var latLng = this.getLayer().attributes.mapLayer.getLayers()[0].getLatLng()
+        return latLngRef.lat === latLng.lat && latLngRef.lng === latLng.lng
       } else {
         return false
       }

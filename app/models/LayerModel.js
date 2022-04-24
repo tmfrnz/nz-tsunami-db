@@ -96,7 +96,7 @@ define([
 
     initInteractions : function(){
 //      var that = this
-      if (this.attributes.type === "point") {
+      if (this.attributes.type === "point" || this.attributes.type === "triangle") {
 
         this.attributes.mapLayer
           .off('mousedown')
@@ -109,7 +109,7 @@ define([
     },
     pointLayerClick:function(e){
       if (typeof this.attributes.eventContext !== "undefined") {
-//         console.log("layer::pointLayerClick: " + this.id)
+        console.log("layer::pointLayerClick: " + this.id)
 
         var containerPoint = this.attributes.mapLayer._map.layerPointToContainerPoint(e.layerPoint)
 
