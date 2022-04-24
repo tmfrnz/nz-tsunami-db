@@ -55,10 +55,15 @@ define([
           var crgba = typeof columnValues.colors !== "undefined"
             ? columnValues.colors[index].colorToRgb()
             : [0,0,0]
+          var color = typeof columnValues.colors !== "undefined" ? columnValues.colors[index] : "";
           return {
             label: typeof columnValues.labels !== "undefined" ? columnValues.labels[index] : value,
-            color: typeof columnValues.colors !== "undefined" ? columnValues.colors[index] : "",
-            fillColor: 'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)'
+            color: color,
+            fillColor: 'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)',
+            icon: iconTemplate && _.template(iconTemplate)({
+              fill: color,
+              color: color,
+            })
           }
         })
       } else if (columnValues.colorGroups) {

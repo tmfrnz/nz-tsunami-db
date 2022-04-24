@@ -196,14 +196,24 @@ define([
       }
     },
     getColumnValue:function(column, formatted){
+      console.log('getColumnValue', column, this.attributes[column])
       formatted = typeof formatted !== "undefined" ? formatted : false
+      var columnModel = this.collection.options.columns.findWhere({column:column})
       if (formatted) {
         if(typeof this.attributes.formatted[column] === "undefined"){
           this.attributes.formatted[column] = this.formatColumn(column)
         }
         return this.attributes.formatted[column]
+      } else if (
+        this.attributes[column] !== null &&
+        columnModel &&
+        columnModel.get("type") === "categorical" &&
+        columnModel.get('separator') &&
+        this.attributes[column].indexOf(columnModel.get('separator')) > -1
+      ) {
+        return "multiple";
       } else {
-        return this.attributes[column]
+        return this.attributes[column];
       }
     },
     getReferences:function(){
