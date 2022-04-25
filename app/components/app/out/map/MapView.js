@@ -29,8 +29,7 @@ define([
       "mouseenter .layer-select" : "layerMouseOver",
       "mouseleave .layer-select" : "layerMouseOut",
       "click .toggle-option" : "toggleOptionClick",
-      "click .nav-link" : "handleNavLink",
-      "toggle-draw-options" : "toggleDrawOptions"
+      "click .nav-link" : "handleNavLink"
     },
     initialize : function(){
 //      console.log('MapView.initialize')
@@ -78,10 +77,13 @@ define([
 
       return this
     },
-    initDraw : function(){
+
+    initDraw : function() {
       var _map = this.model.getMap()
       var labels = this.model.getLabels()
       // init draw tool
+      L.drawLocal.draw.handlers.rectangle.tooltip.start = labels.out.map.draw.start
+      L.drawLocal.draw.handlers.simpleshape.tooltip.end = labels.out.map.draw.end
       var rectangleDrawer = new L.Draw.Rectangle(_map);
       // add draw control
       L.Control.CustomDraw = L.Control.extend({
@@ -97,11 +99,13 @@ define([
       var customDrawControl = new L.Control.CustomDraw();
       _map.addControl(customDrawControl);
       // set up draw events
-      this.$('.custom-draw-toolbar').html(_.template(templateDrawActions)({t:this.model.getLabels()}));
+      this.$('.custom-draw-toolbar').html(
+        _.template(templateDrawActions)({t:this.model.getLabels()})
+      );
       var that = this
       this.$('.toggle-draw-options').on(
         'click',
-        function(e) {that.$el.trigger('toggle-draw-options')}
+        _.bind(function(e) {this.toggleDrawOptions()}, this)
       );
       this.$('.action-filter-records').on(
         'click',
@@ -121,7 +125,7 @@ define([
         'click',
         function(e) {
           rectangleDrawer.disable();
-          that.$el.trigger('toggle-draw-options')
+          that.toggleDrawOptions(false);
         }
       );
       _map.on('draw:created', _.bind(this.onDrawCreated,this));
@@ -142,16 +146,28 @@ define([
         },
       });
       this.model.set("queryDeleteControl", new L.Control.CustomDelete())
-
-      L.drawLocal.draw.handlers.rectangle.tooltip.start = labels.out.map.draw.start
-      L.drawLocal.draw.handlers.simpleshape.tooltip.end = labels.out.map.draw.end
     },
-    toggleDrawOptions: function(){
+    toggleDrawOptions: function(open){
+      // console.log('toggleDrawOptions', open)
       var $el = this.$('.custom-draw-actions');
-      // console.log('toggleDrawOptions')
-      if ($el.hasClass('hide')){
+      var isOpen = !$el.hasClass('hide');
+      // classic toggle: hide if open, open if hidden
+      if (typeof open === 'undefined') {
+        if (isOpen) {
+          // hide
+          $el.addClass('hide');
+
+        } else {
+          // show
+          $el.removeClass('hide');
+        }
+
+      // explicit open/close
+      } else if (open) {
+        // show
         $el.removeClass('hide');
       } else {
+        // hide
         $el.addClass('hide');
       }
     },
@@ -261,6 +277,7 @@ define([
           break
       }
       this.invalidateSize(true)
+      this.toggleDrawOptions(false)
     },
 
 
@@ -361,7 +378,7 @@ define([
 
 
     updateMapView : function(){
-//      console.log('MapView.updateMapView ')
+      console.log('MapView.updateMapView ')
       var currentView = this.model.getView()
       var _map = this.model.getMap()
 
@@ -395,16 +412,16 @@ define([
 
 
         // bounds view
-        // } else if (typeof currentView.south !== 'undefined'
-        //       && typeof currentView.west !== 'undefined'
-        //       && typeof currentView.north !== 'undefined'
-        //       && typeof currentView.east !== 'undefined') {
-        //   _map.fitBounds(
-        //     [
-        //       [currentView.south,currentView.west],
-        //       [currentView.north,currentView.east]
-        //     ]
-        //   )
+        } else if (typeof currentView.south !== 'undefined'
+              && typeof currentView.west !== 'undefined'
+              && typeof currentView.north !== 'undefined'
+              && typeof currentView.east !== 'undefined') {
+          _map.fitBounds(
+            [
+              [currentView.south,currentView.west],
+              [currentView.north,currentView.east]
+            ]
+          )
         } else {
           this.zoomToDefault()
         }
@@ -590,12 +607,6 @@ define([
           queryLayer.bringToBack()
           this.model.set("queryLayer",queryLayer)
           _map.addControl(deleteControl)
-          _map.fitBounds(
-            layerGroup.getBounds(),
-            {
-              padding: [ 20, 20 ]
-            }
-          )
         }
       }
 
@@ -653,12 +664,12 @@ define([
           this.model.set("queryLayerSources",queryLayer)
 
           _map.addControl(deleteControl)
-          _map.fitBounds(
-            layerGroup.getBounds(),
-            {
-              padding: [ 20, 20 ]
-            }
-          )
+          // _map.fitBounds(
+          //   layerGroup.getBounds(),
+          //   {
+          //     padding: [ 20, 20 ]
+          //   }
+          // )
         }
       }
 
