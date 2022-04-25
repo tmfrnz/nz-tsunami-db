@@ -34,16 +34,24 @@
       position: relative;
     z-index: 1010;
 }
+#out .out-nav-info .out-nav-reset {
+  margin-left: 3px;
+}
 #out .out-nav-info {
+  padding: 2px 0;
   font-family: 'Titillium Web', sans-serif;
   margin-left: 5px;
   margin-right: 10px;
   display: inline-block;
+  vertical-align: middle;
 }
 @media (min-width: 992px) {
   #out .out-nav-info {
     margin-left: 30px;
   }
+}
+#out .out-nav-info-stat {
+  padding: 2px 0;
 }
 #out .record-no {
     font-size: 12px;

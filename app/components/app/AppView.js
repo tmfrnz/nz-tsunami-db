@@ -510,6 +510,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
                 recordsPopup:[],
                 recordMouseOverId :"",
                 queryLength:0,
+                querySourcesLength:0,
                 geoQuery:{},
                 paths:{
                   records:that.model.get("config").records.path,
@@ -545,7 +546,6 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
               // console.log('updateOut 3', that.model.getOutColorColumn(), that.model.getOutSourceColorColumn())
               that.views.out.model.set({
                 outMapType:           that.model.getOutMapType(),
-                sourceQueryLength:    Object.keys(that.model.getSourceQuery()).length,
                 geoQuery:             that.model.getGeoQuery(),
                 geoQuerySources:      that.model.getGeoQuerySources(),
                 recordsUpdated :      that.model.getRecordsUpdated(),
@@ -557,6 +557,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
                 outMapShowRecords:    that.model.getOutMapShowRecords(),
                 outMapShowSources:    that.model.getOutMapShowSources(),
                 queryLength:          Object.keys(that.model.getRecordQuery()).length,
+                querySourcesLength:    Object.keys(that.model.getSourceQuery()).length,
                 outPlotColumns:       that.model.getOutPlotColumns(),
                 tableSortColumn:      that.model.getOutTableSortColumn(),
                 tableSortOrder:       that.model.getOutTableSortOrder(),

@@ -7,7 +7,7 @@ define([
   'text!./out_nav.html',
   'text!./out_data.html',
   'text!./out_navInfo.html',
-  // 'text!./out_navReset.html'
+  'text!./out_navReset.html'
   // 'ga'
 ], function (
   $, _, Backbone,
@@ -18,7 +18,7 @@ define([
   templateNav,
   templateData,
   templateNavInfo,
-  // templateNavReset
+  templateNavReset
   // ga
 ) {
 
@@ -27,7 +27,8 @@ define([
       "click .toggle-view" : "toggleView",
       "click .toggle-data" : "toggleData",
       "click .close-data" : "closeData",
-      "click .query-reset": "queryReset",
+      "click .out-nav-reset-records .query-reset": "queryReset",
+      "click .out-nav-reset-sources .query-reset": "queryResetSources",
       "click .download-data": "downloadData",
     },
     initialize : function () {
@@ -56,7 +57,8 @@ define([
       this.listenTo(this.model, "change:sourceId", this.updateSelectedSource);
       this.listenTo(this.model, "change:recordMouseOverId", this.updateMouseOverRecord);
       this.listenTo(this.model, "change:recordsPopup",this.recordsPopup)
-      // this.listenTo(this.model, "change:queryLength",this.updateQueryLength)
+      this.listenTo(this.model, "change:queryLength",this.updateQueryLength)
+      this.listenTo(this.model, "change:querySourcesLength",this.updateQueryLength)
       this.listenTo(this.model, "change:geoQuery",this.updateGeoQuery)
       this.listenTo(this.model, "change:geoQuerySources",this.updateGeoQuerySources)
       this.listenTo(this.model, "change:query",this.updateQuery)
@@ -69,7 +71,7 @@ define([
       }))
       this.renderHeader()
       this.renderHeaderInfo()
-      // this.renderHeaderReset()
+      this.renderHeaderReset()
       this.updateHeaderActive()
       this.updateViews()
       return this
@@ -148,17 +150,27 @@ define([
       }))
     },
 
-//     renderHeaderReset: function(){
-// //      console.log("OutView.renderHeaderReset")
-//       if (this.model.get('queryLength') > 0) {
-//         this.$("nav .out-nav-reset").html(_.template(templateNavReset)({
-//           t: this.model.getLabels(),
-//           count: this.model.get('queryLength')
-//         }))
-//       } else {
-//         this.$("nav .out-nav-reset").html("")
-//       }
-//     },
+    renderHeaderReset: function(){
+//      console.log("OutView.renderHeaderReset")
+      if (this.model.get('queryLength') > 0) {
+        this.$("nav .out-nav-reset-records").html(_.template(templateNavReset)({
+          t: this.model.getLabels(),
+          type: 'r',
+          count: this.model.get('queryLength')
+        }))
+      } else {
+        this.$("nav .out-nav-reset-records").html("")
+      }
+      if (this.model.get('querySourcesLength') > 0) {
+        this.$("nav .out-nav-reset-sources").html(_.template(templateNavReset)({
+          t: this.model.getLabels(),
+          type: 's',
+          count: this.model.get('querySourcesLength')
+        }))
+      } else {
+        this.$("nav .out-nav-reset-sources").html("")
+      }
+    },
     updateHeaderActive: function(active){
 //      console.log("OutView.renderHeaderActive")
       active = typeof active !== "undefined" ? active : this.model.getOutType()
@@ -177,10 +189,10 @@ define([
       this.updateHeaderActive()
       this.updateViews()
     },
-//     updateQueryLength: function(){
-// //      console.log("OutView.updateQueryLength")
-//       this.renderHeaderReset()
-//     },
+    updateQueryLength: function(){
+//      console.log("OutView.updateQueryLength")
+      this.renderHeaderReset()
+    },
 
     canDownload: function() {
       // check for Safari as it passes the test but still appears not to work correctly in versions 9 and 10, see issue #157
@@ -547,6 +559,10 @@ define([
     queryReset:function(e){
       e.preventDefault()
       this.$el.trigger('recordQuerySubmit',{query:{}})
+    },
+    queryResetSources:function(e){
+      e.preventDefault()
+      this.$el.trigger('sourceQuerySubmit',{query:{}})
     },
     toggleData: function(e){
       e.preventDefault()

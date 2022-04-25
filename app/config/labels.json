@@ -23,7 +23,10 @@
       "r": "Tsunami records",
       "s": "Source events"
     },
-    "reset": "Reset filters",
+    "reset": {
+      "r": "Reset record filters",
+      "s": "Reset source filters"
+    },
     "all_filters": "All filter options",
     "default_filters": "Less filter options",
     "reset_group": "Reset group filters",
