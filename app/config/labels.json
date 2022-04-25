@@ -116,8 +116,8 @@
       "draw": {
         "clear":"Reset all area filters",
         "draw":"Draw a rectangle to filter records or sources by area",
-        "start":"Press mouse to start drawing record area filter",
-        "end":"Release mouse to finish record area filter"
+        "start":"Press mouse to start drawing area filter",
+        "end":"Release mouse to finish area filter"
       }
     },
     "table": {
