@@ -130,7 +130,9 @@ a.filter-top-menu-link.active{
 
 
 
+.form-section .form-section-content,
 .expanded-group .hidden-expanded-group,
+.visible-expanded-group,
 .visible-expanded-group,
 .expanded .hidden-expanded,
 .visible-filtered,
@@ -141,6 +143,9 @@ a.filter-top-menu-link.active{
 .filtered .visible-filtered,
 .expanded .visible-expanded {
   display:inline-block
+}
+.form-section .form-section-content.expanded-section {
+  display:block
 }
 
 .btn-group {

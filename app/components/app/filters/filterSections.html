@@ -1,0 +1,8 @@
+<% _.each(sections,function(section){ %>
+<div class="form-section <%= section.classes %> form-section-<%= section.id %>">
+  <a href="#" class="expand-section form-section-toggle-<%= section.id %>" data-sectionid="<%= section.id %>">
+    <h4><%= section.title %></h4>
+  </a>
+  <div class="form-section-content form-section-content-<%= section.id %>" />
+</div>
+<% }) %>

@@ -8,7 +8,42 @@ define([
       this.options = options || {};
       // expanded column group
       this.set('expanded',[])
+      this.set('expandedSections',[])
       this.set('focus','record')
+      if (this.get("columnGroupCollection")) {
+        this.set('sections', this.groupFilterGroups())
+      }
+    },
+    groupFilterGroups: function() {
+      var filterGroups = this.get("columnGroupCollection").filter(
+        function(model) {
+          return typeof model.get('section') !== 'undefined' &&
+            (typeof model.get('filter') === 'undefined' || !!model.get('filter'));
+        }
+      );
+      return _.groupBy(
+        filterGroups,
+        function(group) {
+          return group.get('section')
+        }
+      );
+    },
+    getColumnGroupsBySections : function(){
+      if (!this.attributes.sections){
+        this.set('sections', this.groupFilterGroups())
+      }
+      return this.attributes.sections
+    },
+    getSections : function(){
+      return _.map(
+        Object.keys(this.getColumnGroupsBySections()),
+        function(key){
+          return ({
+            title: key,
+            id: key,
+            classes: '',
+          })
+        });
     },
     getExpanded : function(){
       return this.attributes.expanded
@@ -21,6 +56,15 @@ define([
     },
     setExpanded : function(groups){
       this.set("expanded",groups)
+    },
+    getExpandedSection : function(){
+      return this.attributes.expandedSection
+    },
+    isExpandedSection : function(sectionId){
+      return this.attributes.expandedSection === sectionId
+    },
+    setExpandedSection : function(sectionId){
+      this.set("expandedSection",sectionId)
     },
     getFocus : function(){
       return this.attributes.focus
@@ -42,7 +86,6 @@ define([
         this.set("expanded",_.without(this.attributes.expanded, groups))
       }
     },
-
   });
 
 

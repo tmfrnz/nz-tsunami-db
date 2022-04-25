@@ -152,7 +152,7 @@ define([
       return this.attributes.baseurl
     },
 		setRoute : function(route) {
-			console.log('AppModel.setRoute')
+			console.log('AppModel.setRoute', route)
       if (route.route === "db") {
         this.set("lastDBRoute",route)
       }

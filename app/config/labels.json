@@ -34,7 +34,10 @@
     "specified" : "Specified",
     "unspecified" : "Unspecified",
     "placeholder_select" : "Select",
-    "placeholder_search" : "Search by keyword or record id"
+    "placeholder_search" : {
+      "r": "Search records by keyword or id",
+      "s": "Search sources by keyword or id"
+    }
   },
   "record": {
     "name": {

@@ -337,7 +337,7 @@ console.log('updateNav', Date.now() - window.timeFromUpdate)
         waitFor(
           function(){ return that.model.columnsConfigured() },
           function(){
-console.log('updateFilters', Date.now() - window.timeFromUpdate)
+console.log('updateFilters', Date.now() - window.timeFromUpdate, that.model.isComponentActive(componentId))
             that.views.filters = that.views.filters || new FiltersView({
               el:that.$(componentId),
               model:new FiltersModel({
@@ -373,7 +373,7 @@ console.log('updateFilters', Date.now() - window.timeFromUpdate)
         waitFor(
           function(){ return that.model.sourceColumnsConfigured() },
           function(){
-console.log('updateSourceFilters', Date.now() - window.timeFromUpdate)
+console.log('updateSourceFilters', Date.now() - window.timeFromUpdate, that.model.isComponentActive(componentId))
             that.views.sourcefilters = that.views.sourcefilters || new FiltersView({
               el:that.$(componentId),
               model:new FiltersModel({

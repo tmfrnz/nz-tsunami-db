@@ -11,6 +11,7 @@ define([
   'text!./filterCheckboxBinary.html',
   'text!./filterSearch.html',
   'text!./filterLabel.html',
+  'text!./filterSections.html',
   'text!./filterGroups.html',
   'text!./filterGroupFilters.html',
   'text!./filterMenu.html'
@@ -27,6 +28,7 @@ define([
   templateFilterCheckboxBinary,
   templateFilterSearch,
   templateFilterLabel,
+  templateFilterSections,
   templateFilterGroups,
   templateFilterGroupFilters,
   templateFilterMenu
@@ -34,11 +36,14 @@ define([
 
   var FiltersView = Backbone.View.extend({
     events : {
-      "click .expand-all": "expandAll",
+      // "click .expand-all": "expandAll",
+      "change .column-filter-text-keyword": "handleKeywordChange",
       "click .expand-group": "expandGroup",
+      "click .expand-section": "expandSection",
       "click .query-submit": "querySubmitClick",
       "click .query-reset": "queryReset",
       "click .query-group-reset": "queryGroupReset",
+      "click .query-search-reset": "querySearchResetClick",
       "click .filter-button": "filterButtonClick",
       "click .filter-range-checkbox:checkbox": "filterRangeCheckboxClick",
       "click .filter-checkbox-binary:checkbox": "filterCheckboxBinaryClick",
@@ -51,6 +56,7 @@ define([
       this.listenTo(this.model, "change:active", this.handleActive);
       this.listenTo(this.model, "change:recQuery", this.queryUpdated);
       this.listenTo(this.model, "change:expanded", this.expandedUpdated);
+      this.listenTo(this.model, "change:expandedSection", this.expandedSectionUpdated);
       $(window).on("resize", _.debounce(_.bind(this.resize, this), 100));
     },
     resize: function(){
@@ -66,10 +72,13 @@ define([
         menu: this.renderTopMenu(),
       }))
 
-      this.renderGroups()
-      this.renderGroupFilters()
+      this.renderSearch()
+      this.renderSections()
+      this.renderSectionGroups()
+      this.renderSectionGroupFilters()
 
       this.checkExpanded()
+      this.checkExpandedSections()
       this.checkFiltered()
 
       this.renderReset()
@@ -96,6 +105,11 @@ define([
       this.checkExpanded()
       this.previousExpanded = this.model.getExpanded()
     },
+    expandedSectionUpdated: function () {
+      // this.updateGroupFilters()
+      this.checkExpandedSections()
+      this.previousExpandedSection = this.model.getExpandedSection()
+    },
     queryUpdated: function () {
       this.updateGroupFilters()
       this.updateSearch()
@@ -111,8 +125,20 @@ define([
 
     updateSearch: function() {
       // update search form
-      if (this.model.allExpanded()) {
-        this.renderSearch()
+      this.renderSearch()
+    },
+    handleKeywordChange: function(e) {
+      var $target = $(e.target);
+      console.log('handleKeywordChange', $target.val())
+      // update search form
+      this.checkSearchReset($target.val())
+    },
+    checkSearchReset: function(keyword) {
+      console.log('checkSearchReset', keyword)
+      if (keyword && keyword.length > 0) {
+        this.$('.input-group-btn-keyword .query-search-reset').removeClass('hide')
+      } else {
+        this.$('.input-group-btn-keyword .query-search-reset').addClass('hide')
       }
     },
     renderSearch: function() {
@@ -120,28 +146,31 @@ define([
       var queryKeyword = typeof (this.model.get("recQuery")["s"]) !== "undefined"
         ? this.model.get("recQuery")["s"]
         : ""
+      console.log('renderSearch', queryKeyword)
       this.$('.form-search').html(
         _.template(templateFilterSearch)({
           title:false,
           column:"s",
           type:"keyword",
           value:queryKeyword,
-          placeholder:this.model.getLabels().filters.placeholder_search
+          placeholder:this.model.getLabels().filters.placeholder_search[this.model.get('type')],
         })
       )
+      this.checkSearchReset(queryKeyword)
     },
     checkExpanded: function () {
-      if (this.model.allExpanded()) {
-        this.$el.addClass("expanded")
-        this.renderSearch()
-      } else {
-        this.$el.removeClass("expanded")
-        this.$('.form-search').html('')
-      }
-
       _.each(this.model.get("columnGroupCollection").models,function(group){
           // toggle expanded
         this.$('.group-'+group.id).toggleClass("expanded-group", this.model.isExpanded(group.id))
+      }, this)
+    },
+    checkExpandedSections: function () {
+      _.each(this.model.getSections(),function(section){
+          // toggle expanded
+        this.$('.form-section-content-'+section.id).toggleClass(
+          "expanded-section",
+          this.model.isExpandedSection(section.id),
+        )
       }, this)
     },
     checkFiltered: function () {
@@ -151,27 +180,44 @@ define([
         this.$el.addClass("filtered")
       }
     },
-    renderGroups: function() {
-      var columnCollection = this.model.get("columnCollection").byAttribute("filterable")
-      this.$('.form-groups').html(_.template(templateFilterGroups)({
+    renderSections: function() {
+      var sections = Object.keys(this.model.getColumnGroupsBySections());
+      console.log('renderSections', sections)
+      this.$('.form-sections').html(_.template(templateFilterSections)({
         t: this.model.getLabels(),
-        columnGroups: _.reduce(
-          this.model.get("columnGroupCollection").models,
-          function(groups, group){
-            var columnsByGroup = columnCollection.byGroup(group.id).models
-            if(group.get("filter") !== false && columnsByGroup && columnsByGroup.length > 0) {
-              groups.push({
-                title:group.get("title"),
-                hint:group.get("hint"),
-                id:group.id,
-                classes: "group-" + group.id
-              })
-            }
-            return groups
-          },[], this)
+        sections: this.model.getSections()
       }))
     },
-    renderGroupFilters: function(){
+    renderSectionGroups: function() {
+      var sectionsWithGroups = this.model.getColumnGroupsBySections();
+      var columnCollection = this.model.get("columnCollection").byAttribute("filterable")
+      _.each(
+        sectionsWithGroups,
+        function(groups, sectionId) {
+          this.$('.form-section-content-' + sectionId).html(
+            _.template(templateFilterGroups)({
+              t: this.model.getLabels(),
+              columnGroups: _.reduce(
+                groups,
+                function(memoGroups, group){
+                  var columnsByGroup = columnCollection.byGroup(group.id).models
+                  if(group.get("filter") !== false && columnsByGroup && columnsByGroup.length > 0) {
+                    memoGroups.push({
+                      title:group.get("title"),
+                      hint:group.get("hint"),
+                      id:group.id,
+                      classes: "group-" + group.id
+                    })
+                  }
+                  return memoGroups
+                },[], this)
+            })
+          )
+        },
+        this
+      )
+    },
+    renderSectionGroupFilters: function(){
       var columnCollection = this.model.get("columnCollection").byAttribute("filterable")
       _.each(this.model.get("columnGroupCollection").models,function(group){
         var columnsByGroup = columnCollection.byGroup(group.id).models
@@ -827,6 +873,14 @@ define([
 
       this.querySubmit()
     },
+    querySearchResetClick:function(e){
+      e.preventDefault()
+      // var $target = $(e.target);
+      console.log('querySearchReset')
+      this.$('.column-filter-text-keyword').val("").trigger("change")
+      // this.checkSearchReset('')
+      this.querySubmit()
+    },
     queryReset:function(e){
       e.preventDefault()
       if (this.model.get("type") === 's') {
@@ -835,19 +889,28 @@ define([
         this.$el.trigger('recordQuerySubmit',{query:{}})
       }
     },
-    expandAll:function(){
-      if (this.model.allExpanded()) {
-        this.model.setExpanded([])
-      } else {
-        this.model.setExpanded(_.pluck(this.model.get("columnGroupCollection").models,"id"))
-      }
-    },
+    // expandAll:function(){
+    //   if (this.model.allExpanded()) {
+    //     this.model.setExpanded([])
+    //   } else {
+    //     this.model.setExpanded(_.pluck(this.model.get("columnGroupCollection").models,"id"))
+    //   }
+    // },
     expandGroup:function(e){
       var groupId = $(e.currentTarget).attr("data-group")
       if (this.model.isExpanded(groupId)) {
         this.model.removeExpanded(groupId)
       } else {
         this.model.addExpanded(groupId)
+      }
+    },
+    expandSection:function(e){
+      e.preventDefault()
+      var sectionId = $(e.currentTarget).attr("data-sectionid")
+      if (this.model.isExpandedSection(sectionId)) {
+        this.model.setExpandedSection('')
+      } else {
+        this.model.setExpandedSection(sectionId)
       }
     },
 
@@ -889,7 +952,7 @@ define([
         date = new Date(date.getFullYear().toString())
       }
       var dateString = date.toISOString().split('T')[0]
-      return dateString;
+      return dateString
     },
     handleNavLink : function(e){
       e.preventDefault()
