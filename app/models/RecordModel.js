@@ -203,11 +203,18 @@ define([
           this.attributes.formatted[column] = this.formatColumn(column)
         }
         return this.attributes.formatted[column]
-      } else if (
+      } else {
+        return this.attributes[column];
+      }
+    },
+    getColumnColorValue:function(column){
+      var columnModel = this.collection.options.columns.findWhere({column:column})
+      if (
         this.attributes[column] !== null &&
         columnModel &&
         (columnModel.get("type") === "categorical" || columnModel.get("type") === "ordinal") &&
         columnModel.get('multiple') === 1 &&
+        columnModel.get('auto-multiple') === 1 &&
         columnModel.get('separator') &&
         this.attributes[column].indexOf(columnModel.get('separator')) > -1
       ) {
@@ -437,6 +444,9 @@ define([
                     values = [this.get(column)]
                   } else if (columnModel.get('separator')) {
                     values = _.map(this.get(column).split(columnModel.get('separator')),function(val){return val.trim()})
+                    if (columnModel.get('auto-multiple') === 1 && values.length > 1) {
+                      values = _.union(values, ['multiple'])
+                    }
                   } else {
                     values = [this.get(column)]
                   }

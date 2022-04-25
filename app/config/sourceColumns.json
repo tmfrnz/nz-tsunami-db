@@ -190,6 +190,7 @@
     "default":0,
     "colorable":1,
     "multiple": 1,
+    "auto-multiple": 1,
     "separator": ",",
     "group":"class",
     "values":{

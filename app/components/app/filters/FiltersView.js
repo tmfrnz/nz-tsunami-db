@@ -82,7 +82,6 @@ define([
       this.checkExpandedSections()
       this.checkFiltered()
 
-      // this.renderReset()
       return this
     },
     renderTopMenu: function() {
@@ -104,11 +103,13 @@ define([
     expandedUpdated: function () {
       this.updateGroupFilters()
       this.checkExpanded()
+      this.initMultiselect()
       this.previousExpanded = this.model.getExpanded()
     },
     expandedSectionUpdated: function () {
       // this.updateGroupFilters()
       this.checkExpandedSections()
+      this.initMultiselect()
       this.previousExpandedSection = this.model.getExpandedSection()
     },
     queryUpdated: function () {
@@ -130,12 +131,12 @@ define([
     },
     handleKeywordChange: function(e) {
       var $target = $(e.target);
-      console.log('handleKeywordChange', $target.val())
+      // console.log('handleKeywordChange', $target.val())
       // update search form
       this.checkSearchReset($target.val())
     },
     checkSearchReset: function(keyword) {
-      console.log('checkSearchReset', keyword)
+      // console.log('checkSearchReset', keyword)
       if (keyword && keyword.length > 0) {
         this.$('.input-group-btn-keyword .query-search-reset').removeClass('hide')
       } else {
@@ -147,7 +148,7 @@ define([
       var queryKeyword = typeof (this.model.get("recQuery")["s"]) !== "undefined"
         ? this.model.get("recQuery")["s"]
         : ""
-      console.log('renderSearch', queryKeyword)
+      // console.log('renderSearch', queryKeyword)
       this.$('.form-search').html(
         _.template(templateFilterSearch)({
           title:false,
@@ -559,6 +560,7 @@ define([
             : ""
           // only show default columns or those that are set unless group expanded
           var options = []
+          console.log('categorical', column_id, column.getValues())
           if (typeof column.getValues().values !== "undefined" ) {
             options = _.map(column.getValues().values,function(value, key){
               return {
@@ -761,6 +763,7 @@ define([
       if (this.model.isActive()) {
         this.$el.show()
         this.render()
+        this.initMultiselect()
       } else {
         this.$el.hide()
       }

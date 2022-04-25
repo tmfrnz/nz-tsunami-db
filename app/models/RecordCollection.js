@@ -77,7 +77,7 @@ define([
           // ))
           model.setColor(
             args.colorColumn.getColor(
-              model.getColumnValue(args.colorColumn.get("column"))
+              model.getColumnColorValue(args.colorColumn.get("column"))
             )
           )
         }
