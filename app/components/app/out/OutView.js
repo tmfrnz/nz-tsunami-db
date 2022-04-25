@@ -58,6 +58,7 @@ define([
       this.listenTo(this.model, "change:recordsPopup",this.recordsPopup)
       // this.listenTo(this.model, "change:queryLength",this.updateQueryLength)
       this.listenTo(this.model, "change:geoQuery",this.updateGeoQuery)
+      this.listenTo(this.model, "change:geoQuerySources",this.updateGeoQuerySources)
       this.listenTo(this.model, "change:query",this.updateQuery)
       this.listenTo(this.model, "change:dataToggled",this.renderData)
     },
@@ -367,6 +368,7 @@ define([
         this.updateOutMapType()
 
         this.updateGeoQuery()
+        this.updateGeoQuerySources()
 
         this.updateOutColorColumn()
         // this.updateOutShowRecords()
@@ -402,6 +404,11 @@ define([
     updateGeoQuery:function(){
       if (this.model.getOutType() === 'map' && typeof this.views.map !== 'undefined'){
         this.views.map.model.set("geoQuery",this.model.get('geoQuery'))
+      }
+    },
+    updateGeoQuerySources:function(){
+      if (this.model.getOutType() === 'map' && typeof this.views.map !== 'undefined'){
+        this.views.map.model.set("geoQuerySources",this.model.get('geoQuerySources'))
       }
     },
     updateOutShowRecords:function(){

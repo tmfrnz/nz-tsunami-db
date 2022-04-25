@@ -68,6 +68,14 @@
       "color":"#0483B0",
       "dashArray":"5,5",
       "interactive":false
+    },
+    "querySources" : {
+      "fillOpacity": 0,
+      "weight":1,
+      "opacity": 1,
+      "color":"#E34E4F",
+      "dashArray":"10,10",
+      "interactive":false
     }
   }
 }

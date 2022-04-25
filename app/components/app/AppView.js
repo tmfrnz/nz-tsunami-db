@@ -97,6 +97,8 @@ define([
 
       geoQuerySubmit:"geoQuerySubmit",
       geoQueryDelete:"geoQueryDelete",
+      geoQuerySourcesSubmit:"geoQuerySourcesSubmit",
+      geoQuerySourcesDelete:"geoQuerySourcesDelete",
 
       // table view events
       sortRecords:"sortRecords",
@@ -545,6 +547,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
                 outMapType:           that.model.getOutMapType(),
                 sourceQueryLength:    Object.keys(that.model.getSourceQuery()).length,
                 geoQuery:             that.model.getGeoQuery(),
+                geoQuerySources:      that.model.getGeoQuerySources(),
                 recordsUpdated :      that.model.getRecordsUpdated(),
                 sourcesUpdated :      that.model.getSourcesUpdated(),
                 recordId :            that.model.getSelectedRecordId(),
@@ -1456,6 +1459,38 @@ console.log("geoQuerySubmit")
       query["q_"+latColumn.getQueryColumnByType("min")] = args.geoQuery.south.toString()
       query["q_"+lngColumn.getQueryColumnByType("max")] = args.geoQuery.east.toString()
       query["q_"+lngColumn.getQueryColumnByType("min")] = args.geoQuery.west.toString()
+
+      this.model.getRouter().queryUpdate(
+        query,
+        true, // trigger
+        false, // replace
+        true // extend
+      )
+    },
+    geoQuerySourcesDelete:function(e){
+console.log("geoQuerySourcesDelete")
+
+      var latColumn = this.model.getSourceColumns().get("lat")
+      var lngColumn = this.model.getSourceColumns().get("lng")
+      this.model.getRouter().queryDelete([
+        "qs_"+latColumn.getQueryColumnByType("max"),
+        "qs_"+latColumn.getQueryColumnByType("min"),
+        "qs_"+lngColumn.getQueryColumnByType("max"),
+        "qs_"+lngColumn.getQueryColumnByType("min"),
+      ])
+    },
+    geoQuerySourcesSubmit:function(e,args){
+console.log("geoQuerySourcesSubmit")
+      var latColumn = this.model.getSourceColumns().get("lat")
+      var lngColumn = this.model.getSourceColumns().get("lng")
+
+      // new query
+      var query = {}
+
+      query["qs_"+latColumn.getQueryColumnByType("max")] = args.geoQuery.north.toString()
+      query["qs_"+latColumn.getQueryColumnByType("min")] = args.geoQuery.south.toString()
+      query["qs_"+lngColumn.getQueryColumnByType("max")] = args.geoQuery.east.toString()
+      query["qs_"+lngColumn.getQueryColumnByType("min")] = args.geoQuery.west.toString()
 
       this.model.getRouter().queryUpdate(
         query,

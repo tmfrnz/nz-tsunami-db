@@ -326,3 +326,48 @@ a.leaflet-control-zoom-in{
 .leaflet-rrose a {
     color: #808990;
 }
+
+.custom-draw-control {
+  position: relative;
+}
+.custom-draw-actions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 30px;
+    top: 0;
+    white-space: nowrap;
+    background-color: transparent;
+    font-size:0px;
+}
+.leaflet-bar a.toggle-draw-options {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  background-image: none;
+  background-color: #036789;
+  opacity:1;
+  display: block;
+  border: none;
+  padding: 0;
+}
+a.toggle-draw-options:hover {
+  background-color: #0d5f7d;
+  opacity: 1;
+}
+
+.custom-draw-actions li {
+    display: inline-block;
+}
+.custom-draw-actions li a{
+  font-size:12px;
+  width: auto !important;
+  height: 30px;
+  background-color: #fff;
+  opacity: 0.6;
+  border-bottom: 0;
+  font-weight: 100;
+  padding: 0 4px;
+  margin-left: 2px;
+}

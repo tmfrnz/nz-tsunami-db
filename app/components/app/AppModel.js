@@ -210,6 +210,18 @@ define([
         west:recordQuery[lngColumn.getQueryColumnByType("min")]
       }
     },
+    getGeoQuerySources:function(){
+      var latColumn = this.attributes.sourceColumnCollection.get("lat")
+      var lngColumn = this.attributes.sourceColumnCollection.get("lng")
+      var sourceQuery = this.getSourceQuery()
+
+      return {
+        north:sourceQuery[latColumn.getQueryColumnByType("max")],
+        south:sourceQuery[latColumn.getQueryColumnByType("min")],
+        east:sourceQuery[lngColumn.getQueryColumnByType("max")],
+        west:sourceQuery[lngColumn.getQueryColumnByType("min")]
+      }
+    },
     getOutType: function(){
       return this.attributes.route.query.out
     },

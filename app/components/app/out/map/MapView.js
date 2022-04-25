@@ -8,6 +8,7 @@ define([
   './mapPlot/mapPlotLat/MapPlotLatView', './mapPlot/MapPlotModel',
   'text!./map.html',
   'text!./mapPopupMultipeRecords.html',
+  'text!./drawActions.html',
   'text!templates/triangleIcon.html'
 ], function(
   $, _, Backbone,
@@ -19,6 +20,7 @@ define([
   MapPlotLatView, MapPlotModel,
   template,
   templatePopupMultiple,
+  templateDrawActions,
   templateTriangleIcon
 ){
   var MapView = Backbone.View.extend({
@@ -27,7 +29,8 @@ define([
       "mouseenter .layer-select" : "layerMouseOver",
       "mouseleave .layer-select" : "layerMouseOut",
       "click .toggle-option" : "toggleOptionClick",
-      "click .nav-link" : "handleNavLink"
+      "click .nav-link" : "handleNavLink",
+      "toggle-draw-options" : "toggleDrawOptions"
     },
     initialize : function(){
 //      console.log('MapView.initialize')
@@ -60,68 +63,97 @@ define([
       this.listenTo(this.model, "change:sourcesUpdated", this.sourcesUpdated);
 //      this.listenTo(this.model, "change:currentRecordCollection", this.updateViews);
       this.listenTo(this.model, "change:geoQuery", this.updateGeoQuery);
+      this.listenTo(this.model, "change:geoQuerySources", this.updateGeoQuerySources);
 
 
     },
+
     render : function(){
 //      console.log('MapView.render')
       this.$el.html(_.template(template)({t:this.model.getLabels()}))
       this.configureMap()
       this.updateViews()
       this.initDraw()
+      // this.initDrawSources()
+
       return this
     },
     initDraw : function(){
-      // Initialise the draw control and pass it the FeatureGroup of editable layers
       var _map = this.model.getMap()
-      var drawControl = new L.Control.Draw({
-        draw: {
-          rectangle: true,
-          polyline: false,
-          polygon: false,
-          marker: false,
-          circle: false
-        },
-        edit: false
-      })
       var labels = this.model.getLabels()
-      L.drawLocal.draw.toolbar.buttons.rectangle = labels.out.map.draw.draw
-      L.drawLocal.draw.handlers.rectangle.tooltip.start = labels.out.map.draw.start
-      L.drawLocal.draw.handlers.simpleshape.tooltip.end = labels.out.map.draw.end
-
-      _map.addControl(drawControl)
-
-      this.$('.leaflet-draw-toolbar .leaflet-draw-draw-rectangle').html('<span class="icon-icon_draw"></span>')
-
-      _map.on('draw:created', _.bind(this.onDrawCreated,this));
-      _map.on('draw:drawstart', _.bind(this.onDrawStart,this));
-
+      // init draw tool
+      var rectangleDrawer = new L.Draw.Rectangle(_map);
+      // add draw control
+      L.Control.CustomDraw = L.Control.extend({
+        options: { position: 'topleft' },
+        onAdd: function (map) {
+          var controlDiv = L.DomUtil.create('div', 'custom-draw-toolbar leaflet-bar');
+          L.DomEvent
+            .addListener(controlDiv, 'click', L.DomEvent.stopPropagation)
+            .addListener(controlDiv, 'click', L.DomEvent.preventDefault)
+          return controlDiv;
+        }
+      });
+      var customDrawControl = new L.Control.CustomDraw();
+      _map.addControl(customDrawControl);
+      // set up draw events
+      this.$('.custom-draw-toolbar').html(_.template(templateDrawActions)({t:this.model.getLabels()}));
       var that = this
-      // add delete control
-      var deleteControl = L.Control.extend({
+      this.$('.toggle-draw-options').on(
+        'click',
+        function(e) {that.$el.trigger('toggle-draw-options')}
+      );
+      this.$('.action-filter-records').on(
+        'click',
+        function(e) {
+          that.model.set('drawActiveType', 'records')
+          rectangleDrawer.enable();
+        }
+      );
+      this.$('.action-filter-sources').on(
+        'click',
+        function(e) {
+          that.model.set('drawActiveType', 'sources')
+          rectangleDrawer.enable();
+        }
+      );
+      this.$('.action-cancel-draw').on(
+        'click',
+        function(e) {
+          rectangleDrawer.disable();
+          that.$el.trigger('toggle-draw-options')
+        }
+      );
+      _map.on('draw:created', _.bind(this.onDrawCreated,this));
 
+      // add delete control but do not yet add to map
+      L.Control.CustomDelete = L.Control.extend({
         options: {
           position: 'topleft'
         },
-
         onAdd: function () {
-
           var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-delete');
           var deleteLink = L.DomUtil.create('a', '',container);
-          $(deleteLink).attr('href',"#")
-          $(deleteLink).attr('title', labels.out.map.draw.clear)
+          $(deleteLink).attr('href',"#");
+          $(deleteLink).attr('title', labels.out.map.draw.clear);
           L.DomUtil.create('span', 'icon-icon_draw-reset', deleteLink);
-
-          deleteLink.onclick = _.bind(that.queryDeleteClicked,that)
-
+          deleteLink.onclick = _.bind(that.queryDeleteClicked,that);
           return container;
         },
+      });
+      this.model.set("queryDeleteControl", new L.Control.CustomDelete())
 
-      })
-
-      this.model.set("queryDeleteControl",new deleteControl())
-
-
+      L.drawLocal.draw.handlers.rectangle.tooltip.start = labels.out.map.draw.start
+      L.drawLocal.draw.handlers.simpleshape.tooltip.end = labels.out.map.draw.end
+    },
+    toggleDrawOptions: function(){
+      var $el = this.$('.custom-draw-actions');
+      // console.log('toggleDrawOptions')
+      if ($el.hasClass('hide')){
+        $el.removeClass('hide');
+      } else {
+        $el.addClass('hide');
+      }
     },
 
     initMapControlView : function(){
@@ -294,7 +326,11 @@ define([
       var config = this.model.getConfig()
 
       // init layer groups
-      var layerGroups = {}
+      var queryFeatureGroup = new L.featureGroup();
+      queryFeatureGroup.addTo(_map);
+      var layerGroups = {
+        query: queryFeatureGroup
+      }
       _.each(config.layerGroups,function(conditions,id){
         var layerGroup = new L.layerGroup()
         layerGroups[id] = layerGroup
@@ -359,16 +395,16 @@ define([
 
 
         // bounds view
-        } else if (typeof currentView.south !== 'undefined'
-              && typeof currentView.west !== 'undefined'
-              && typeof currentView.north !== 'undefined'
-              && typeof currentView.east !== 'undefined') {
-          _map.fitBounds(
-            [
-              [currentView.south,currentView.west],
-              [currentView.north,currentView.east]
-            ]
-          )
+        // } else if (typeof currentView.south !== 'undefined'
+        //       && typeof currentView.west !== 'undefined'
+        //       && typeof currentView.north !== 'undefined'
+        //       && typeof currentView.east !== 'undefined') {
+        //   _map.fitBounds(
+        //     [
+        //       [currentView.south,currentView.west],
+        //       [currentView.north,currentView.east]
+        //     ]
+        //   )
         } else {
           this.zoomToDefault()
         }
@@ -506,7 +542,7 @@ define([
       var geoQuery = this.model.get("geoQuery")
       var queryLayer = this.model.get("queryLayer")
       var deleteControl = this.model.get("queryDeleteControl")
-      var layerGroup = this.model.getLayerGroups()["default"]
+      var layerGroup = this.model.getLayerGroups()["query"]
       var _map = this.model.getMap()
 
       // remove layer from map
@@ -553,10 +589,76 @@ define([
           layerGroup.addLayer(queryLayer)
           queryLayer.bringToBack()
           this.model.set("queryLayer",queryLayer)
+          _map.addControl(deleteControl)
+          _map.fitBounds(
+            layerGroup.getBounds(),
+            {
+              padding: [ 20, 20 ]
+            }
+          )
+        }
+      }
 
+    },
+    updateGeoQuerySources:function(){
+      var geoQuery = this.model.get("geoQuerySources")
+      var queryLayer = this.model.get("queryLayerSources")
+      var deleteControl = this.model.get("queryDeleteControl")
+      var layerGroup = this.model.getLayerGroups()["query"]
+      var _map = this.model.getMap()
+
+      // remove layer from map
+      if (typeof queryLayer !== "undefined") {
+        if (layerGroup.hasLayer(queryLayer)){
+          layerGroup.removeLayer(queryLayer)
+        }
+      }
+      // if (typeof deleteControl !== "undefined") {
+      //     deleteControl.remove()
+      // }
+
+      // add layer from map if at least one boundary defined
+      if (typeof geoQuery !== "undefined") {
+        // have at least one undefined
+        if (typeof geoQuery.north !== "undefined"
+        || typeof geoQuery.south !== "undefined"
+        || typeof geoQuery.west !== "undefined"
+        || typeof geoQuery.east !== "undefined" ) {
+
+
+          queryLayer = L.rectangle(
+            L.latLngBounds(
+              L.latLng(
+                typeof geoQuery.south !== "undefined" ? parseFloat(geoQuery.south) : -90,
+                typeof geoQuery.west !== "undefined"
+                  ? geoQuery.west < 0
+                    ? parseFloat(geoQuery.west) + 360
+                    : parseFloat(geoQuery.west)
+                  : 0
+              ),
+              L.latLng(
+                typeof geoQuery.north !== "undefined" ? parseFloat(geoQuery.north) : 90,
+                typeof geoQuery.east !== "undefined"
+                    ? geoQuery.east < 0
+                      ? parseFloat(geoQuery.east) + 360
+                      : parseFloat(geoQuery.east)
+                    : 360
+              )
+            ),
+            this.model.getConfig().layerStyles.querySources
+          )
+
+          layerGroup.addLayer(queryLayer)
+          queryLayer.bringToBack()
+          this.model.set("queryLayerSources",queryLayer)
 
           _map.addControl(deleteControl)
-
+          _map.fitBounds(
+            layerGroup.getBounds(),
+            {
+              padding: [ 20, 20 ]
+            }
+          )
         }
       }
 
@@ -671,6 +773,7 @@ define([
     queryDeleteClicked:function(e){
       e.preventDefault()
       this.$el.trigger('geoQueryDelete')
+      this.$el.trigger('geoQuerySourcesDelete')
     },
 
     layerSelect:function(e){
@@ -723,21 +826,29 @@ define([
     },
     onDrawCreated : function(e) {
       var map = this.model.getMap()
+      var drawActiveType = this.model.get('drawActiveType')
       map.closePopup()
       $(map.getPane("popupPane")).show()
-
-      this.$el.trigger('geoQuerySubmit',{
-        geoQuery: {
-          north:this.roundDegrees(e.layer.getBounds().getNorth()),
-          south:this.roundDegrees(e.layer.getBounds().getSouth()),
-          west:this.roundDegrees(e.layer.getBounds().getWest()),
-          east:this.roundDegrees(e.layer.getBounds().getEast())
+      this.$el.trigger(drawActiveType === 'sources'
+        ? 'geoQuerySourcesSubmit'
+        : 'geoQuerySubmit',
+        {
+          geoQuery: {
+            north:this.roundDegrees(e.layer.getBounds().getNorth()),
+            south:this.roundDegrees(e.layer.getBounds().getSouth()),
+            west:this.roundDegrees(e.layer.getBounds().getWest()),
+            east:this.roundDegrees(e.layer.getBounds().getEast())
+          }
         }
-      })
-
-      map.fitBounds(e.layer.getBounds())
-
-
+      )
+      var layerGroup = this.model.getLayerGroups()["query"]
+      // zoom to query group
+      map.fitBounds(
+        layerGroup.getBounds(),
+        {
+          padding: [ 20, 20 ]
+        }
+      )
     },
 
     handleNavLink : function(e){
