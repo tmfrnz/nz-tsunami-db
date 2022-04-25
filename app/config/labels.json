@@ -26,7 +26,8 @@
     "reset": "Reset filters",
     "all_filters": "All filter options",
     "default_filters": "Less filter options",
-    "reset_group": "Reset",
+    "reset_group": "Reset group filters",
+    "reset_section": "Reset section filters",
     "all_group_filters": "More",
     "default_group_filters": "Less",
     "button_submit": "Submit",
@@ -38,7 +39,7 @@
       "r": "Search records by keyword or id",
       "s": "Search sources by keyword or id"
     }
-  },
+   },
   "record": {
     "name": {
       "record": "Record detail",
@@ -53,6 +54,16 @@
       "pre" : "Please ",
       "anchor": "contact us",
       "post": " for more information"
+    }
+  },
+  "sections": {
+    "r": {
+      "general": "Records general",
+      "tide-gauge-records": "Tide Gauge Records",
+      "observations": "Observations"
+    },
+    "s": {
+      "general": "Sources general"
     }
   },
   "out": {

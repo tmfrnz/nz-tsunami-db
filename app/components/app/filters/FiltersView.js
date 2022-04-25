@@ -43,6 +43,7 @@ define([
       "click .query-submit": "querySubmitClick",
       "click .query-reset": "queryReset",
       "click .query-group-reset": "queryGroupReset",
+      "click .query-section-reset": "querySectionReset",
       "click .query-search-reset": "querySearchResetClick",
       "click .filter-button": "filterButtonClick",
       "click .filter-range-checkbox:checkbox": "filterRangeCheckboxClick",
@@ -81,7 +82,7 @@ define([
       this.checkExpandedSections()
       this.checkFiltered()
 
-      this.renderReset()
+      // this.renderReset()
       return this
     },
     renderTopMenu: function() {
@@ -112,16 +113,16 @@ define([
     },
     queryUpdated: function () {
       this.updateGroupFilters()
+      this.updateSectionGroupReset()
       this.updateSearch()
       this.checkFiltered()
       this.previousQuery = $.extend(true, {}, this.model.get("recQuery"))
-      this.renderReset()
     },
-    renderReset: function(){
-      if(Object.keys(this.model.get("recQuery")).length > 0) {
-        this.$('.btn.query-reset').html(this.model.getLabels().filters.reset + " (" + Object.keys(this.model.get("recQuery")).length + ")")
-      }
-    },
+    // renderReset: function(){
+    //   if(Object.keys(this.model.get("recQuery")).length > 0) {
+    //     this.$('.btn.query-reset').html(this.model.getLabels().filters.reset + " (" + Object.keys(this.model.get("recQuery")).length + ")")
+    //   }
+    // },
 
     updateSearch: function() {
       // update search form
@@ -167,7 +168,7 @@ define([
     checkExpandedSections: function () {
       _.each(this.model.getSections(),function(section){
           // toggle expanded
-        this.$('.form-section-content-'+section.id).toggleClass(
+        this.$('.form-section-'+section.id).toggleClass(
           "expanded-section",
           this.model.isExpandedSection(section.id),
         )
@@ -185,10 +186,12 @@ define([
       console.log('renderSections', sections)
       this.$('.form-sections').html(_.template(templateFilterSections)({
         t: this.model.getLabels(),
+        type: this.model.get('type'),
         sections: this.model.getSections()
       }))
     },
     renderSectionGroups: function() {
+      var labels = this.model.getLabels();
       var sectionsWithGroups = this.model.getColumnGroupsBySections();
       var columnCollection = this.model.get("columnCollection").byAttribute("filterable")
       _.each(
@@ -196,7 +199,7 @@ define([
         function(groups, sectionId) {
           this.$('.form-section-content-' + sectionId).html(
             _.template(templateFilterGroups)({
-              t: this.model.getLabels(),
+              t: labels,
               columnGroups: _.reduce(
                 groups,
                 function(memoGroups, group){
@@ -213,6 +216,39 @@ define([
                 },[], this)
             })
           )
+          // also toggle section reset button
+          const sectionFilterCount =  _.reduce(groups, function(memo, group){
+              var columnsByGroup = columnCollection.byGroup(group.id).models
+              var groupFilterCount = _.reduce(columnsByGroup, function(memo2, column){
+                return this.isColumnSet(column) ? memo2 + 1 : memo2;
+              }, 0, this)
+              return memo + groupFilterCount
+            }, 0, this)
+          this.$('.form-section-' + sectionId + ' .query-section-reset').toggle(
+            sectionFilterCount > 0
+          ).html(labels.filters.reset_section + ' (' + sectionFilterCount + ')')
+        },
+        this
+      )
+    },
+    updateSectionGroupReset: function(){
+      var labels = this.model.getLabels();
+      var sectionsWithGroups = this.model.getColumnGroupsBySections();
+      var columnCollection = this.model.get("columnCollection").byAttribute("filterable")
+      _.each(
+        sectionsWithGroups,
+        function(groups, sectionId) {
+          // also toggle section reset button
+          const sectionFilterCount =  _.reduce(groups, function(memo, group){
+              var columnsByGroup = columnCollection.byGroup(group.id).models
+              var groupFilterCount = _.reduce(columnsByGroup, function(memo2, column){
+                return this.isColumnSet(column) ? memo2 + 1 : memo2;
+              }, 0, this)
+              return memo + groupFilterCount
+            }, 0, this)
+          this.$('.form-section-' + sectionId + ' .query-section-reset').toggle(
+            sectionFilterCount > 0
+          ).html(labels.filters.reset_section + ' (' + sectionFilterCount + ')')
         },
         this
       )
@@ -873,6 +909,20 @@ define([
 
       this.querySubmit()
     },
+    querySectionReset:function(e){
+      console.log('querySectionReset')
+      e.preventDefault()
+      var $target = $(e.target);
+
+      this.$('.form-section-'+$target.attr("data-sectionid")).find('.column-filter').each(function(){
+        $(this).find(
+          '.filter-range-checkbox, .filter-checkbox-binary, .column-filter-text, .column-filter-multiselect'
+        ).val("")
+        $(this).find('.column-filter-buttongroup .filter-button').removeClass("active")
+      })
+
+      this.querySubmit()
+    },
     querySearchResetClick:function(e){
       e.preventDefault()
       // var $target = $(e.target);
@@ -907,6 +957,7 @@ define([
     expandSection:function(e){
       e.preventDefault()
       var sectionId = $(e.currentTarget).attr("data-sectionid")
+      console.log('expandSection', sectionId)
       if (this.model.isExpandedSection(sectionId)) {
         this.model.setExpandedSection('')
       } else {
