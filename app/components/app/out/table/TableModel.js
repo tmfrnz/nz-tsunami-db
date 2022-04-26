@@ -35,7 +35,18 @@ define([
           }
           return (aval > bval ? 1 : (bval > aval) ? -1 : 0) * order;
         }
-
+        if (isNumber(aval) && !isNumber(bval)) {
+          return 1 * order;
+        }
+        if (isNumber(bval) && !isNumber(aval)) {
+          return -1 * order;
+        }
+        if (isNumber(bval) && isNumber(aval)) {
+          return (parseFloat(aval) > parseFloat(bval) ? 1 : -1) * order
+        }
+        // if (isNumber(aval.toString()[0]) && isNumber(bval.toString()[0])) {
+        //   return (parseInt(aval) > parseInt(bval) ? 1 : -1) * order
+        // }
         return (aval > bval ? 1 : -1) * order
 
       }

@@ -240,7 +240,7 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
           var newSourceQuery = that.model.getSourceQuery()
           var recordsQueryChanged = !that.model.getRecordsUpdated() || !_.isEqual(oldQuery, newQuery);
           var sourcesQueryChanged = !that.model.getSourcesUpdated() || !_.isEqual(oldSourceQuery, newSourceQuery);
-          // console.log('updateRecordCollections recordsQueryChanged', recordsQueryChanged)
+          console.log('updateRecordCollections', newSourceQuery, newQuery)
           // console.log('updateRecordCollections sourcesQueryChanged', sourcesQueryChanged)
           // TODO figure out a better way to update both with respect to each other
           // 1. figure out active records without updating
@@ -265,7 +265,7 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
           // filter sources by active/filtered records
           that.model.getRecords().updateRecords({
             query: newQuery,
-            queryTemp: { trigger_event_id: activeSourceIds },
+            queryTemp: Object.keys(newSourceQuery).length > 0 ? { trigger_event_id: activeSourceIds } : null,
             selectedId: recordSelectedId,
             relatedSelected: {
               column: 'trigger_event_id',
@@ -277,7 +277,7 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
           // filter sources by active/filtered records
           that.model.getSources().updateRecords({
             query: newSourceQuery,
-            queryTemp: { id: activeRecordSourceIds },
+            queryTemp: Object.keys(newQuery).length > 0 ? { id: activeRecordSourceIds } : null,
             selectedId: sourceSelectedId,
             relatedSelected: {
               column: 'id',

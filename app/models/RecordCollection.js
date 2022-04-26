@@ -50,7 +50,7 @@ define([
       // console.log("recordCollection.updateRecords", args)
       // remember query but ignore tempQuery
       this.query = args.query || this.query
-      const query = Object.assign({}, this.query, args.queryTemp)
+      const query = args.queryTemp ? Object.assign({}, this.query, args.queryTemp) : this.query
 
       var that = this;
       _.each(_.clone(this.models).reverse(),function(model){
