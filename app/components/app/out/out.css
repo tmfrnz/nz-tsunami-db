@@ -26,8 +26,8 @@
 
 #out nav {
     height: 60px;
-    background-color: #19313f;
-    color: #B2B8BD;
+    background-color: #EEEFF1;
+    color: #66696C;
     -webkit-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);
   box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);
@@ -57,7 +57,7 @@
     font-size: 12px;
     line-height: 16px;
     vertical-align: middle;
-    color:#fff;
+    color:#66696C;
     position: relative;
     top: -2px;
     margin-right: 2px;
@@ -76,12 +76,13 @@
   left: 0;
   right: 0;
   overflow: auto;
-  bottom: 0;    z-index: 9999;
+  bottom: 0;
+  z-index: 1000;
   padding: 30px 50px 60px;
-  border-top:1px solid #172630;
   -webkit-box-shadow: 0px 3px 8px -2px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 3px 8px -2px rgba(0,0,0,0.2);
   box-shadow: 0px 3px 8px -2px rgba(0,0,0,0.2);
+  margin-bottom: 0px;
 }
 
 .btn-out-nav:active:focus,
@@ -96,26 +97,30 @@
     font-weight: bold;
     text-transform: uppercase;
     font-size: 11px;
-    color: #B2B8BD;
-    border-right: 1px solid #172630;
+    color: #66696C;
+    border-right: 1px solid #D0D4D6;
 }
 .btn-out-nav.pull-right {
-  border-left: 1px solid #172630;
+  border-left: 1px solid #D0D4D6;
   border-right: 0;
 }
 
 .btn-out-nav.active,
 .btn-out-nav.active:hover,
 .btn-out-nav.active:focus {
-    background-color: #009DD6;
+    background-color: #66696C;
     color: #fff;
 }
 
 .btn-out-nav:hover{
-  color: #B2B8BD;
-  background-color: #172630;
+  color: #66696C;
+  background-color: #D0D4D6;
 }
 
+#out .btn-link.query-reset {
+  font-weight: 700;
+  padding: 0;
+}
 
 .close-data {
     position: absolute;
@@ -157,6 +162,7 @@
 
 a.download-data {
   font-weight:bold;
+  color:#66696C;
   margin-right: 15px;
     line-height: 21px;
     min-height: 21px;
@@ -166,7 +172,7 @@ a.download-data {
 a.download-data:hover, a.download-data:focus{
   text-decoration: none;
   opacity: 0.8;
-  color:#009dd6;
+  color:#66696C;
 }
 
 .tab-pane {
@@ -176,7 +182,7 @@ a.download-data:hover, a.download-data:focus{
 .form-control.form-control-api {
     background-color: #172630;
     border: 1px solid #172630;
-    color: #009dd6;
+    color: #A71930;
     border-radius: 3px;
     font-size: 12px;
     height: 21px;

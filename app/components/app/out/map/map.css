@@ -246,7 +246,6 @@ a.leaflet-control-zoom-in{
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 2000;
 }
 
 #map-options .toggle-option.btn-info:active,
@@ -254,20 +253,20 @@ a.leaflet-control-zoom-in{
     display: block;
     border-radius: 0;
     padding: 0;
-    background-color: #93C7DE;
+    background-color: #EEEFF1;
     border: none;
 }
 #map-options .toggle-option.btn-info:active:hover,
 #map-options .toggle-option.btn-info:hover {
-    background-color: #80bace;
+    background-color: #D0D4D6;
 }
 #map-options .toggle-option.btn-info.active:active,
 #map-options .toggle-option.btn-info.active {
-    background-color: #009DD6;
+    background-color: #A71930;
 }
 #map-options .toggle-option.btn-info.active:active:hover,
 #map-options .toggle-option.btn-info.active:hover {
-    background-color: #188fc0;
+    background-color: #A71930;
 }
 
 #map-options .toggle-option.btn-info:active:focus,
@@ -281,14 +280,14 @@ a.leaflet-control-zoom-in{
 .leaflet-touch .leaflet-draw-toolbar a.leaflet-draw-draw-rectangle,
 .leaflet-draw-toolbar a.leaflet-draw-draw-rectangle {
     background-image: none;
-    background-color: #036789;
+    background-color: #fff;
     opacity:1;
 }
 .leaflet-control-delete a:hover,
 .leaflet-touch .leaflet-control-delete a:hover,
 .leaflet-draw-toolbar a.leaflet-draw-draw-rectangle:hover,
 .leaflet-touch .leaflet-draw-toolbar a.leaflet-draw-draw-rectangle:hover {
-  background-color: #0d5f7d;
+  background-color: #EEEFF1;
   opacity: 1;
 }
 
@@ -346,14 +345,14 @@ a.leaflet-control-zoom-in{
   height: 30px;
   line-height: 30px;
   background-image: none;
-  background-color: #036789;
+  background-color: #fff;
   opacity:1;
   display: block;
   border: none;
   padding: 0;
 }
 a.toggle-draw-options:hover {
-  background-color: #0d5f7d;
+  background-color: #EEEFF1;
   opacity: 1;
 }
 

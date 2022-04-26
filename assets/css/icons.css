@@ -39,17 +39,19 @@ xs: 16*/
 }
 
 .icon-icon_hide-panel,
+.icon-icon_latplot-grey,
 .icon-icon_latplot,
 .icon-icon_longplot,
+.icon-icon_settings-grey,
 .icon-icon_settings {
-  width: 48px; 
-  height: 48px; 
+  width: 48px;
+  height: 48px;
 }
 
 .icon-icon_download-grey,
 .icon-icon_download-white{
   width: 19px;
-  height: 32px;  
+  height: 32px;
 }
 
 .icon-icon_detail,
@@ -59,7 +61,7 @@ xs: 16*/
 .icon-icon_table,
 .icon-icon_filter {
   width: 32px;
-  height: 32px;  
+  height: 32px;
 }
 
 .icon-icon_info {

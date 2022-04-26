@@ -1,4 +1,4 @@
-#record {
+#record, #source {
   overflow: hidden;
   display:none;
 }
@@ -71,7 +71,7 @@ a.record-top-menu-link {
 a.record-top-menu-link.active,
 a.record-top-menu-link:focus,
 a.record-top-menu-link:hover{
-  color: #009dd6;
+  color: #A71930;
   text-decoration:none;
 }
 

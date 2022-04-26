@@ -302,7 +302,7 @@
     "default":1,
     "plot":1,
     "plotMax":5,
-    "plotColor":"#007FAD",
+    "plotColor":"#A71930",
     "unit": "m",
     "values":{
       "range" : {
@@ -596,7 +596,7 @@
     "unit": "m",
     "plot":1,
     "plotMax":10,
-    "plotColor":"#50C6DD",
+    "plotColor":"#7E0D1F",
     "values":{
       "range" : {
         "min" : ["auto"],

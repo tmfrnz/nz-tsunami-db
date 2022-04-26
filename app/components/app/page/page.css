@@ -4,9 +4,9 @@
   bottom: 0;
   left: 0;
   right:0;
-  width: auto;   
+  width: auto;
   overflow-y: auto;
-  background-color: #F2F3F4;
+  background-color: #EEEFF1;
   z-index: 1001;
   display:none;
 }
@@ -37,16 +37,16 @@ a.close-page {
     margin-bottom: 30px;
 }
 
-#page .lead, 
+#page .lead,
 #page blockquote {
   padding: 0 0 54px;
   margin: 0 0 54px;
   font-size: 20px;
   border-left: none;
   text-align: center;
-  color: #009DD6;
+  color: #7E0D1F;
   font-family: 'Titillium Web', sans-serif;
-  border-bottom: 1px solid #E5E7E9;
+  border-bottom: 1px solid #EEEFF1;
 }
 
 #page h2 {
@@ -87,7 +87,7 @@ a.close-page {
     margin-top: 10px
 }
 
-#page .record-column h4 {  
+#page .record-column h4 {
     color: #808990;
     font-size: 17px;
     text-transform: none;
@@ -105,14 +105,12 @@ a.close-page {
   border-bottom: 1px solid #ccd0d3;
   white-space: nowrap;
 }
- 
+
 #page table > tbody > tr > td {
     border-color:#f2f3f4;
 }
 
 code {
-  color: #007FAD;
-  background-color: #EDF5F9;
   font-weight:normal;
 }
 
