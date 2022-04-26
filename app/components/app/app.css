@@ -104,7 +104,7 @@ a:hover {
 
 .component-left {
   position: absolute;
-  top: 60px;
+  top: 50px;
   bottom: 0;
   left: 0;
   right:0;
@@ -134,14 +134,14 @@ a:hover {
 }
 
 .panel-dark {
-    background-color: #19313f;
+    background-color: #2F3D47;
     color: #fff;
 }
 .share-outer {
     position: relative;
     z-index: 10000;
     padding:50px;
-    top:60px;
+    top:50px;
     -webkit-box-shadow: 0px 3px 8px -2px rgba(0,0,0,0.2);
     -moz-box-shadow: 0px 3px 8px -2px rgba(0,0,0,0.2);
     box-shadow: 0px 3px 8px -2px rgba(0,0,0,0.2);
@@ -382,5 +382,5 @@ hr {
 
 #xs-fallback {
     position: absolute;
-    top: 60px;
+    top: 50px;
 }
