@@ -276,9 +276,9 @@ define([
       var type = $(e.currentTarget).attr("data-recordtype");
       console.log(type, id)
       if (type === 'source') {
-        this.$el.trigger('sourceSelect',{id:id})
+        this.$el.trigger('sourceSelect',{id: 's' + id})
       } else {
-        this.$el.trigger('recordSelect',{id:id})
+        this.$el.trigger('recordSelect',{id: 'r' + id})
       }
     },
 

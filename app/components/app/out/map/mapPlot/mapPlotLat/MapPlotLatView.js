@@ -23,27 +23,27 @@ define([
 ) {
 
   return Backbone.View.extend({
-    events : {    
-      "click .expand": "expand",      
-      "click .select-record" : "selectRecord",      
-      "click .select-column" : "selectColumn",      
-      "mouseenter .select-record" : "mouseOverRecord",            
-      "mouseleave .select-record" : "mouseOutRecord",            
-      "click .nav-link" : "handleNavLink",      
+    events : {
+      "click .expand": "expand",
+      "click .select-record" : "selectRecord",
+      "click .select-column" : "selectColumn",
+      "mouseenter .select-record" : "mouseOverRecord",
+      "mouseleave .select-record" : "mouseOutRecord",
+      "click .nav-link" : "handleNavLink",
     },
-    initialize : function () {      
-      this.handleActive()    
-      
+    initialize : function () {
+      this.handleActive()
+
       this.render()
-      this.listenTo(this.model, "change:active",        this.handleActive);      
-      this.listenTo(this.model, "change:currentRecordCollection", this.recordsUpdated);      
-      this.listenTo(this.model, "change:selectedRecordId", this.selectedRecordUpdated);      
-      this.listenTo(this.model, "change:mouseOverRecordId", this.mouseOverRecordUpdated);   
-      this.listenTo(this.model, "change:outPlotColumns",this.updateOutPlotColumns);      
-      this.listenTo(this.model, "change:expanded", this.expandedUpdated);      
-      
+      this.listenTo(this.model, "change:active",        this.handleActive);
+      this.listenTo(this.model, "change:currentRecordCollection", this.recordsUpdated);
+      this.listenTo(this.model, "change:selectedRecordId", this.selectedRecordUpdated);
+      this.listenTo(this.model, "change:mouseOverRecordId", this.mouseOverRecordUpdated);
+      this.listenTo(this.model, "change:outPlotColumns",this.updateOutPlotColumns);
+      this.listenTo(this.model, "change:expanded", this.expandedUpdated);
+
       this.RECORD_NO = 30
-      
+
     },
     expand:function(){
       if (this.model.getExpanded()) {
@@ -51,20 +51,20 @@ define([
       } else {
         this.model.setExpanded(true)
       }
-    },    
-    expandedUpdated: function () {      
+    },
+    expandedUpdated: function () {
 //      console.log("MapplotLatView.expandedUpdated 1");
       if (this.model.getExpanded()) {
-        this.$el.addClass("expanded") 
+        this.$el.addClass("expanded")
       } else {
-        this.$el.removeClass("expanded") 
-      }   
+        this.$el.removeClass("expanded")
+      }
       this.renderPlot()
-    },    
+    },
     render: function () {
       this.$el.html(_.template(template)({
         t:this.model.getLabels()
-      }))     
+      }))
       this.renderControl()
       return this
     },
@@ -78,34 +78,34 @@ define([
             active:this.model.get("outPlotColumns").indexOf(col.id) > -1 ,
             color:col.get("plotColor"),
             tooltip:col.get("description"),
-            tooltip_more:col.hasMoreDescription(),               
+            tooltip_more:col.hasMoreDescription(),
           }
         },this)
-      }))      
+      }))
       this.$('[data-toggle="tooltip"]').tooltip()
     },
     renderPlot : function(){
 //        console.log("MapplotLatView.renderPlot 1");
-      
+
       var records = this.model.getCurrentRecords()
-      
+
       if (records.length > 0) {
-      
+
         var columns = _.reject(this.model.get("columnCollection").models,function(col){
-          return this.model.get("outPlotColumns").indexOf(col.id) === -1 
+          return this.model.get("outPlotColumns").indexOf(col.id) === -1
         },this)
-        
+
 //console.log("MapplotLatView.renderPlot 2", Date.now() - window.timeFromUpdate);
         var recordsSorted = _.sortBy(records,
             function(record){
               return record.get('latitude')
             }
           ).reverse()
-  
+
           if (!this.model.getExpanded()) {
             recordsSorted = recordsSorted.slice(0, this.RECORD_NO)
           }
-          
+
           if (recordsSorted.length < this.RECORD_NO) {
             this.$('.plot-bottom-buttons').hide()
           } else {
@@ -116,29 +116,29 @@ define([
             return {
               cap:col.get("plotMax"),
               color:col.get("plotColor"),
-              unit: col.getUnit() || '',              
+              unit: col.getUnit() || '',
             }
           })
-//console.log("MapplotLatView.renderPlot 2b", Date.now() - window.timeFromUpdate);          
+//console.log("MapplotLatView.renderPlot 2b", Date.now() - window.timeFromUpdate);
         var dataRows = _.map(
           recordsSorted,
           function(record){
-            var crgba = record.getColor().colorToRgb();            
-             // remember column ranges and record column values            
+            var crgba = record.getColor().colorToRgb();
+             // remember column ranges and record column values
             // remember record data
             return _.template(templateRecord)({
               id:record.id,
               selected:record.isSelected(),
               marker: _.template(templateRecordMarker)({
                 marker_color:record.getColor(),
-                marker_fillColor:'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)',                  
-              }),                           
+                marker_fillColor:'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)',
+              }),
               bars: _.reduce(columns, function(bars, col) {
                 var recordColumnValue = record.getColumnValue(col.getQueryColumn())
-                var value = recordColumnValue !== null ? recordColumnValue : 0                
+                var value = recordColumnValue !== null ? recordColumnValue : 0
                 bars.bars.push(_.template(templateRecordBar)({
                   value: value,
-                  width: Math.max(Math.min(100,(value/col.get("plotMax"))*100),0), 
+                  width: Math.max(Math.min(100,(value/col.get("plotMax"))*100),0),
                   label: recordColumnValue !== null ? value : this.model.getLabels().out.map.plot.no_data,
                   color: col.get("plotColor")
                 }))
@@ -156,118 +156,118 @@ define([
                 below: [],
                 bars: [],
                 above: [],
-              }, this)                                                               
+              }, this)
             })
           }, this)
 //console.log("MapplotLatView.renderPlot 2c", Date.now() - window.timeFromUpdate);
-        
+
         this.$("#plot-plot").html(_.template(templatePlot)({
           records:dataRows,
           columns: dataColumns,
           anySelected:this.model.get("selectedLayerId") !== ""
         }))
 //console.log("MapplotLatView.renderPlot 3", Date.now() - window.timeFromUpdate);
-        
+
       } else {
         this.$('.plot-bottom-buttons').hide()
         this.$("#plot-plot").html("<div class='hint hint-no-records'>" + this.model.getLabels().out.map.plot.no_records_hint + "</p>")
       }
-      
-      
+
+
     },
 
     // event handlers for model change events
     handleActive : function(){
       if (this.model.isActive()) {
-        this.$el.show()   
-        this.model.setExpanded(false)      
+        this.$el.show()
+        this.model.setExpanded(false)
         this.renderPlot()
       } else {
         this.$el.hide()
       }
     },
-    
+
     mouseOverRecordUpdated:function(){
-//      console.log("MapPlotLatView.mouseOverRecordUpdated")            
+//      console.log("MapPlotLatView.mouseOverRecordUpdated")
       var id = this.model.get("mouseOverRecordId")
       this.$(".select-record").removeClass('hover')
       if (id !== "") {
         this.$(".select-record[data-recordid='"+id+"']").addClass('hover')
-      }       
-      
+      }
+
     },
     selectedRecordUpdated:function(){
 //      console.log('selectedRecordUpdated')
       this.renderPlot()
-    },    
-    
+    },
+
     recordsUpdated:function(){
 //      console.log('recordsUpdated')
 //      this.model.setExpanded(false)
       this.$el.scrollTop(0)
       this.renderPlot()
-    },    
-    
-    
+    },
+
+
     updateOutPlotColumns:function(){
 //      console.log('updateOutPlotColumns')
       this.renderPlot()
       this.renderControl()
-    },    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    selectColumn:function(e){      
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    selectColumn:function(e){
       e.preventDefault()
-      
+
       var columns
-      
+
       var toggleColumn = $(e.currentTarget).attr("data-columnid")
-      
+
       if (this.model.get("outPlotColumns").indexOf(toggleColumn) > -1){
         columns = _.without(this.model.get("outPlotColumns"),toggleColumn)
       } else {
         columns = _.union(this.model.get("outPlotColumns"),[toggleColumn])
       }
-      
-      this.$el.trigger('plotColumnsSelected',{columns:columns})      
-    },    
-    
-    selectRecord:function(e){      
+
+      this.$el.trigger('plotColumnsSelected',{columns:columns})
+    },
+
+    selectRecord:function(e){
       e.preventDefault()
-      this.$el.trigger('recordSelect',{id:$(e.currentTarget).attr("data-recordid")})      
-    },    
-    mouseOverRecord:function(e){      
+      this.$el.trigger('recordSelect',{id: 'r' + $(e.currentTarget).attr("data-recordid")})
+    },
+    mouseOverRecord:function(e){
       e.preventDefault()
-      this.$el.trigger('recordMouseOver',{id:$(e.currentTarget).attr("data-recordid")})      
-    },    
+      this.$el.trigger('recordMouseOver',{id:$(e.currentTarget).attr("data-recordid")})
+    },
     mouseOutRecord:function(e){      
       e.preventDefault()
-      this.$el.trigger('recordMouseOut',{id:$(e.currentTarget).attr("data-recordid")})      
-    },    
+      this.$el.trigger('recordMouseOut',{id:$(e.currentTarget).attr("data-recordid")})
+    },
     handleNavLink : function(e){
       e.preventDefault()
       e.stopPropagation()
-      
+
       this.$el.trigger('navLink',{
         id:$(e.currentTarget).attr("data-id"),
         anchor:$(e.currentTarget).attr("data-page-anchor"),
         route:"page",
         type:"page"
-      })      
-    },    
+      })
+    },
   });
 
 });
