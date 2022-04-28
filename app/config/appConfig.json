@@ -20,9 +20,7 @@
       "navitems":[
         {
           "id":"about",
-          "title":"About",
-          "format":"xml",
-          "path": "//content.niwa.co.nz/content/resource_by_name/About%20ptdb"
+          "title":"About"
         },
         {
           "id":"attributes",
@@ -32,15 +30,11 @@
         },
         {
           "id":"usage",
-          "title":"Data Usage",
-          "format":"xml",
-          "path": "//content.niwa.co.nz/content/resource_by_name/Data%20Usage%20ptdb"
+          "title":"Data Usage"
         },
         {
           "id":"contact",
-          "title":"Contact",
-          "format":"xml",
-          "path": "//content.niwa.co.nz/content/resource_by_name/Contact%20ptdb"
+          "title":"Contact"
         },
         {
           "id":"basemap",
