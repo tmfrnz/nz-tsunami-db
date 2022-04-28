@@ -8,13 +8,13 @@
     </div>
   </div>
   <div class="row">
-    <div class="data-option col-sm-12 col-md-6">
+    <div class="data-option">
       <div class="text-center">
         <h5><%= t.out.data.download_title %></h5>
       </div>
       <div>
         <% if (canDownload) { %>
-        <!-- Nav tabs -->
+        <!-- Nav tabs
         <ul class="nav nav-tabs" role="tablist">
           <% _.each(download.formats, function(format){ %>
             <li role="presentation" class="active">
@@ -23,45 +23,60 @@
               </a>
             </li>
           <% }) %>
-        </ul>
+        </ul>-->
 
         <!-- Tab panes -->
         <div class="tab-content">
-          <% _.each(download.formats, function(format){ %>
-          <div role="tabpanel" class="tab-pane active" id="<%= format.id %>">
+          <div role="tabpanel" class="tab-pane active" id="tab-csv">
             <p class="hint"><%= t.out.data.download_hint %></p>
             <% _.each(download.tables, function(table){ %>
-            <h6><%= table.title %> (<%= format.title %>)</h6>
+            <h6><%= table.title %></h6>
             <% if (table.id === "records" && filtered) { %>
             <a href="#"
-               data-format="<%= format.format %>"
+               data-format="csv"
                data-table="<%= table.id %>"
                data-active="false"
                class="download-data">
-              <%= t.out.data.all %> <%= table.title %>
+              <%= t.out.data.all %>: <%= table.title %>
               <span class="icon-icon_download-blue"></span>
             </a>
             <a href="#"
-               data-format="<%= format.format %>"
+               data-format="csv"
                data-table="<%= table.id %>"
                data-active="true"
                class="download-data">
-              <%= t.out.data.filtered %> <%= table.title %>
+              <%= t.out.data.filtered %>: <%= table.title %>
+              <span class="icon-icon_download-blue"></span>
+            </a>
+            <% } else if (table.id === "sources" && filteredSources) { %>
+            <a href="#"
+               data-format="csv"
+               data-table="<%= table.id %>"
+               data-active="false"
+               class="download-data">
+              <%= t.out.data.all %>: <%= table.title %>
+              <span class="icon-icon_download-blue"></span>
+            </a>
+            <a href="#"
+               data-format="csv"
+               data-table="<%= table.id %>"
+               data-active="true"
+               class="download-data">
+              <%= t.out.data.filtered %>: <%= table.title %>
               <span class="icon-icon_download-blue"></span>
             </a>
             <% } else { %>
             <a href="#"
-               data-format="<%= format.format %>"
+               data-format="csv"
                data-table="<%= table.id %>"
                data-active="false"
                class="download-data">
-              <%= table.title %>
+               <%= t.out.data.all %>: <%= table.title %>
               <span class="icon-icon_download-blue"></span>
             </a>
             <% } %>
             <% }) %>
           </div>
-          <% }) %>
         </div>
         <% } else { %>
         <p class="hint"><%= t.out.data.noDownload %></p>

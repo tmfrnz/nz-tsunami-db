@@ -15,7 +15,7 @@
     "twitter_hashtags" : "",
     "twitter_via": "",
     "twitter_related": "niwa_nz,ECan",
-    "current_link": "Get link to current view"
+    "current_link": "Copy the URL below to share and reproduce the current view, including any current filter and map settings"
   },
   "filters": {
     "name": "Filter and explore",
@@ -80,8 +80,8 @@
     },
     "data": {
       "title": "Get the data",
-      "download_title": "Download",
-      "download_hint": "Download data tables",
+      "download_title": "Download data (CSV)",
+      "download_hint": "Download data tables: get the complete lists or use the filtering options for a custom selection (please note that the attributes are not yet fully configured)",
       "all" : "All",
       "filtered" : "Filtered",
       "wfs_title": "Web Feature Service (WFS)",
@@ -93,7 +93,7 @@
       },
       "tables": {
         "records": "Records",
-        "proxies": "Proxies",
+        "sources": "Source events",
         "references": "References"
       },
       "noDownload": "We are sorry! Unfortunately the data table download feature is not currently supported by your browser. Please use the Web Feature Service or try a different browser."

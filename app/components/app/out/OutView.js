@@ -207,6 +207,7 @@ define([
         this.$("#data-view").html(_.template(templateData)({
           t:this.model.getLabels(),
           filtered : this.model.get('queryLength') > 0,
+          filteredSources : this.model.get('querySourcesLength') > 0,
           canDownload: this.canDownload(),
           download : {
             formats: [
@@ -222,8 +223,8 @@ define([
                 title: this.model.getLabels().out.data.tables.records,
               },
               {
-                id:"references",
-                title: this.model.getLabels().out.data.tables.references,
+                id:"sources",
+                title: this.model.getLabels().out.data.tables.sources,
               },
             ]
           }
@@ -608,6 +609,14 @@ define([
               filename = active === "true"
                 ? "records_filtered.csv"
                 : "records.csv"
+              break;
+            case "sources":
+              csv = active === "true"
+                ? this.model.get("sourceCollection").byActive().toCSV()
+                : this.model.get("sourceCollection").toCSV()
+              filename = active === "true"
+                ? "sources_filtered.csv"
+                : "sources.csv"
               break;
             // case "proxies":
             //   csv = this.model.get("recordCollection").getProxies().toCSV()
