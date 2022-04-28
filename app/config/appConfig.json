@@ -59,7 +59,7 @@
   ],
   "records":{
     "model": "geojson",
-    "path" : "app/data/gns_records_2.csv",
+    "path" : "app/data/gns_records.csv",
     "layerOptions":{
       "type":"point",
       "wrap" : true,
