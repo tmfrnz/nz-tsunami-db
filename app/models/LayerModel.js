@@ -316,7 +316,7 @@ define([
         this.getMapLayer(function(mapLayer){
           if (typeof mapLayer._map !== "undefined") {
             var map = mapLayer._map
-            if (!map.getBounds().contains(mapLayer.getLayers()[0].getLatLng())) {
+            if (map && !map.getBounds().contains(mapLayer.getLayers()[0].getLatLng())) {
               that.centerMap()
             }
           }
