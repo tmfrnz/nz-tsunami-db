@@ -27,6 +27,7 @@
 }
 nav .loading-animation {
   background: url('../img/loading.gif') no-repeat top left;
+  background-size: contain;
   float:left;
   width: 30px;
   height: 30px;
