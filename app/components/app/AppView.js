@@ -972,6 +972,7 @@ console.log("configureReferences")
         function(){
 console.log("done... configureReferences")
           that.model.getRecords().setReferences(that.model.getReferences())
+          that.model.getSources().setReferences(that.model.getReferences())
           that.model.referencesConfigured(true)
         }
       )

@@ -36,10 +36,10 @@ define([
       )
     },
     getTitle:function(){
-      return this.attributes.reference
+      return this.attributes.short
     },
     getReference:function(){
-      return this.attributes.full_reference
+      return this.attributes.reference
     },
     getUrl:function(short){
       short = typeof short !== 'undefined' ? short : false

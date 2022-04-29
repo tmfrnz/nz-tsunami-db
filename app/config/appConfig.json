@@ -84,6 +84,6 @@
     }
   },
   "references":{
-    "path" : "app/data/references.csv"
+    "path" : "app/data/gns_references.csv"
   }
 }

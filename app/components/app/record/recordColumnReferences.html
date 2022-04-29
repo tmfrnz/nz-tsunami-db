@@ -1,12 +1,12 @@
-<div class="record-column">
+<div class="record-column record-column-references">
   <div class="row">
     <div class="col-xs-12">
       <div class="column-title">
         <%= title %>
-        <% if(tooltip !== "") {%><a 
-          data-toggle="tooltip" 
-          data-placement="top" 
-          title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>" 
+        <% if(tooltip !== "") {%><a
+          data-toggle="tooltip"
+          data-placement="top"
+          title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
           data-html="true"
           href="#"
           class="nav-link toggle-tooltip"
@@ -14,23 +14,20 @@
           data-id="attributes">
          <span class="icon-icon_info" aria-hidden="true"></span>
        </a><% } %>
-      </div>      
-      <% _.each(references,function(ref){ %> 
-      <div class="reference-title"><%= ref.getTitle() %></div> 
-      <% if (ref.getReference() !== null) { %>      
+      </div>
+      <% _.each(references,function(ref){ %>
+      <div class="reference-title"><%= ref.getTitle() %></div>
+      <% if (ref.getReference() !== null) { %>
       <p><%= ref.getReference() %></p>
-      <% } else { %>    
+      <% } else { %>
       <p>
         <%= t.record.contact_us.pre %>
         <a title="<%= t.record.contact_us.anchor %>" class="nav-link" href="#" data-route="page" data-type="page" data-id="contact">
           <%= t.record.contact_us.anchor %>
-        </a>      
+        </a>
         <%= t.record.contact_us.post %>
       </p>
-        
-      <% } %>      
-      <% if (ref.getDoi() !== null) { %>
-      <p><%= t.record.references_doi %>: <%= ref.getDoi() %></p>
+
       <% } %>
       <% if (ref.getUrl() !== null) { %>
       <p>
@@ -39,8 +36,7 @@
         </a>
       </p>
       <% } %>
-      <% }) %>      
+      <% }) %>
     </div>
   </div>
-</div>  
- 
+</div>

@@ -1,12 +1,12 @@
-<div class="record-column">
+<div class="record-column record-column-text">
   <div class="row">
     <div class="col-xs-5">
       <span class="column-title">
         <%= title %>
-        <% if(tooltip !== "") {%><a 
-          data-toggle="tooltip" 
-          data-placement="top" 
-          title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>" 
+        <% if(tooltip !== "") {%><a
+          data-toggle="tooltip"
+          data-placement="top"
+          title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
           data-html="true"
           href="#"
           class="nav-link toggle-tooltip"
@@ -17,8 +17,7 @@
       </span>
     </div>
     <div class="col-xs-7">
-      <%= value %> 
+      <%= value %>
     </div>
   </div>
-</div>  
- 
+</div>

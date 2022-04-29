@@ -225,12 +225,16 @@ define([
       }
     },
     getReferences:function(){
-      if (this.attributes["references"] === null) {
+      if (this.attributes["reference_ids"] === null) {
         return []
       } else {
-        return _.map(this.attributes["references"].split(","),function(refid){
-          return this.collection.options.references.get(refid)
-        },this)
+        return _.map(
+          this.attributes["reference_ids"].split(","),
+          function(refid){
+            return this.collection.options.references.get(refid);
+          },
+          this
+        )
       }
     },
     getSource:function(){
