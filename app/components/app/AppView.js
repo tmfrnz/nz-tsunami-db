@@ -231,28 +231,19 @@ window.timeFromUpdate = Date.now()
         function(){
 console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, that.model.getSelectedRecordId())
           // check updated
-          var oldQuery = that.model.getRecords().query
-          var newQuery = that.model.getRecordQuery()
+          var oldRecordQuery = that.model.getRecords().query
+          var newRecordQuery = that.model.getRecordQuery()
           var recordSelected = that.model.getSelectedRecord();
           var recordSelectedId = that.model.getSelectedRecordId()
           var sourceSelectedId = that.model.getSelectedSourceId()
           var oldSourceQuery = that.model.getSources().query
           var newSourceQuery = that.model.getSourceQuery()
-          var recordsQueryChanged = !that.model.getRecordsUpdated() || !_.isEqual(oldQuery, newQuery);
+          var recordsQueryChanged = !that.model.getRecordsUpdated() || !_.isEqual(oldRecordQuery, newRecordQuery);
           var sourcesQueryChanged = !that.model.getSourcesUpdated() || !_.isEqual(oldSourceQuery, newSourceQuery);
-          console.log('updateRecordCollections', newSourceQuery, newQuery)
+          console.log('updateRecordCollections', newSourceQuery, newRecordQuery)
           // console.log('updateRecordCollections sourcesQueryChanged', sourcesQueryChanged)
           // TODO figure out a better way to update both with respect to each other
-          // 1. figure out active records without updating
-          var activeRecords = that.model.getRecords().byQuery(newQuery)
-          var activeRecordSourceIds = _.reduce(
-            activeRecords.models,
-            function(memo, record) {
-              return _.union(memo, [record.get('trigger_event_id').toString()]);
-            },
-            [],
-          );
-          // 2. figure out active sources without updating
+          // 1. figure out active sources without updating
           var activeSources = that.model.getSources().byQuery(newSourceQuery)
           var activeSourceIds = _.reduce(
             activeSources.models,
@@ -261,11 +252,11 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
             },
             [],
           );
-          // 3. then update records with active sources
+          // 2. then update records with active sources
           // filter sources by active/filtered records
           that.model.getRecords().updateRecords({
-            query: newQuery,
-            queryTemp: Object.keys(newSourceQuery).length > 0 ? { trigger_event_id: activeSourceIds } : null,
+            query: newRecordQuery,
+            queryRelated: Object.keys(newSourceQuery).length > 0 ? { trigger_event_id: activeSourceIds } : null,
             selectedId: recordSelectedId,
             relatedSelected: {
               column: 'trigger_event_id',
@@ -273,11 +264,22 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
             },
             colorColumn: that.model.getOutColorColumn()
           })
+          // 3. get active records and figure out active sourceids if record query set
+          if (Object.keys(newRecordQuery).length > 0) {
+            var activeRecords = that.model.getRecords().byActive()
+            var activeRecordSourceIds = _.reduce(
+              activeRecords.models,
+              function(memo, record) {
+                return _.union(memo, [record.get('trigger_event_id').toString()]);
+              },
+              [],
+            );
+          }
           // 4. then update sources with active records
           // filter sources by active/filtered records
           that.model.getSources().updateRecords({
             query: newSourceQuery,
-            queryTemp: Object.keys(newQuery).length > 0 ? { id: activeRecordSourceIds } : null,
+            queryRelated: Object.keys(newRecordQuery).length > 0 ? { id: activeRecordSourceIds } : null,
             selectedId: sourceSelectedId,
             relatedSelected: {
               column: 'id',

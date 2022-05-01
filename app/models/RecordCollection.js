@@ -48,9 +48,9 @@ define([
     },
     updateRecords:function(args){
       // console.log("recordCollection.updateRecords", args)
-      // remember query but ignore tempQuery
+      // remember query but ignore queryRelated (only apply once)
       this.query = args.query || this.query
-      const query = args.queryTemp ? Object.assign({}, this.query, args.queryTemp) : this.query
+      const query = args.queryRelated ? Object.assign({}, this.query, args.queryRelated) : this.query
 
       var that = this;
       _.each(_.clone(this.models).reverse(),function(model){
