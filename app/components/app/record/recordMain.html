@@ -11,18 +11,23 @@
   </a></h1>
 </div>
 <div class="record-main">
-  <% _.each(columnGroups,function(group, index){ %>
-  <div class="well">
-    <div class="group <%= group.classes %>" data-index="<%= index %>">
-      <h3><%= group.title %></h3>
-      <div class="record-columns">
-      <% _.each(group.groupColumns,function(column){ %>
-      <% if (column) { %>
-          <%= column %>
-      <% } %>
-      <% }) %>
+  <% _.each(columnSections,function(section){ %>
+  <div class="record-column-section">
+    <h2><%= t.sections[typeSimple][section.id] %></h2>
+    <% _.each(section.groups,function(group, index){ %>
+    <div class="well">
+      <div class="group <%= group.classes %>" data-index="<%= index %>">
+        <h3><%= group.title %></h3>
+        <div class="record-columns">
+        <% _.each(group.groupColumns,function(column){ %>
+        <% if (column) { %>
+            <%= column %>
+        <% } %>
+        <% }) %>
+        </div>
       </div>
     </div>
+    <% }) %>
   </div>
   <% }) %>
 </div>

@@ -47,13 +47,62 @@ define([
     },
 
     update: function () {
-
       var columnCollection = this.model.get("columnCollection").byAttribute("single")
+      // var that = this
+      var columnSections = this.model.getSections();
+      var that = this
+      var columnSectionGroups = _.map(
+        columnSections,
+        function (sectionGroups, sectionId) {
+          return {
+            id: sectionId,
+            groups: _.filter(
+              _.map(
+                sectionGroups,
+                function(group) {
+                  // group classes
+                  var classes = "group-" + group.id
+                  var columnsByGroup = columnCollection.byGroup(group.id).models
+                  if (columnsByGroup.length === 0 || group.id === "id") {
+                    return false;
+                  } else {
+                    return {
+                      title:group.get("title"),
+                      hint:group.get("hint"),
+                      id:group.id,
+                      classes: classes,
+                      groupColumns: _.filter(
+                        _.map(
+                          columnsByGroup,
+                          function(column){
+                            return that.getColumnHtml(column, group.id)
+                          },
+                        ),
+                        function(html){
+                          return html !== false
+                        }
+                      )
+                    };
+                  }
+                }
+              ),
+              function(group) {
+                return !!group;
+              }
+            ),
+          };
+        }
+      );
+      console.log('columnSections', columnSections)
+      console.log('columnSectionGroups', columnSections)
+
       this.$el.html(_.template(templateMain)({
         t:this.model.getLabels(),
         recordid: this.model.get("record").id,
         recordType: this.model.get("type"),
+        typeSimple: this.model.get("type") === 'record' ? 'r' : 's',
         recordMenu: this.renderTopMenu(),
+        columnSections: columnSectionGroups,
         columnGroups:_.filter(
           _.map(this.model.get("columnGroupCollection").models,function(group){
             // group classes

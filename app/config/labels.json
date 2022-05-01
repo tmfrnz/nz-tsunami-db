@@ -64,12 +64,14 @@
   },
   "sections": {
     "r": {
-      "general": "Records general",
+      "general": "General attributes",
       "tide-gauge-records": "Tide Gauge Records",
-      "observations": "Observations"
+      "observations": "Observations",
+      "other": "Related source & references"
     },
     "s": {
-      "general": "Sources general"
+      "general": "General attributes",
+      "other": "Related records & references"
     }
   },
   "out": {
