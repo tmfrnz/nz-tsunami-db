@@ -1,28 +1,32 @@
 define([
   'jquery', 'underscore', 'backbone',
-  './ReferenceModel'  
+  './ReferenceModel'
 ], function(
   $, _, Backbone, model
 ){
   var ReferenceCollection = Backbone.Collection.extend({
     model:model,
-    initialize: function(models,options) {            
-      this.options = options || {};       
-    
-    },    
+    initialize: function(models,options) {
+      this.options = options || {};
+
+    },
     toCSV:function(){
-      
+
       var columnDelimiter = ',';
       var lineDelimiter = '\n'
       var csv = '';
-      
+
       // add header
-      var keys = _.without(Object.keys(this.models[0].attributes),'attributeMap')
-      
+      var keys = _.without(
+        Object.keys(this.models[0].attributes),
+        'attributeMap',
+        'sort'
+      )
+
       csv += keys.join(columnDelimiter);
       csv += lineDelimiter;
-      
-      // add rows 
+
+      // add rows
       // for each record
       _.each(this.models,function(model){
         // for each column
@@ -31,14 +35,14 @@ define([
             csv += columnDelimiter
           }
           csv += '"'
-          csv += model.get(key) ? model.get(key).toString().replace(/"/g, '\""') : "";                  
+          csv += model.get(key) ? model.get(key).toString().replace(/"/g, '\""') : "";
           csv += '"'
         })
         csv += lineDelimiter
       })
       return csv
-    }    
-    
+    }
+
   });
 
   return ReferenceCollection;

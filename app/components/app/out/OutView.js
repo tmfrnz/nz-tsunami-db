@@ -204,10 +204,10 @@ define([
 //      console.log("OutView.renderData")
 
       if (this.model.get('dataToggled')) {
+        var activeRecords = this.model.getRecords().byActive()
+        var activeSources = this.model.getSources().byActive()
         this.$("#data-view").html(_.template(templateData)({
           t:this.model.getLabels(),
-          filtered : this.model.get('queryLength') > 0,
-          filteredSources : this.model.get('querySourcesLength') > 0,
           canDownload: this.canDownload(),
           download : {
             formats: [
@@ -221,10 +221,23 @@ define([
               {
                 id:"records",
                 title: this.model.getLabels().out.data.tables.records,
+                filterable: true,
+                no_total: this.model.getRecords() ? this.model.getRecords().length : 0,
+                no_filtered: typeof activeRecords !== "undefined" ? activeRecords.length : 0,
+                filtered: this.model.get('queryLength') > 0
               },
               {
                 id:"sources",
                 title: this.model.getLabels().out.data.tables.sources,
+                filterable: true,
+                no_total: this.model.getSources() ? this.model.getSources().length : 0,
+                no_filtered: typeof activeSources !== "undefined" ? activeSources.length : 0,
+                filtered : this.model.get('querySourcesLength') > 0
+              },
+              {
+                id:"references",
+                title: this.model.getLabels().out.data.tables.references,
+                filterable: false,
               },
             ]
           }

@@ -31,47 +31,26 @@
             <p class="hint"><%= t.out.data.download_hint %></p>
             <% _.each(download.tables, function(table){ %>
             <h6><%= table.title %></h6>
-            <% if (table.id === "records" && filtered) { %>
             <a href="#"
                data-format="csv"
                data-table="<%= table.id %>"
                data-active="false"
-               class="download-data">
-              <%= t.out.data.all %>: <%= table.title %>
+               class="download-data"
+            >
+              <% if (table.filterable) { %>
+              <%= t.out.data.all %> <%= table.title %> (<%= table.no_total %>)
+              <% } else { %>
+                <%= table.title %>
+              <% } %>
               <span class="icon-icon_download-blue"></span>
             </a>
+            <% if (table.filterable && table.filtered) { %>
             <a href="#"
                data-format="csv"
                data-table="<%= table.id %>"
                data-active="true"
                class="download-data">
-              <%= t.out.data.filtered %>: <%= table.title %>
-              <span class="icon-icon_download-blue"></span>
-            </a>
-            <% } else if (table.id === "sources" && filteredSources) { %>
-            <a href="#"
-               data-format="csv"
-               data-table="<%= table.id %>"
-               data-active="false"
-               class="download-data">
-              <%= t.out.data.all %>: <%= table.title %>
-              <span class="icon-icon_download-blue"></span>
-            </a>
-            <a href="#"
-               data-format="csv"
-               data-table="<%= table.id %>"
-               data-active="true"
-               class="download-data">
-              <%= t.out.data.filtered %>: <%= table.title %>
-              <span class="icon-icon_download-blue"></span>
-            </a>
-            <% } else { %>
-            <a href="#"
-               data-format="csv"
-               data-table="<%= table.id %>"
-               data-active="false"
-               class="download-data">
-               <%= t.out.data.all %>: <%= table.title %>
+              <%= t.out.data.filtered %> <%= table.title %> (<%= table.no_filtered %>)
               <span class="icon-icon_download-blue"></span>
             </a>
             <% } %>
