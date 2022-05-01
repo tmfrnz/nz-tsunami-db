@@ -21,6 +21,12 @@ define([
     getShowSources:function(){
       return this.attributes.outShowSources
     },
+    setShowRecords:function(show){
+      return this.set('outShowRecords', show)
+    },
+    setShowSources:function(show){
+      return this.set('outShowSources', show)
+    },
   });
 
 

@@ -21,7 +21,8 @@ define([
       "change .select-color-attribute-records" : "colorColumnChanged",
       "change .select-color-attribute-sources" : "sourceColorColumnChanged",
       "click .nav-link" : "handleNavLink",
-      "change .layer-checkbox" : "handleLayerToggled",
+      // "change .layer-checkbox" : "handleLayerToggled",
+      "click .select-layer" : "handleLayerToggled",
     },
     initialize : function () {
       this.handleActive()
@@ -38,11 +39,12 @@ define([
       this.update()
     },
     render: function () {
-      console.log('mapcontroilview render', this.model.getShowRecords())
+      var showRecords = this.model.getShowRecords() !== '0';
+      var showSources = this.model.getShowSources() !== '0';
       this.$el.html(_.template(template)({
         t:this.model.getLabels(),
-        showSources: this.model.getShowSources(),
-        showRecords: this.model.getShowRecords()
+        showSources: showSources,
+        showRecords: showRecords
       }))
       return this
     },
@@ -86,7 +88,6 @@ define([
       var showSources = this.model.getShowSources() !== '0';
       var outColumn = this.model.getOutColorColumn()
       var outSourceColumn = this.model.getOutSourceColorColumn()
-      // console.log('MCV update', showRecords)
 
       $('.layer-checkbox-records').prop('checked', showRecords == '1');
       $('.layer-checkbox-sources').prop('checked', showSources == '1');
@@ -167,6 +168,18 @@ define([
         this.$('.color-attribute-selector-sources').hide()
       }
 
+      if (showRecords) {
+        this.$('#type-records .select-layer').addClass('active');
+      } else {
+        this.$('#type-records .select-layer').removeClass('active');
+      }
+
+      if (showSources) {
+        this.$('#type-sources .select-layer').addClass('active');
+      } else {
+        this.$('#type-sources .select-layer').removeClass('active');
+      }
+
       this.initTooltips()
     },
     updateOutColorColumn:function(){
@@ -187,17 +200,16 @@ define([
     },
     handleLayerToggled:function(e){
       e.preventDefault()
-      var showSources = this.model.getShowSources();
-      var showRecords = this.model.getShowRecords();
-      var $target = $(e.target);
-      var isChecked = $target.is(':checked');
+      var showRecords = this.model.getShowRecords() !== '0';
+      var showSources = this.model.getShowSources() !== '0';
+
+      var $target = $(e.currentTarget);
       var type = $target.attr('data-type');
-      var value = isChecked ? '1' : '0';
-      if (type === 'records' && showRecords !== value) {
-        this.$el.trigger('mapShowRecordsToggled', {value: value})
+      if (type === 'records') {
+        this.$el.trigger('mapShowRecordsToggled', {value: showRecords ? '0' : '1' })
       }
-      if (type === 'sources' && showSources !== value) {
-        this.$el.trigger('mapShowSourcesToggled', {value: value})
+      if (type === 'sources') {
+        this.$el.trigger('mapShowSourcesToggled', {value: showSources ? '0' : '1' })
       }
     },
     // event handlers for model change events

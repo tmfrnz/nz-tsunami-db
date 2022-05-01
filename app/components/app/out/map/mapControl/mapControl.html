@@ -6,34 +6,40 @@
   <p class="hint"><%= t.out.map.control.marker_hint %></p>
 </div>
 <div id="type-records" class="map-control-layer">
-  <label class="map-control-layer-label">
-    <input
-      type="checkbox"
-      data-type="records"
-      value="records"
-      class="layer-checkbox layer-checkbox-records"
-      <% if (showRecords) { %>
-      checked
-      <% } %>
-    >
-    <%= t.out.map.control.marker_records %>
-  </label>
+  <div class="table-wrap">
+    <table>
+      <tr class="select-layer <% if(showRecords){ %> active<% } %>" data-type="records">
+        <td class="select-label">
+          <label class="map-control-layer-label"><%= t.out.map.control.marker_records %></label>
+        </td>
+        <td class="select-checkbox">
+          <div class="select-checkbox-inner">
+            <span class="show-on-active show-on-active-inline icon-icon_tick"
+                aria-hidden="true"></span>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
   <div class="color-attribute-selector color-attribute-selector-records"></div>
   <div class="color-attribute-key color-attribute-key-records"></div>
 </div>
 <div id="type-sources" class="map-control-layer">
-  <label class="map-control-layer-label">
-    <input
-      type="checkbox"
-      data-type="sources"
-      value="sources"
-      class="layer-checkbox layer-checkbox-sources"
-      <% if (showSources) { %>
-      checked
-      <% } %>
-    >
-    <%= t.out.map.control.marker_sources %>
-  </label>
+  <div class="table-wrap">
+    <table>
+      <tr class="select-layer <% if(showSources){ %> active<% } %>" data-type="sources">
+        <td class="select-label">
+          <label class="map-control-layer-label"><%= t.out.map.control.marker_sources %></label>
+        </td>
+        <td class="select-checkbox">
+          <div class="select-checkbox-inner">
+            <span class="show-on-active show-on-active-inline icon-icon_tick"
+                aria-hidden="true"></span>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
   <div class="color-attribute-selector color-attribute-selector-sources"></div>
   <div class="color-attribute-key color-attribute-key-sources"></div>
 </div>

@@ -41,12 +41,32 @@
 }
 .map-control-layer {
   margin-top: 15px;
+  margin-bottom: 5px;
+}
+.map-control-layer .table-wrap {
+  padding: 0 10px 0 15px;
+  margin-bottom: 10px;
+}
+.map-control-layer table .select-layer .select-checkbox{
+  padding-right: 0;
+  padding-left: 5px;
+}
+.map-control-layer table td.select-label{
+  width: 99%;
 }
 .map-control-layer-label {
-  padding: 0 15px;
-  margin-bottom: 5px;
+  padding: 0;
+  margin-bottom: 0px;
   text-transform: uppercase;
   font-family: 'Titillium Web', sans-serif;
+  width: 100%;
+}
+.map-control-layer-label input[type="checkbox"]{
+  float: right;
+}
+
+.map-control-layer .select-checkbox-inner {
+  background: #7E8083;
 }
 
 
@@ -70,8 +90,8 @@
 #map-control .select2-container--mapcontrol .select2-selection--single,
 #map-control .form-control {
   border: none;
-  background-color: #A71930;
-  color: #fff;
+  background-color: #EEEFF1;
+  color: #66696C;
   border-radius: 0;
   width: 100% !important;
 }
@@ -84,7 +104,7 @@
   }
 }
 .select2-container--mapcontrol .select2-selection--single .select2-selection__rendered {
-  color: #fff;
+  color: #66696C;
   line-height: 28px;
   padding-left: 15px;
 }
@@ -106,13 +126,13 @@
     right: 1px;
     width: 20px; }
     .select2-container--mapcontrol .select2-selection--single .select2-selection__arrow b {
-      border-color: #fff transparent transparent transparent;
+      border-color: #66696C transparent transparent transparent;
       border-style: solid;
-      border-width: 5px 4px 0 4px;
+      border-width: 8px 5px 0 5px;
       height: 0;
       left: 50%;
-      margin-left: -4px;
-      margin-top: -2px;
+      margin-left: -12px;
+      margin-top: -3px;
       position: absolute;
       top: 50%;
       width: 0; }
@@ -131,8 +151,8 @@
     display: none; }
 
 .select2-container--mapcontrol.select2-container--open .select2-selection--single .select2-selection__arrow b {
-  border-color: transparent transparent #fff transparent;
-  border-width: 0 4px 5px 4px; }
+  border-color: transparent transparent #66696C transparent;
+  border-width: 0 5px 8px 5px; }
 
 .select2-container--mapcontrol .select2-selection--multiple {
   background-color: #F5F6F6;
@@ -266,4 +286,21 @@
 
 .select2-container--mapcontrol .select2-dropdown {
   border-width: 0 0 1px 0;
+}
+
+
+tr.select-layer label,
+tr.select-layer {
+    cursor: pointer;
+}
+
+.select-layer .select-checkbox{
+  padding-right: 5px;
+}
+.select-layer .select-checkbox-inner {
+    height: 16px;
+    width: 16px;
+    margin-top: -1px;
+    border-radius: 2px;
+    cursor: pointer;
 }
