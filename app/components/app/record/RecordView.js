@@ -121,7 +121,8 @@ define([
               id:column.id,
               tooltip:column.get("description"),
               tooltip_more:column.hasMoreDescription(),
-              hint:column.get("hint")
+              hint:column.get("hint"),
+              recordType: this.model.get("type")
             })
           }
           if (column.id === 'trigger_event_id' && record.getSource()) {

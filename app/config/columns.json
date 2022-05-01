@@ -663,5 +663,17 @@
     "group":"other",
     "table":1,
     "sortable":0
+  },
+  {
+    "id":"references",
+    "column":"reference_ids",
+    "title":"Reference(s)",
+    "type":"index",
+    "description":"TODO: reference description",
+    "blanks":1,
+    "filterable":0,
+    "group":"other",
+    "table":0,
+    "sortable":0
   }
 ]

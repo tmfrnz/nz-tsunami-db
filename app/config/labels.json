@@ -53,6 +53,9 @@
       "source": "Source event"
     },
     "references_doi": "DOI",
+    "no_references_for_source": "No reference(s) available",
+    "no_references_for_record": "No specific reference(s) available for record - please refer to the source event above",
+    "see_source_for_reference": "Please also refer to the source event for additional references",
     "contact_us": {
       "pre" : "Please ",
       "anchor": "contact us",

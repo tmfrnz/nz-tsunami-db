@@ -1,4 +1,4 @@
-<div class="record-column record-column-references">
+<div class="record-column record-column-list record-column-references">
   <div class="row">
     <div class="col-xs-12">
       <div class="column-title">
@@ -15,6 +15,12 @@
          <span class="icon-icon_info" aria-hidden="true"></span>
        </a><% } %>
       </div>
+      <% if (references.length === 0 && recordType !== 'record') { %>
+          <p class="hint"><%= t.record.no_references_for_source %></p>
+      <% } %>
+      <% if (references.length === 0 && recordType === 'record') { %>
+          <p class="hint"><%= t.record.no_references_for_record %></p>
+      <% } %>
       <% _.each(references,function(ref){ %>
       <div class="reference-title"><%= ref.getTitle() %></div>
       <% if (ref.getReference() !== null) { %>
@@ -37,6 +43,9 @@
       </p>
       <% } %>
       <% }) %>
+      <% if (references.length > 0 && recordType === 'record') { %>
+          <p class="hint"><%= t.record.see_source_for_reference %></p>
+      <% } %>
     </div>
   </div>
 </div>

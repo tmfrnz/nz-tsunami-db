@@ -225,7 +225,7 @@ define([
       }
     },
     getReferences:function(){
-      if (this.attributes["reference_ids"] === null) {
+      if (this.attributes["reference_ids"] === null || this.attributes["reference_ids"] === '') {
         return []
       } else {
         return _.map(

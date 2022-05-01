@@ -1,4 +1,4 @@
-#record, #source {
+.record-view {
   overflow: hidden;
   display:none;
 }
@@ -109,17 +109,17 @@ a.record-top-menu-link:hover{
   margin-bottom: 10px;
 }
 
-#record .group h3 {
+.record-view .group h3 {
   font-size: 16px;
   font-weight: bold;
   margin-top: 0px;
 }
 
-#record .record-column{
+.record-view .record-column{
   border-top:1px solid #e5e7e9;
   padding: 10px 0;
 }
-#record .record-column:first-child{
+.record-view .record-column:first-child{
   border-top:1px solid;
   padding: 10px 0
 }
@@ -139,19 +139,26 @@ a.record-top-menu-link:hover{
     padding-right: 5px;
 }
 
-#record p {
+.record-view p {
     margin: 0 0 8px;
 }
 
-#record .related-title {
+.record-view .related-title {
   font-weight: bold;
   margin-top: 12px;
 }
-#record .reference-title {
+.record-view .reference-title {
   font-weight: bold;
   margin-top: 12px;
 }
 
-#record .reference-link {
+.record-view .reference-link {
   font-weight: bold;
+}
+.record-view .hint {
+  font-size: 100%;
+}
+
+.record-column-list {
+  margin-bottom: 15px;
 }

@@ -26,8 +26,7 @@
   {
     "id":"other",
     "section":"other",
-    "title":"Related",
-    "hint":"Source events and references",
+    "title":"Related records & references",
     "filter":false
   }
 ]

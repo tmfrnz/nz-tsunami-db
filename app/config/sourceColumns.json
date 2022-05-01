@@ -398,7 +398,7 @@
   },
   {
     "id":"related-records",
-    "title":"Records",
+    "title":"Record(s)",
     "description":"Records related to source event",
     "type":"reverse",
     "blanks":1,
@@ -409,7 +409,8 @@
   },
   {
     "id":"references",
-    "title":"References",
+    "column":"reference_ids",
+    "title":"Reference(s)",
     "type":"index",
     "description":"TODO: reference description",
     "blanks":1,

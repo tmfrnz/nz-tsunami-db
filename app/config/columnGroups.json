@@ -64,8 +64,7 @@
   {
     "id":"other",
     "section":"other",
-    "title":"Related",
-    "hint":"Source events and references",
+    "title":"Related source event & references",
     "filter":false
   }
 ]
