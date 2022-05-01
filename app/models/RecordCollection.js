@@ -246,8 +246,8 @@ define([
             csv += columnDelimiter
           }
           csv += '"'
-          csv += (record.getColumnValue(key) !== null && typeof record.getColumnValue(key) !== 'undefined')
-            ? record.getColumnValue(key).toString().replace(/"/g, '\""')
+          csv += (record.getOriginalColumnValue(key) !== null && typeof record.getOriginalColumnValue(key) !== 'undefined')
+            ? record.getOriginalColumnValue(key).toString().replace(/"/g, '\""')
             : "";
           csv += '"'
         })

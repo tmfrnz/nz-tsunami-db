@@ -11,6 +11,8 @@ define([
       if (typeof this.attributes.attributeMap !== 'undefined'){
         this.mapAttributes(this.attributes.attributeMap)
       }
+      // remember original attributes for csv export
+      this.set('original', options);
       // console.log('RecordModel', this.attributes)
       this.set('formatted',{})
       this.set('selected',false)
@@ -206,6 +208,10 @@ define([
       } else {
         return this.attributes[column];
       }
+    },
+    getOriginalColumnValue:function(column){
+      console.log('getOriginalColumnValue')
+      return this.attributes.original[column];
     },
     getColumnColorValue:function(column){
       var columnModel = this.collection.options.columns.findWhere({column:column})
