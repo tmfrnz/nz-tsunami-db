@@ -2,6 +2,13 @@
   overflow: hidden;
   display:none;
 }
+.record-view h2.section-title {
+  font-size: 24px;
+  margin: 14px 19px;
+}
+.record-view .record-column-section {
+  margin-bottom: 50px;
+}
 
 .record-top {
   padding:10px 15px 20px;

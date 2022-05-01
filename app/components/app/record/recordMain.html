@@ -13,7 +13,7 @@
 <div class="record-main">
   <% _.each(columnSections,function(section){ %>
   <div class="record-column-section">
-    <h2><%= t.sections[typeSimple][section.id] %></h2>
+    <h2 class="section-title"><%= t.sections[typeSimple][section.id] %></h2>
     <% _.each(section.groups,function(group, index){ %>
     <div class="well">
       <div class="group <%= group.classes %>" data-index="<%= index %>">
