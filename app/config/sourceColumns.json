@@ -127,15 +127,11 @@
     "separator": ",",
     "group":"class",
     "values":{
-      "values":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","0"],
+      "values":["1","2","6","8","9","10","11","12","13","14","0"],
       "labels":[
         "Earthquake",
         "Questionable Earthquake",
-        "Earthquake and Landslide",
-        "Volcano and Earthquake",
-        "Volcano, Earthquake, and Landslide",
         "Volcano",
-        "Volcano and Landslide",
         "Landslide",
         "Meteo-tsunami",
         "Explosion",
