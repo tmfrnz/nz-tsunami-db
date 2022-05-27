@@ -65,7 +65,7 @@
     "sortable":1,
     "table":1,
     "default":1,
-    "separator": ":"
+    "separator": ","
   },
   {
     "id":"lat",
