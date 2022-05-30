@@ -11,9 +11,6 @@ define([
   "text!templates/content_basemap.html",
   "text!templates/content_attributes.html",
   "text!templates/not_found.html",
-  "text!templates/content_palaeotsunami.html",
-  "text!templates/content_sources.html",
-  "text!templates/content_travel.html"
 ], function(
   $,
   _,
@@ -27,9 +24,6 @@ define([
   templateContentBasemap,
   templateContentAttributes,
   templateNotFound,
-  templateContentPalaeotsunami,
-  templateContentSources,
-  templateContentTravel
 ) {
   var PageView = Backbone.View.extend({
     events: {
@@ -108,31 +102,31 @@ define([
                 that.$el.scrollTop(0);
               }
               break;
-            case "palaeotsunami":
-              that
-                .$(".page-outer")
-                .html(_.template(templateContentPalaeotsunami)({}));
-              that.$(".page-outer").removeClass("loading");
-              if (that.model.getPageAnchor() === "") {
-                that.$el.scrollTop(0);
-              }
-              break;
-            case "sources":
-              that
-                .$(".page-outer")
-                .html(_.template(templateContentSources)({}));
-              that.$(".page-outer").removeClass("loading");
-              if (that.model.getPageAnchor() === "") {
-                that.$el.scrollTop(0);
-              }
-              break;
-            case "travel":
-              that.$(".page-outer").html(_.template(templateContentTravel)({}));
-              that.$(".page-outer").removeClass("loading");
-              if (that.model.getPageAnchor() === "") {
-                that.$el.scrollTop(0);
-              }
-              break;
+            // case "palaeotsunami":
+            //   that
+            //     .$(".page-outer")
+            //     .html(_.template(templateContentPalaeotsunami)({}));
+            //   that.$(".page-outer").removeClass("loading");
+            //   if (that.model.getPageAnchor() === "") {
+            //     that.$el.scrollTop(0);
+            //   }
+            //   break;
+            // case "sources":
+            //   that
+            //     .$(".page-outer")
+            //     .html(_.template(templateContentSources)({}));
+            //   that.$(".page-outer").removeClass("loading");
+            //   if (that.model.getPageAnchor() === "") {
+            //     that.$el.scrollTop(0);
+            //   }
+            //   break;
+            // case "travel":
+            //   that.$(".page-outer").html(_.template(templateContentTravel)({}));
+            //   that.$(".page-outer").removeClass("loading");
+            //   if (that.model.getPageAnchor() === "") {
+            //     that.$el.scrollTop(0);
+            //   }
+            //   break;
             default:
               that.$(".page-outer").html(_.template(templateNotFound)({}));
               that.$(".page-outer").removeClass("loading");
