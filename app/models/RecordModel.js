@@ -210,7 +210,6 @@ define([
       }
     },
     getOriginalColumnValue:function(column){
-      console.log('getOriginalColumnValue')
       return this.attributes.original[column];
     },
     getColumnColorValue:function(column){
