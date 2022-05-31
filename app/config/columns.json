@@ -41,6 +41,20 @@
     "specificityColumn":"date_specificity",
     "certaintyColumn":"date_certainty",
     "certaintyColumnTitle":"Date: certainty",
+    "commentColumns":[
+      {
+        "column": "year_comment",
+        "title": "Date: year comment"
+      },
+      {
+        "column": "month_comment",
+        "title": "Date: month comment"
+      },
+      {
+        "column": "day_comment",
+        "title": "Date: day comment"
+      }
+    ],
     "blanks":1,
     "single":1,
     "default":1,
