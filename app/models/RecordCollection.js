@@ -231,9 +231,23 @@ define([
       var csv = '';
 
       // add header
-      var keys = _.map(columns.models,function(col){
-        return col.getQueryColumn()
-      })
+      var keys = _.reduce(
+        columns.models,
+        function(memo, col) {
+          if (
+            col.get('combo') === 1 &&
+            col.get('comboMain') === 1 &&
+            col.get('specificityColumn')
+          ) {
+            return memo.concat(
+              col.getQueryColumn(),
+              col.get('specificityColumn')
+            );
+          }
+          return memo.concat(col.getQueryColumn())
+        },
+        [],
+      )
       csv += keys.join(columnDelimiter);
       csv += lineDelimiter;
 
