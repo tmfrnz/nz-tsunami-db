@@ -39,6 +39,7 @@
     "comboTitleEqual":"Date",
     "comboColumnId":"date_from",
     "specificityColumn":"date_specificity",
+    "certaintyColumn":"date_certainty",
     "blanks":1,
     "single":1,
     "default":1,
