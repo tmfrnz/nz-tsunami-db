@@ -234,17 +234,22 @@ define([
       var keys = _.reduce(
         columns.models,
         function(memo, col) {
+          var result = memo.concat(col.getQueryColumn());
           if (
             col.get('combo') === 1 &&
             col.get('comboMain') === 1 &&
             col.get('specificityColumn')
           ) {
-            return memo.concat(
-              col.getQueryColumn(),
+            result = result.concat(
               col.get('specificityColumn')
             );
           }
-          return memo.concat(col.getQueryColumn())
+          if (col.get('certaintyColumn')) {
+            result = result.concat(
+              col.get('certaintyColumn')
+            );
+          }
+          return result
         },
         [],
       )
