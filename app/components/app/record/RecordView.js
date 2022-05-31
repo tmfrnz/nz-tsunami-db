@@ -191,16 +191,16 @@ define([
           if(column.get('combo') === 1) {
             // only use main combo column
             if (column.get('comboMain') === 1) {
-              var combo_column = this.model.get("columnCollection").get(column.get('comboColumnId'))
+              var comboColumn = this.model.get("columnCollection").get(column.get('comboColumnId'))
               var valueMin = ""
               var valueMax = ""
               if(column.get('comboType') === "max") {
-                valueMin = record.getColumnValue(combo_column.get("column"),true)
+                valueMin = record.getColumnValue(comboColumn.get("column"),true)
                 valueMax = record.getColumnValue(column.get("column"),true)
 
               } else {
                 valueMin = record.getColumnValue(column.get("column"),true)
-                valueMax = record.getColumnValue(combo_column.get("column"),true)
+                valueMax = record.getColumnValue(comboColumn.get("column"),true)
               }
 
               return _.template(templateColumnText)({
@@ -226,15 +226,15 @@ define([
           if(column.get('combo') === 1) {
             // only use main combo column
             if (column.get('comboMain') === 1) {
-              var combo_column = this.model.get("columnCollection").get(column.get('comboColumnId'))
+              var comboColumn = this.model.get("columnCollection").get(column.get('comboColumnId'))
               var valueMin = ""
               var valueMax = ""
               if(column.get('comboType') === "max") {
-                valueMin = record.getColumnValue(combo_column.get("column"))
+                valueMin = record.getColumnValue(comboColumn.get("column"))
                 valueMax = record.getColumnValue(column.get("column"))
               } else {
                 valueMin = record.getColumnValue(column.get("column"))
-                valueMax = record.getColumnValue(combo_column.get("column"))
+                valueMax = record.getColumnValue(comboColumn.get("column"))
               }
               var hasMin = valueMin !== null && valueMin !== '';
               var hasMax = valueMax !== null && valueMax !== '';
@@ -273,7 +273,7 @@ define([
                   title:column.get("comboTitleEqual")
                     ? column.get("comboTitleEqual")
                     : column.get("comboTitle"),
-                  value: record.getColumnValue(combo_column.get("column"), true),
+                  value: record.getColumnValue(comboColumn.get("column"), true),
                   id:column.id,
                   tooltip:column.get("comboDescription"),
                   tooltip_more:column.hasMoreDescription(),
