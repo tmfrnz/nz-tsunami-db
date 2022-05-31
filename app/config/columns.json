@@ -190,6 +190,29 @@
     "type":"text",
     "group":"source",
     "filterable":0,
+    "searchable":1,
+    "single":1,
+    "table":1
+  },
+  {
+    "id":"discussion",
+    "title":"Discussion of Data",
+    "description":"TODO: description",
+    "type":"text",
+    "group":"source",
+    "filterable":0,
+    "searchable":1,
+    "single":1,
+    "table":1
+  },
+  {
+    "id":"obs_photographs",
+    "title":"Photographs available?",
+    "description":"TODO: description",
+    "type":"text",
+    "group":"source",
+    "filterable":0,
+    "searchable":1,
     "single":1,
     "table":1
   },
