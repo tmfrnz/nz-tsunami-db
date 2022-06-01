@@ -657,6 +657,7 @@
     },
     "specified": 1
   },
+        "min" : ["auto"],
   {
     "id":"obs_water_elevation_shore_lower",
     "title":"Max water elevation, min (m)",
@@ -728,7 +729,7 @@
     "comboType":"max",
     "comboTitle":"Max height reached at inundation limit, range (m)",
     "comboTitleEqual":"Max height reached at inundation limit (m)",
-    "comboColumnId":"obs_water_elevation_shore_lower",
+    "comboColumnId":"obs_height_max_at-inundation_lower",
     "certaintyColumn":"obs_height_max_at-inundation_certainty",
     "commentColumn":"obs_height_max_at-inundation_comment",
     "single":1,
@@ -740,8 +741,67 @@
       }
     },
     "query":{
-      "min" : "obs_max_peak-trough_min",
-      "max" : "obs_max_peak-trough_max"
+      "min" : "obs_height_at_inundation_min",
+      "max" : "obs_height_at_inundation_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"obs_waterheight_at-inundation_proxy_min",
+    "title":"Waterheight at inundation (proxy), min (m)",
+    "description":"Max water elevation",
+    "descriptionMore":"More description (optional)",
+    "type":"quantitative",
+    "group":"obs-metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "filterable":0
+  },
+  {
+    "id":"obs_waterheight_at-inundation_proxy_max",
+    "title":"Waterheight at inundation (proxy), max (m)",
+    "description":"obs_water_elevation_shore.",
+    "comboDescription":"Showing range when uncertain",
+    "type":"quantitative",
+    "group":"obs-metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Waterheight at inundation (proxy), range (m)",
+    "comboTitleEqual":"Waterheight at inundation (proxy) (m)",
+    "comboColumnId":"obs_waterheight_at-inundation_proxy_min",
+    "single":1,
+    "unit": "m",
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "obs_w_height_proxy_min",
+      "max" : "obs_w_height_proxy_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"obs_height_onshore",
+    "title":"Max onshore height reached relative to sea level (m)",
+    "description":"TODO",
+    "type":"quantitative",
+    "group":"obs-metrics",
+    "single":1,
+    "unit": "m",
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "obs_height_onshore_min",
+      "max" : "obs_height_onshore_max"
     },
     "specified": 1
   },
