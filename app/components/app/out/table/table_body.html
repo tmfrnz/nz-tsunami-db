@@ -4,14 +4,14 @@
   <td class="column-<%= col.id %> column-type-<%= col.getType() %> ">
     <% if (index === 0) { %>
     <a href="#"
-       title="Select record <%=row. record.id %>" 
-       class="select-record" 
+       title="Select record <%=row. record.id %>"
+       class="select-record"
        data-recordid="<%= row.record.id %>">
     <% } %>
-    <%= row.record.getColumnValue(col.get("column"),true) %>
+    <%= row.record.getColumnValue(col.get("column"),true,true) %>
     <% if (index === 0) { %>
     </a>
-    <% } %>    
+    <% } %>
   </td>
   <% }) %>
 </tr>

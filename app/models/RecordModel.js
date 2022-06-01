@@ -197,14 +197,19 @@ define([
         this.getLayer().centerMap()
       }
     },
-    getColumnValue:function(column, formatted){
+    getColumnValue:function(column, formatted, truncated){
       formatted = typeof formatted !== "undefined" ? formatted : false
+      truncated = typeof truncated !== "undefined" ? truncated : false
       var columnModel = this.collection.options.columns.findWhere({column:column})
       if (formatted) {
         if(typeof this.attributes.formatted[column] === "undefined"){
           this.attributes.formatted[column] = this.formatColumn(column)
         }
-        return this.attributes.formatted[column]
+        if (truncated) {
+          return truncateText(this.attributes.formatted[column]);
+        } else {
+          return this.attributes.formatted[column];
+        }
       } else {
         return this.attributes[column];
       }
