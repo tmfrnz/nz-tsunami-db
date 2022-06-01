@@ -4,6 +4,7 @@ define([
   'text!./recordMain.html',
   'text!./recordMenu.html',
   'text!./recordColumnText.html',
+  'text!./recordColumnTextSecondary.html',
   'text!./recordColumnSource.html',
   'text!./recordColumnRecords.html',
   // 'text!./recordColumnProxies.html',
@@ -14,6 +15,7 @@ define([
   templateMain,
   templateRecordMenu,
   templateColumnText,
+  templateColumnTextSecondary,
   templateColumnSource,
   templateColumnRecords,
   templateColumnReferences
@@ -50,7 +52,8 @@ define([
       var columnCollection = this.model.get("columnCollection").byAttribute("single")
       // var that = this
       var columnSections = this.model.getSections();
-      var that = this
+      var record = this.model.get("record");
+      var that = this;
       var columnSectionGroups = _.map(
         columnSections,
         function (sectionGroups, sectionId) {
@@ -72,11 +75,52 @@ define([
                       id:group.id,
                       classes: classes,
                       groupColumns: _.filter(
-                        _.map(
+                        _.reduce(
                           columnsByGroup,
-                          function(column){
-                            return that.getColumnHtml(column, group.id)
+                          function(memo, column){
+                            var result = memo.concat(that.getColumnHtml(column));
+                            if (
+                              column.get('certaintyColumn') ||
+                              column.get('commentColumn')
+                            ) {
+                              var recValue = record.getColumnValue(column.get('column'));
+                              if (recValue && recValue !== '') {
+                                if (column.get('certaintyColumn')) {
+                                  result = result.concat(that.getCertaintyColumnHtml(column))
+                                }
+                                if (column.get('commentColumn')) {
+                                  var commentValue = record.getColumnValue(column.get('commentColumn'))
+                                  if (commentValue && commentValue !== '') {
+                                    result = result.concat(that.getCommentColumnHtml(column.get('commentColumn')))
+                                  }
+                                }
+                                if (column.get('commentColumns') && column.get('commentColumns').length > 0) {
+                                  result = _.reduce(
+                                    column.get('commentColumns'),
+                                    function (memo, commentCol) {
+                                      var commentValue = record.getColumnValue(commentCol.column);
+                                      if (commentValue && commentValue !== '') {
+                                        return memo.concat(
+                                          that.getCommentColumnHtml(
+                                            commentCol.column,
+                                            commentCol.title
+                                          )
+                                        )
+                                      }
+                                      return memo;
+                                    },
+                                    result,
+                                  )
+                                  var commentValue = record.getColumnValue(column.get('commentColumn'))
+                                  if (commentValue && commentValue !== '') {
+                                    result = result.concat(that.getCommentColumnHtml(column.get('commentColumn')))
+                                  }
+                                }
+                              }
+                            }
+                            return result;
                           },
+                          [],
                         ),
                         function(html){
                           return html !== false
@@ -142,6 +186,32 @@ define([
     },
     initTooltips:function(){
       this.$('[data-toggle="tooltip"]').tooltip()
+    },
+    getCommentColumnHtml:function(commentCol, title){
+      var record = this.model.get("record")
+      return _.template(templateColumnTextSecondary)({
+        t:this.model.getLabels(),
+        title: title || 'Comment/details',
+        value: record.get(commentCol),
+        id:commentCol
+      })
+    },
+    getCertaintyColumnHtml:function(column){
+      var record = this.model.get("record")
+      var certCol = column.get('certaintyColumn');
+      var value;
+      if (record.get(certCol) === 1 || record.get(certCol) === '1') {
+        value = '1 (definite/certain/exact)';
+      }
+      if (record.get(certCol) === 2 || record.get(certCol) === '2') {
+        value = '2 (questionable/uncertain/range)';
+      }
+      return _.template(templateColumnTextSecondary)({
+        t:this.model.getLabels(),
+        title: 'Certainty',
+        value: value,
+        id:certCol
+      })
     },
     getColumnHtml:function(column){
       var record = this.model.get("record")

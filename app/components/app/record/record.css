@@ -108,6 +108,19 @@ a.record-top-menu-link:hover{
   font-family: 'Titillium Web', sans-serif;
   font-size: 14px;
 }
+.record-main .record-column-text-secondary .column-title {
+  font-weight:600;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 13px;
+}
+.record-main .record-column-text-secondary .column-title {
+  font-weight:600;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 13px;
+}
+.record-main .record-column-text-secondary .column-value {
+  font-size: 13px;
+}
 .record-main .group-other {
   font-size: 12px;
 }
@@ -122,13 +135,17 @@ a.record-top-menu-link:hover{
   margin-top: 0px;
 }
 
-.record-view .record-column{
+.record-view .record-column {
   border-top:1px solid #e5e7e9;
   padding: 10px 0;
 }
-.record-view .record-column:first-child{
-  border-top:1px solid;
-  padding: 10px 0
+.record-view .record-column {
+  border-top:1px solid #e5e7e9;
+  padding: 10px 0;
+}
+.record-view .record-column.record-column-text-secondary {
+  border-top:1px solid transparent;
+  padding-top: 0;
 }
 
 

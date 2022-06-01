@@ -249,6 +249,20 @@ define([
               col.get('certaintyColumn')
             );
           }
+          if (col.get('commentColumn')) {
+            result = result.concat(
+              col.get('commentColumn')
+            );
+          }
+          if (col.get('commentColumns')) {
+            result = _.reduce(
+              col.get('commentColumns'),
+              function (memo, commentCol) {
+                return memo.concat(commentCol.column)
+              },
+              result,
+            );
+          }
           return result
         },
         [],
