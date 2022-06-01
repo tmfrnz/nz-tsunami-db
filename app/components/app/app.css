@@ -296,7 +296,7 @@ a.close-share {
 .btn-default.active{
   color: #fff;
   background-color: #A71930;
-  border-color: #10759d;
+  border-color: #7e0d1f;
 }
 .btn:active:focus,
 .btn.active:focus,
@@ -321,8 +321,8 @@ a.close-share {
 .btn-default.active:active:hover,
 .btn-default.active:hover{
   color:#fff;
-  background-color: #10759d;
-  border-color: #10759d;
+  background-color: #7e0d1f;
+  border-color: #7e0d1f;
 }
 .btn-info:active,
 .btn-info {
