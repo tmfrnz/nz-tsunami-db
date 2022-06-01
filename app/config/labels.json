@@ -126,7 +126,7 @@
       }
     },
     "table": {
-      "all_columns": "All attribute columns",
+      "all_columns": "More attribute columns",
       "default_columns": "Less attribute columns"
     }
   },
