@@ -44,15 +44,15 @@
     "commentColumns":[
       {
         "column": "year_comment",
-        "title": "Additional information: year"
+        "title": "Year (previous database)"
       },
       {
         "column": "month_comment",
-        "title": "Additional information: month"
+        "title": "Month (previous database)"
       },
       {
         "column": "day_comment",
-        "title": "Additional information: day"
+        "title": "Day (previous database)"
       }
     ],
     "blanks":1,
@@ -192,7 +192,8 @@
     "filterable":0,
     "searchable":1,
     "single":1,
-    "table":1
+    "table":1,
+    "sortable":0
   },
   {
     "id":"discussion",
@@ -203,7 +204,8 @@
     "filterable":0,
     "searchable":1,
     "single":1,
-    "table":1
+    "table":1,
+    "sortable":0
   },
   {
     "id":"obs_photographs",
@@ -214,7 +216,8 @@
     "filterable":0,
     "searchable":1,
     "single":1,
-    "table":1
+    "table":1,
+    "sortable":0
   },
   {
     "id":"time_arrival_from",
@@ -417,6 +420,42 @@
       "labels":["Up","Down","Unknown"],
       "colors":["#2EA563","#E34E4F","#969696"]
     }
+  },
+  {
+    "id":"predominant_periods",
+    "title":"Predominant Periods (s)",
+    "description":"TODO: description",
+    "type":"text",
+    "group":"tg-metrics",
+    "filterable":0,
+    "searchable":0,
+    "single":1,
+    "table":1,
+    "sortable":0
+  },
+  {
+    "id":"tidal_records",
+    "title":"Tidal Records",
+    "description":"TODO: description",
+    "type":"text",
+    "group":"tg-metrics",
+    "filterable":0,
+    "searchable":1,
+    "single":1,
+    "table":1,
+    "sortable":0
+  },
+  {
+    "id":"reference_datasource",
+    "title":"Reference (data source)",
+    "description":"TODO: description",
+    "type":"text",
+    "group":"tg-metrics",
+    "filterable":0,
+    "searchable":1,
+    "single":1,
+    "table":1,
+    "sortable":0
   },
   {
     "id":"obs_time_first_arrival_from",
