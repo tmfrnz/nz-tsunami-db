@@ -350,7 +350,7 @@
   },
   {
     "id":"max_effective_peak-trough_upper",
-    "title":"Max effective peak-trough, min (m)",
+    "title":"Max effective peak-trough, max (m)",
     "description":"Max effective peak-trough",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
@@ -447,7 +447,7 @@
   },
   {
     "id":"reference_datasource",
-    "title":"Reference (data source)",
+    "title":"Reference (tide gauge)",
     "description":"TODO: description",
     "type":"text",
     "group":"tg-metrics",
@@ -503,6 +503,18 @@
       "max" : "obs_time_first_arrival_max"
     },
     "specified": 1
+  },
+  {
+    "id":"obs_first_arrival_comments",
+    "title":"First arrival: comments",
+    "description":"TODO: description",
+    "type":"text",
+    "group":"obs-time",
+    "filterable":0,
+    "searchable":1,
+    "single":1,
+    "table":1,
+    "sortable":0
   },
   {
     "id":"time_arrival_expected_from",
