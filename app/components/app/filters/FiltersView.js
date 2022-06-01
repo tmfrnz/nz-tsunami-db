@@ -295,6 +295,7 @@ define([
             switch (column.get("type")){
               case "date":
               case "quantitative":
+              case "discrete":
                 this.initRangeSlider($filter)
                 break
               case "categorical":
@@ -427,6 +428,7 @@ define([
 
         case "date":
         case "quantitative":
+        case "discrete":
           //
           // range slider filter
           //
@@ -515,6 +517,16 @@ define([
               {},
             )
           }
+          var value_min_formatted = queryMin;
+          var value_max_formatted = queryMax;
+          if (column.get("type") === 'date') {
+            value_min_formatted = queryMin ? this.formatDate(queryMin) : queryMin;
+            value_max_formatted = queryMax ? this.formatDate(queryMax) : queryMax;
+          }
+          if (column.get("type") === 'discrete') {
+            value_min_formatted = queryMin ? parseInt(queryMin) : queryMin;
+            value_max_formatted = queryMax ? parseInt(queryMax) : queryMax;
+          }
           return _.template(templateFilterMinMaxSlider)({
             label:_.template(templateFilterLabel)({
               t:this.model.getLabels(),
@@ -536,8 +548,8 @@ define([
             unspecified:queryValue === "null",
             value_min:queryMin,
             value_max:queryMax,
-            value_min_formatted:queryMin && column.get("type") === 'date' ? this.formatDate(queryMin) : queryMin,
-            value_max_formatted:queryMax && column.get("type") === 'date' ? this.formatDate(queryMax) : queryMax,
+            value_min_formatted:value_min_formatted,
+            value_max_formatted:value_max_formatted,
             value_min_overall:value_min_overall,
             value_max_overall:value_max_overall,
             slider_active:queryMin !== "" || queryMax !== "",
@@ -687,7 +699,7 @@ define([
           "range": ranges,
           "connect": true,
           "pips":{
-            "mode":"range",
+            "mode": "range",
             "density": 3
           }
         }
@@ -696,6 +708,9 @@ define([
             "to" : that.formatDateAsYear,
             "from" : that.formatDateAsYear
           }
+        }
+        if (colType === "discrete") {
+          sliderOptions.step = 1;
         }
 
         noUiSlider.create(slider,sliderOptions)
@@ -709,6 +724,9 @@ define([
           if(colType === "date") {
             that.$('input#text-'+colMin).val(that.formatDate(Math.round(values[0]), 'y'))
             that.$('input#text-'+colMax).val(that.formatDate(Math.round(values[1]), 'y'))
+          } else if(colType === "discrete") {
+            that.$('input#text-'+colMin).val(parseInt(Math.round(values[0])))
+            that.$('input#text-'+colMax).val(parseInt(Math.round(values[1])))
           } else {
             that.$('input#text-'+colMin).val(values[0])
             that.$('input#text-'+colMax).val(values[1])

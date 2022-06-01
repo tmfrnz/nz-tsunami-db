@@ -74,7 +74,11 @@ define([
       }
 
 
-      if (this.attributes.type === "spatial" || this.attributes.type === "quantitative") {
+      if (
+        this.attributes.type === "spatial" ||
+        this.attributes.type === "quantitative" ||
+        this.attributes.type === "discrete"
+      ) {
         if (this.attributes.placeholders === null){
           this.set("placeholders", {min:"Min",max:"Max"})
         }

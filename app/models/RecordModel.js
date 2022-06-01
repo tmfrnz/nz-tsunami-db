@@ -74,7 +74,7 @@ define([
             } else if (column.get('type') === 'date' && this.attributes[column.get('queryColumn')]) {
               this.set(column.get('queryColumn'), this.parseDate(this.attributes[column.get('queryColumn')]))
             } else if (
-              (column.get('type') === 'quantitative' || column.get('type') === 'spatial')
+              (column.get('type') === 'quantitative' || column.get('type') === 'spatial' || column.get('type') === 'discrete' )
               && this.attributes[column.get('queryColumn')]
             ) {
               if (isNumber(this.attributes[column.get('queryColumn')])) {
@@ -314,6 +314,10 @@ define([
             } else {
               return this.decodeValue(this.attributes[col], columnModel.get('values')).trim();
             }
+            break
+          case "discrete":
+            //round to 2 decimals
+            return parseInt(this.attributes[col]);
             break
           case "quantitative":
             //round to 2 decimals

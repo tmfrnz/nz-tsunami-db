@@ -151,6 +151,7 @@ table.display > thead > tr > th div {
 table.display tbody td.column-type-id,
 table.display tbody td.column-type-spatial,
 table.display tbody td.column-type-date,
+table.display tbody td.column-type-discrete,
 table.display tbody td.column-type-quantitative{
   text-align:right;
 }

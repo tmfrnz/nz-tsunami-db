@@ -289,6 +289,7 @@ define([
           break
         case "binary":
         case "quantitative":
+        case "discrete":
         case "spatial":
         case "categorical":
         case "ordinal":

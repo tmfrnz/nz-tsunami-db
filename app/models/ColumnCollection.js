@@ -13,7 +13,11 @@ define([
       _.each(this.models,function(column){
         column.get('queryColumn') || console.log(column.get('queryColumn'))
         // console.log('ColumnCollection initializeModels')
-        if (column.get("type") === "quantitative" || column.get("type") === "date" ) {
+        if (
+          column.get("type") === "quantitative" ||
+          column.get("type") === "date" ||
+          column.get("type") === "discrete"
+        ) {
           if(column.getValues() === 'auto'){
             var values = records.getValuesForColumn(column)
             column.set("values", {
