@@ -33,6 +33,7 @@ define([
         single :          typeof this.attributes.single !== "undefined" ? this.attributes.single : 1,
         // also show when not expanded
         isDefault:        typeof this.attributes['default'] !== "undefined" ? this.attributes['default'] : 0,
+        isDefaultFilter:  typeof this.attributes.defaultFilter !== "undefined" ? this.attributes.defaultFilter : 0,
         // allow keyword search
         searchable :      typeof this.attributes.searchable !== "undefined" ? this.attributes.searchable : 0,
         // allow sorting in table
@@ -57,6 +58,9 @@ define([
           valueDescription: false
         }
       })
+      if (this.get('isDefault') === 1) {
+        this.set('isDefaultFilter', 1);
+      }
       // set
       this.set('queryColumn', this.attributes.queryColumn || this.attributes.column)
       if (typeof this.attributes.query === "object") {

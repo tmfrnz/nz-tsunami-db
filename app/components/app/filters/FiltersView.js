@@ -377,7 +377,7 @@ define([
       var column_min = column.getQueryColumnByType("min")
       var column_max = column.getQueryColumnByType("max")
       var column_value = column.getQueryColumnByType("value")
-      return column.get("isDefault")
+      return column.get("isDefaultFilter")
         || typeof (this.model.get("recQuery")[column_min]) !== "undefined"
         || typeof (this.model.get("recQuery")[column_max]) !== "undefined"
         || typeof (this.model.get("recQuery")[column_value]) !== "undefined"
