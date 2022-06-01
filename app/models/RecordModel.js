@@ -308,7 +308,7 @@ define([
               return _.map(
                 this.attributes[col].split(columnModel.get('separator')),
                 function(val) {
-                  return that.decodeValue(val, columnModel.get('values')).trim();
+                  return that.decodeValue(val.trim(), columnModel.get('values')).trim();
                 },
               ).join(columnModel.get('separator') + ' ')
             } else {
