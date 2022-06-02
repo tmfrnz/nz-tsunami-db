@@ -324,6 +324,29 @@
     "comboTitleEqual":"Max Eff. Peak/Trough (m)",
     "comboColumnId":"max_effective_peak-trough_lower",
     "certaintyColumn":"max_effective_peak-trough_certainty",
+    "dateColumns": [
+      {
+        "title":"Time of max effective peak",
+        "minColumn":"time_peak-effective_from",
+        "maxColumn":"time_peak-effective_to",
+        "specificityColumn":"time_peak-effective_specificity",
+        "certaintyColumn":"time_peak-effective_certainty"
+      },
+      {
+        "title":"Time of max effective trough",
+        "minColumn":"time_trough-effective_from",
+        "maxColumn":"time_trough-effective_to",
+        "specificityColumn":"time_trough-effective_specificity",
+        "certaintyColumn":"time_trough-effective_certainty",
+        "commentColumn":"time_peak-trough-effective_comment"
+      }
+    ],
+    "elapsedColumn": {
+      "title":"Time elapsed (h)",
+      "minColumn":"time-elapsed_peak-trough-effective_lower",
+      "maxColumn":"time-elapsed_peak-trough-effective_upper",
+      "certaintyColumn":"time-elapsed_peak-trough-effective_certainty"
+    },
     "defaultFilter":1,
     "plot":1,
     "plotMax":5,
@@ -349,6 +372,22 @@
     "group":"tg-metrics",
     "certaintyColumn":"max_effective_zeropeak_certainty",
     "commentColumn":"max_effective_zeropeak_comment",
+    "dateColumns": [
+      {
+        "title":"Time of effective zero peak",
+        "minColumn":"time_zeropeak-effective_from",
+        "maxColumn":"time_zeropeak-effective_to",
+        "specificityColumn":"time_zeropeak-effective_specificity",
+        "certaintyColumn":"time_zeropeak-effective_certainty",
+        "commentColumn":"time_zeropeak-effective_comment"
+      }
+    ],
+    "elapsedColumn": {
+      "title":"Time elapsed (h)",
+      "minColumn":"time-elapsed_zeropeak-effective_lower",
+      "maxColumn":"time-elapsed_zeropeak-effective_upper",
+      "certaintyColumn":"time-elapsed_zeropeak-effective_certainty"
+    },
     "values":{
       "range" : {
         "min" : ["auto"],
@@ -630,6 +669,23 @@
     "comboTitleEqual":"Obs. max effective peak-trough (m)",
     "comboColumnId":"obs_max_peak-trough_lower",
     "certaintyColumn":"obs_max_peak-trough_certainty",
+    "dateColumns": [
+      {
+        "title":"Time of max effective peak",
+        "minColumn":"obs_time_max_peak-effective_from",
+        "maxColumn":"obs_time_max_peak-effective_to",
+        "specificityColumn":"obs_time_max_peak-effective_specificity",
+        "certaintyColumn":"obs_time_max_peak-effective_certainty"
+      },
+      {
+        "title":"Time of max effective trough",
+        "minColumn":"obs_time_max_trough-effective_from",
+        "maxColumn":"obs_time_max_trough-effective_to",
+        "specificityColumn":"obs_time_max_trough-effective_specificity",
+        "certaintyColumn":"obs_time_max_trough-effective_certainty",
+        "commentColumn":"obs_time_max_peak-trough-effective_comment"
+      }
+    ],
     "unit": "m",
     "values":{
       "range" : {
@@ -669,6 +725,15 @@
     "comboColumnId":"obs_water_elevation_shore_lower",
     "certaintyColumn":"obs_water_elevation_shore_certainty",
     "commentColumn":"obs_water_elevation_shore_comment",
+    "dateColumns": [
+      {
+        "title":"Time of max water elevation",
+        "minColumn":"obs_time_max_elevation_from",
+        "maxColumn":"obs_time_max_elevation_to",
+        "specificityColumn":"obs_time_max_elevation_specificity",
+        "certaintyColumn":"obs_time_max_elevation_certainty"
+      }
+    ],
     "defaultFilter":1,
     "unit": "m",
     "plot":1,
@@ -712,6 +777,16 @@
     "comboColumnId":"obs_height_max_at-inundation_lower",
     "certaintyColumn":"obs_height_max_at-inundation_certainty",
     "commentColumn":"obs_height_max_at-inundation_comment",
+    "dateColumns": [
+      {
+        "title":"Time of max height reached",
+        "minColumn":"obs_time_max_height_from",
+        "maxColumn":"obs_time_max_height_to",
+        "specificityColumn":"obs_time_max_height_specificity",
+        "certaintyColumn":"obs_time_max_height_certainty",
+        "commentColumn":"obs_time_max_height_comment"
+      }
+    ],
     "unit": "m",
     "values":{
       "range" : {
@@ -822,7 +897,7 @@
   },
   {
     "id":"obs_height_max_inundation_lower",
-    "title":"Max horizontal extent of inundation, min (m)",
+    "title":"Max observed height of inundation above MSL, min (m)",
     "description":"TODO",
     "descriptionMore":"More description (optional)",
     "type":"quantitative",
@@ -833,7 +908,7 @@
   },
   {
     "id":"obs_height_max_inundation_upper",
-    "title":"Max horizontal extent of inundation, max (m)",
+    "title":"Max observed height of inundation above MSL, max (m)",
     "description":"TODO",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
@@ -841,11 +916,21 @@
     "combo":1,
     "comboMain":1,
     "comboType":"max",
-    "comboTitle":"Max horizontal extent of inundation, range (m)",
-    "comboTitleEqual":"Max horizontal extent of inundation (m)",
+    "comboTitle":"Max observed height of inundation above MSL, range (m)",
+    "comboTitleEqual":"Max observed height of inundation above MSL (m)",
     "comboColumnId":"obs_height_max_inundation_lower",
     "certaintyColumn":"obs_height_max_inundation_certainty",
     "commentColumn":"obs_height_max_inundation_comment",
+    "dateColumns": [
+      {
+        "title":"Time of max observed height",
+        "minColumn":"obs_time_max_height_inundation_from",
+        "maxColumn":"obs_time_max_height_inundation_to",
+        "specificityColumn":"obs_time_max_height_inundation_specificity",
+        "certaintyColumn":"obs_time_max_height_inundation_certainty",
+        "commentColumn":"obs_time_max_heighobs_time_max_height_inundation_comment"
+      }
+    ],
     "unit": "m",
     "values":{
       "range" : {
