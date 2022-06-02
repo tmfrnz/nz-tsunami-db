@@ -263,6 +263,43 @@ define([
               result,
             );
           }
+          if (col.get('dateColumns')) {
+            result = _.reduce(
+              col.get('dateColumns'),
+              function (memo, dateCol) {
+                var res = memo;
+                if (dateCol.minColumn) {
+                  res = res.concat(dateCol.minColumn)
+                }
+                if (dateCol.maxColumn) {
+                  res = res.concat(dateCol.maxColumn)
+                }
+                if (dateCol.specificityColumn) {
+                  res = res.concat(dateCol.specificityColumn)
+                }
+                if (dateCol.certaintyColumn) {
+                  res = res.concat(dateCol.certaintyColumn)
+                }
+                if (dateCol.commentColumn) {
+                  res = res.concat(dateCol.commentColumn)
+                }
+                return res;
+              },
+              result,
+            );
+          }
+          if (col.get('elapsedColumn')) {
+            var elCol = col.get('elapsedColumn');
+            if (elCol.minColumn) {
+              result = result.concat(elCol.minColumn)
+            }
+            if (elCol.maxColumn) {
+              result = result.concat(elCol.maxColumn)
+            }
+            if (elCol.certaintyColumn) {
+              result = result.concat(elCol.certaintyColumn)
+            }
+          }
           return result
         },
         [],

@@ -332,7 +332,7 @@ define([
             if (columnModel.get("specificityColumn")) {
               spec = this.attributes[columnModel.get("specificityColumn")]
             }
-            var date = new Date(this.attributes[col])
+            var date = new Date(this.attributes[col]);
             if (spec === 'y') {
               return date.getFullYear();
             }

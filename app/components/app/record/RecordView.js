@@ -86,7 +86,7 @@ define([
                               var recValue = record.getColumnValue(column.get('column'));
                               if (recValue && recValue !== '') {
                                 if (column.get('certaintyColumn')) {
-                                  result = result.concat(that.getCertaintyColumnHtml(column))
+                                  result = result.concat(that.getCertaintyColumnHtml(column.get('certaintyColumn')))
                                 }
                                 if (column.get('commentColumn')) {
                                   var commentValue = record.getColumnValue(column.get('commentColumn'))
@@ -116,6 +116,100 @@ define([
                                     result = result.concat(that.getCommentColumnHtml(column.get('commentColumn')))
                                   }
                                 }
+                                if (column.get('dateColumns') && column.get('dateColumns').length > 0) {
+                                  result = _.reduce(
+                                    column.get('dateColumns'),
+                                    function (memo, dateCol) {
+                                      var minValue, maxValue;
+                                      var specValue = dateCol.specificityColumn
+                                        ? record.getColumnValue(dateCol.specificityColumn)
+                                        : 't';
+                                      if (dateCol.minColumn && dateCol.maxColumn) {
+                                        minValue = new Date(
+                                          record.parseDate(
+                                            record.getColumnValue(dateCol.minColumn)
+                                          )
+                                        );
+                                        maxValue = new Date(
+                                          record.parseDate(
+                                            record.getColumnValue(dateCol.maxColumn)
+                                          )
+                                        );
+                                        if (specValue === 'y') {
+                                          minValue = minValue.getFullYear();
+                                          maxValue = maxValue.getFullYear();
+                                        } else if (specValue === 'm' || specValue === 'd' ) {
+                                          minValue = minValue.toLocaleDateString('en-NZ')
+                                          maxValue = maxValue.toLocaleDateString('en-NZ')
+                                        } else { // 't'
+                                          minValue = minValue.toLocaleString('en-NZ')
+                                          maxValue = maxValue.toLocaleString('en-NZ')
+                                        }
+                                        var res = memo.concat(
+                                          that.getAuxRangeColumnHTML(
+                                            dateCol.minColumn,
+                                            minValue,
+                                            maxValue,
+                                            dateCol.title,
+                                          )
+                                        );
+                                        if (dateCol.certaintyColumn) {
+                                          res = res.concat(
+                                            that.getCertaintyColumnHtml(
+                                              dateCol.certaintyColumn,
+                                              '&mdash; Certainty'
+                                            )
+                                          );
+                                        }
+                                        if (
+                                          dateCol.commentColumn &&
+                                          record.get(dateCol.commentColumn) &&
+                                          record.get(dateCol.commentColumn).trim() !== ''
+                                        ) {
+                                          return res.concat(
+                                            that.getCommentColumnHtml(
+                                              dateCol.commentColumn,
+                                              'Time comment (previous database)'
+                                            )
+                                          );
+                                        }
+                                        return res;
+                                      }
+                                      return memo;
+                                    },
+                                    result,
+                                  )
+                                  var commentValue = record.getColumnValue(column.get('commentColumn'))
+                                  if (commentValue && commentValue !== '') {
+                                    result = result.concat(that.getCommentColumnHtml(column.get('commentColumn')))
+                                  }
+                                }
+                                if (column.get('elapsedColumn')) {
+                                  var col = column.get('elapsedColumn');
+                                  var minValue, maxValue;
+                                  if (col.minColumn && col.maxColumn) {
+                                    minValue = record.getColumnValue(col.minColumn);
+                                    maxValue = record.getColumnValue(col.maxColumn);
+                                    if (minValue || maxValue) {
+                                      result = result.concat(
+                                        that.getAuxRangeColumnHTML(
+                                          col.minColumn,
+                                          minValue,
+                                          maxValue,
+                                          col.title,
+                                        )
+                                      );
+                                      if (col.certaintyColumn) {
+                                        result = result.concat(
+                                          that.getCertaintyColumnHtml(
+                                            col.certaintyColumn,
+                                            '&mdash; Certainty'
+                                          )
+                                        );
+                                      }
+                                    }
+                                  }
+                                }
                               }
                             }
                             return result;
@@ -137,8 +231,6 @@ define([
           };
         }
       );
-      console.log('columnSections', columnSections)
-      console.log('columnSectionGroups', columnSections)
 
       this.$el.html(_.template(templateMain)({
         t:this.model.getLabels(),
@@ -196,9 +288,16 @@ define([
         id:commentCol
       })
     },
-    getCertaintyColumnHtml:function(column){
+    getAuxRangeColumnHTML:function(id, minValue, maxValue, title){
+      return _.template(templateColumnTextSecondary)({
+        t:this.model.getLabels(),
+        title: title || 'Comment/details',
+        value:minValue === maxValue ? minValue : minValue + ' - ' + maxValue,
+        id:id,
+      })
+    },
+    getCertaintyColumnHtml:function(certCol, title){
       var record = this.model.get("record")
-      var certCol = column.get('certaintyColumn');
       var value;
       if (record.get(certCol) === 1 || record.get(certCol) === '1') {
         value = '1 (definite/certain/exact)';
@@ -208,7 +307,7 @@ define([
       }
       return _.template(templateColumnTextSecondary)({
         t:this.model.getLabels(),
-        title: 'Certainty',
+        title: title || 'Certainty',
         value: value,
         id:certCol
       })
