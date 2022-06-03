@@ -16,9 +16,12 @@
        </a><% } %>
       </div>
       <div class="related-title">
-        <a href="#" class="select-record" data-recordid="<%= source.get('id') %>" data-recordtype="source">
+        <% if(source) { %><a href="#" class="select-record" data-recordid="<%= source.get('id') %>" data-recordtype="source">
           <%= source.get('id') %>: <%= source.getColumnValue('region', true) %> (<%= source.getColumnValue('magn_moment_lower', true) %>)
-        </a>
+        </a><% } %>
+        <% if(!source && source_id) { %><a href="#" class="select-record" data-recordid="<%= source_id %>" data-recordtype="source">
+          <%= source_id %>
+        </a><% } %>
       </div>
     </div>
   </div>
