@@ -1,9 +1,9 @@
 <% if(title){ %><label for="<%= forId %>">
   <%= title %>
-  <% if(tooltip !== "") {%><a 
-     data-toggle="tooltip" 
-     data-placement="top" 
-     title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>" 
+  <% if(tooltip !== "" && false) {%><a
+     data-toggle="tooltip"
+     data-placement="top"
+     title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
      data-html="true"
      href="#"
      class="nav-link toggle-tooltip"
