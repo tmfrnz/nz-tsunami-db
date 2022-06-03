@@ -378,7 +378,7 @@ define([
 
 
     updateMapView : function(){
-      console.log('MapView.updateMapView ')
+      // console.log('MapView.updateMapView ')
       var currentView = this.model.getView()
       var _map = this.model.getMap()
 

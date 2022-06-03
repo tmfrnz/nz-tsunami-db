@@ -112,7 +112,7 @@ define([
 
 
     initialize : function(){
-      console.log('appview.initialize')
+      // console.log('appview.initialize')
 
       //the layer model types
       this.layerModels = {
@@ -199,7 +199,7 @@ define([
       var that = this
       this.model.validateRouter(function(validated){
         if (validated) {
-console.log("AppView.update", 0);
+// console.log("AppView.update", 0);
 window.timeFromUpdate = Date.now()
           that.$el.addClass('updating')
           // init/update components
@@ -229,7 +229,7 @@ window.timeFromUpdate = Date.now()
             && that.model.sourceColumnsConfigured()
         },
         function(){
-console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, that.model.getSelectedRecordId())
+// console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, that.model.getSelectedRecordId())
           // check updated
           var oldRecordQuery = that.model.getRecords().query
           var newRecordQuery = that.model.getRecordQuery()
@@ -240,7 +240,7 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
           var newSourceQuery = that.model.getSourceQuery()
           var recordsQueryChanged = !that.model.getRecordsUpdated() || !_.isEqual(oldRecordQuery, newRecordQuery);
           var sourcesQueryChanged = !that.model.getSourcesUpdated() || !_.isEqual(oldSourceQuery, newSourceQuery);
-          console.log('updateRecordCollections', newSourceQuery, newRecordQuery)
+          // console.log('updateRecordCollections', newSourceQuery, newRecordQuery)
           // console.log('updateRecordCollections sourcesQueryChanged', sourcesQueryChanged)
           // TODO figure out a better way to update both with respect to each other
           // 1. figure out active sources without updating
@@ -311,7 +311,7 @@ console.log('updateRecordCollections 1', Date.now() - window.timeFromUpdate, tha
         waitFor(
           function(){ return that.model.configsLoaded() },
           function(){
-console.log('updateNav', Date.now() - window.timeFromUpdate)
+// console.log('updateNav', Date.now() - window.timeFromUpdate)
             that.views.nav = that.views.nav || new NavView({
               el:that.$(componentId),
               model:new NavModel({
@@ -339,7 +339,7 @@ console.log('updateNav', Date.now() - window.timeFromUpdate)
         waitFor(
           function(){ return that.model.columnsConfigured() },
           function(){
-console.log('updateFilters', Date.now() - window.timeFromUpdate, that.model.isComponentActive(componentId))
+// console.log('updateFilters', Date.now() - window.timeFromUpdate, that.model.isComponentActive(componentId))
             that.views.filters = that.views.filters || new FiltersView({
               el:that.$(componentId),
               model:new FiltersModel({
@@ -375,7 +375,7 @@ console.log('updateFilters', Date.now() - window.timeFromUpdate, that.model.isCo
         waitFor(
           function(){ return that.model.sourceColumnsConfigured() },
           function(){
-console.log('updateSourceFilters', Date.now() - window.timeFromUpdate, that.model.isComponentActive(componentId))
+// console.log('updateSourceFilters', Date.now() - window.timeFromUpdate, that.model.isComponentActive(componentId))
             that.views.sourcefilters = that.views.sourcefilters || new FiltersView({
               el:that.$(componentId),
               model:new FiltersModel({
@@ -415,7 +415,7 @@ console.log('updateSourceFilters', Date.now() - window.timeFromUpdate, that.mode
               && that.model.referencesConfigured()
           },
           function(){
-console.log('updateRecord', Date.now() - window.timeFromUpdate)
+// console.log('updateRecord', Date.now() - window.timeFromUpdate)
 
             that.views.record = that.views.record || new RecordView({
               el:that.$(componentId),
@@ -453,7 +453,7 @@ console.log('updateRecord', Date.now() - window.timeFromUpdate)
               && that.model.referencesConfigured()
           },
           function(){
-console.log('updateSource', Date.now() - window.timeFromUpdate)
+// console.log('updateSource', Date.now() - window.timeFromUpdate)
 
             that.views.source = that.views.source || new RecordView({
               el:that.$(componentId),
@@ -492,7 +492,7 @@ console.log('updateSource', Date.now() - window.timeFromUpdate)
               && that.model.referencesConfigured()
           },
           function(){
-console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getOutColorColumn(), that.model.getOutSourceColorColumn())
+// console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getOutColorColumn(), that.model.getOutSourceColorColumn())
 // console.log("updateOut", that.model.getSources())
 
             that.views.out = that.views.out || new OutView({
@@ -677,7 +677,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
       this.model.layersConfigured(true)
     },
     loadRecords : function(){
-      console.log("loadRecords")
+      // console.log("loadRecords")
       var recordConfig = this.model.get("config").records
       var that = this
       if (typeof recordConfig !== "undefined") {
@@ -691,7 +691,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
           success: function(data) {
             that.model.set('recordsLoaded', true)
             var dataObjects = $.csv.toObjects(data);
-            console.log("success loading records data")
+            // console.log("success loading records data")
             var records = {
               type: "FeatureCollection",
               features: dataObjects.map((d) => {
@@ -720,7 +720,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
       }
     },
     loadSources : function(){
-      console.log("loadSources")
+      // console.log("loadSources")
       var sourceConfig = this.model.get("config").sources
       var that = this
       if (typeof sourceConfig !== "undefined") {
@@ -735,7 +735,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
             that.model.set('sourcesLoaded', true)
             var dataObjects = $.csv.toObjects(data);
             // console.log("success loading sources data", data, dataObjects)
-            console.log("success loading sources data")
+            // console.log("success loading sources data")
             var sources = {
               type: "FeatureCollection",
               features: dataObjects.map((d) => {
@@ -766,7 +766,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
     configureRecords : function(recordData) {
       var recordConfig = this.model.get("config").records
       if (typeof recordConfig !== "undefined") {
-        console.log("configureRecords")
+        // console.log("configureRecords")
 
         var that = this
         waitFor(
@@ -812,7 +812,7 @@ console.log('updateOut', Date.now() - window.timeFromUpdate) //, that.model.getO
             // reorganise attributes (move properties up)
             that.model.setRecords(recordCollection)
             that.model.recordsConfigured(true)
-console.log("done... configureRecords")
+// console.log("done... configureRecords")
           }
         )
       }
@@ -820,7 +820,7 @@ console.log("done... configureRecords")
     configureSources : function(sourceData) {
       var sourceConfig = this.model.get("config").sources
       if (typeof sourceConfig !== "undefined") {
-        console.log("configureSources")
+        // console.log("configureSources")
 
         var that = this
         waitFor(
@@ -881,7 +881,7 @@ console.log("done... configureRecords")
                 that.model.getRecords().setSources(that.model.getSources())
                 that.model.getSources().setChildren(that.model.getRecords())
                 that.model.sourcesConfigured(true)
-                console.log("done... configureSources")
+                // console.log("done... configureSources")
               }
             )
           }
@@ -891,46 +891,46 @@ console.log("done... configureRecords")
 
 
     initColumns:function(){
-console.log("initColumns")
+// console.log("initColumns")
       // store column groups
       this.model.setColumnGroups(new ColumnGroupCollection(this.model.get("columnGroupConfig")))
       // store and init columns
       this.model.setColumns(new ColumnCollection(this.model.get("columnConfig")))
       this.model.columnsInitialised(true)
-console.log("done... initColumns")
+// console.log("done... initColumns")
     },
 
     configureColumns:function(){
-console.log("configureColumns")
+// console.log("configureColumns")
       // store column groups
 
       this.model.get("columnCollection").initializeModels(this.model.getRecords())
       // store columns reference with record collection
       // this.model.getRecords().setColumns(this.model.get("columnCollection"))
       this.model.columnsConfigured(true)
-console.log("done... configureColumns")
+// console.log("done... configureColumns")
     },
     initSourceColumns:function(){
-console.log("initSourceColumns")
+// console.log("initSourceColumns")
       // store column groups
       this.model.setSourceColumnGroups(new ColumnGroupCollection(this.model.get("sourceColumnGroupConfig")))
       // store and init columns
       this.model.setSourceColumns(new ColumnCollection(this.model.get("sourceColumnConfig")))
       this.model.sourceColumnsInitialised(true)
-console.log("done... initSourceColumns")
+// console.log("done... initSourceColumns")
     },
 
     configureSourceColumns:function(){
-console.log("configureSourceColumns", this.model.getSources(), this.model.get("sourceColumnCollection"))
+// console.log("configureSourceColumns", this.model.getSources(), this.model.get("sourceColumnCollection"))
       // store column groups
 
       this.model.get("sourceColumnCollection").initializeModels(this.model.getSources())
       this.model.sourceColumnsConfigured(true)
-console.log("done... configureSourceColumns")
+// console.log("done... configureSourceColumns")
     },
 
     loadReferences : function(){
-console.log("loadReferences")
+// console.log("loadReferences")
       var refConfig = this.model.get("config").references
       var that = this
       $.ajax({
@@ -942,7 +942,7 @@ console.log("loadReferences")
         url: this.model.getBaseURL() + '/' + refConfig.path,
         success: function(data) {
           var dataObjects = $.csv.toObjects(data);
-console.log("success loading ref data")
+// console.log("success loading ref data")
           that.model.set('referencesLoaded', true)
           that.configureReferences(dataObjects)
         },
@@ -953,7 +953,7 @@ console.log("success loading ref data")
       });
     },
     configureReferences : function(refData) {
-console.log("configureReferences")
+// console.log("configureReferences")
       var refConfig = this.model.get("config").references
 
       var that = this
@@ -972,7 +972,7 @@ console.log("configureReferences")
         function(){ return that.model.recordsConfigured() },
         //then
         function(){
-console.log("done... configureReferences")
+// console.log("done... configureReferences")
           that.model.getRecords().setReferences(that.model.getReferences())
           that.model.getSources().setReferences(that.model.getReferences())
           that.model.referencesConfigured(true)
@@ -1038,11 +1038,11 @@ console.log("done... configureReferences")
 
     // general navigation events
     resetApp : function(e,args){
-      console.log('AppView.resetApp')
+      // console.log('AppView.resetApp')
       this.model.getRouter().resetApp()
     },
     homeLink : function(e,args){
-      console.log('AppView.homeLink')
+      // console.log('AppView.homeLink')
 
       this.model.getRouter().update({
         link:true,
@@ -1095,7 +1095,7 @@ console.log("done... configureReferences")
       })
     },
     sourceSelect : function(e,args){
-      console.log("sourceSelect", args)
+      // console.log("sourceSelect", args)
 
       if (this.model.getSelectedSourceId() !== args.id){
         this.model.getRouter().update({
@@ -1110,7 +1110,7 @@ console.log("done... configureReferences")
       }
     },
     recordSelect : function(e,args){
-      console.log("recordSelect", args)
+      // console.log("recordSelect", args)
 
       if (this.model.getSelectedRecordId() !== args.id){
         this.model.getRouter().update({
@@ -1147,7 +1147,7 @@ console.log("done... configureReferences")
       })
     },
     plotColumnsSelected : function(e,args){
-console.log("plotColumnsSelected")
+// console.log("plotColumnsSelected")
       this.model.getRouter().queryUpdate({
         plot:args.columns
       })
@@ -1158,7 +1158,7 @@ console.log("plotColumnsSelected")
       this.model.mapConfigured(true)
     },
     mapViewUpdated : function(e,args){
-      console.log('AppView.mapViewUpdated')
+      // console.log('AppView.mapViewUpdated')
 
       var viewUpdated = this.model.toMapviewString(args.view)
 

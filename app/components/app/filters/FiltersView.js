@@ -184,7 +184,7 @@ define([
     },
     renderSections: function() {
       var sections = Object.keys(this.model.getColumnGroupsBySections());
-      console.log('renderSections', sections)
+      // console.log('renderSections', sections)
       this.$('.form-sections').html(_.template(templateFilterSections)({
         t: this.model.getLabels(),
         type: this.model.get('type'),
@@ -572,7 +572,7 @@ define([
             : ""
           // only show default columns or those that are set unless group expanded
           var options = []
-          console.log('categorical', column_id, column.getValues())
+          // console.log('categorical', column_id, column.getValues())
           if (typeof column.getValues().values !== "undefined" ) {
             options = _.map(column.getValues().values,function(value, key){
               return {
@@ -931,7 +931,7 @@ define([
       this.querySubmit()
     },
     querySectionReset:function(e){
-      console.log('querySectionReset')
+      // console.log('querySectionReset')
       e.preventDefault()
       var $target = $(e.target);
 
@@ -947,7 +947,7 @@ define([
     querySearchResetClick:function(e){
       e.preventDefault()
       // var $target = $(e.target);
-      console.log('querySearchReset')
+      // console.log('querySearchReset')
       this.$('.column-filter-text-keyword').val("").trigger("change")
       // this.checkSearchReset('')
       this.querySubmit()
@@ -978,7 +978,7 @@ define([
     expandSection:function(e){
       e.preventDefault()
       var sectionId = $(e.currentTarget).attr("data-sectionid")
-      console.log('expandSection', sectionId)
+      // console.log('expandSection', sectionId)
       if (this.model.isExpandedSection(sectionId)) {
         this.model.setExpandedSection('')
       } else {

@@ -65,7 +65,7 @@ define([
       this.listenTo(this.model, "change:dataToggled",this.renderData)
     },
     render: function () {
-      console.log("OutView.render")
+      // console.log("OutView.render")
       this.$el.html(_.template(template)({
         t:this.model.getLabels()
       }))
@@ -77,7 +77,7 @@ define([
       return this
     },
     updateViews:function(){
-      console.log("OutView.updateViews")
+      // console.log("OutView.updateViews")
 
       //          console.log('OutView.updateViews 1', Date.now() - window.timeFromUpdate)
       // always init map view so we can already add layers
@@ -179,13 +179,13 @@ define([
     },
 
     updateRecords: function(){
-      console.log("OutView.updateRecords")
+      // console.log("OutView.updateRecords")
       this.renderHeaderInfo()
       this.updateViews()
       this.renderData()
     },
     updateOutType: function(){
-      console.log("OutView.updateOutType")
+      // console.log("OutView.updateOutType")
       this.updateHeaderActive()
       this.updateViews()
     },
@@ -363,7 +363,7 @@ define([
       }
     },
     initMapView : function(){
-      console.log("OutView.initMapView", this.model.getOutMapShowRecords())
+      // console.log("OutView.initMapView", this.model.getOutMapShowRecords())
 
       var componentId = '#map'
 
@@ -439,7 +439,7 @@ define([
     },
     updateOutShowRecords:function(){
       if (this.model.getOutType() === 'map' && typeof this.views.map !== 'undefined'){
-        console.log('updateOutShowRecords', this.model.getOutMapShowRecords())
+        // console.log('updateOutShowRecords', this.model.getOutMapShowRecords())
         this.views.map.model.set("outShowRecords",this.model.getOutMapShowRecords())
       }
     },
