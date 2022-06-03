@@ -39,6 +39,9 @@
     "comboTitleEqual":"Date",
     "comboColumnId":"date_from",
     "specificityColumn":"date_specificity",
+    "certaintyColumn":"date_certainty",
+    "commentColumn":"date_comment",
+    "commentColumnTitle":"Date (as entered)",
     "blanks":1,
     "single":1,
     "default":1,
@@ -59,6 +62,9 @@
     "title":"Region",
     "description":"region description TODO",
     "type":"categorical",
+    "certaintyColumn":"date_certainty",
+    "commentColumn":"location_reference",
+    "commentColumnTitle":"Location reference",
     "group":"site",
     "filterable":1,
     "searchable":1,
@@ -116,6 +122,15 @@
     "filterable":1
   },
   {
+    "id":"lat-lon_comment",
+    "title":"Latitude/longitude comment",
+    "type":"text",
+    "group":"site",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
     "id":"source_class",
     "title":"Source cause",
     "description":"TODO",
@@ -126,6 +141,8 @@
     "colorable":1,
     "separator": ",",
     "group":"class",
+    "certaintyColumn":"source_class_certainty",
+    "commentColumn":"source_class_comment",
     "values":{
       "values":["1","2","6","8","9","10","11","12","13","14","0"],
       "labels":[
@@ -187,6 +204,8 @@
     "auto-multiple": 1,
     "separator": ",",
     "group":"class",
+    "certaintyColumn":"class_certainty",
+    "commentColumn":"class_comment",
     "values":{
       "values":["LOCAL","REGIONAL","DISTANT","UNKNOWN", "multiple", "null"],
       "labels":["Local","Regional","Distant","Unknown", "Multiple classes", "Unspecified"],
@@ -226,6 +245,17 @@
     "comboTitle":"Magnitude moment",
     "comboTitleEqual":"Magnitude moment",
     "comboColumnId":"magn_moment_lower",
+    "certaintyColumn":"magn_moment_certainty",
+    "commentColumns":[
+      {
+        "column": "magn_moment_comment",
+        "title": "Comment/details"
+      },
+      {
+        "column": "magn_moment_reference",
+        "title": "Reference"
+      }
+    ],
     "blanks":1,
     "single":1,
     "default":1,
@@ -268,6 +298,9 @@
     "comboTitle":"Magnitude local",
     "comboTitleEqual":"Magnitude local",
     "comboColumnId":"magn_local_lower",
+    "certaintyColumn":"magn_local_certainty",
+    "commentColumn":"magn_local_reference",
+    "commentColumnTitle": "Reference",
     "blanks":1,
     "single":1,
     "default":0,
@@ -293,6 +326,8 @@
     "blanks":1,
     "single":1,
     "default":0,
+    "commentColumn":"magn_surface_wave_reference",
+    "commentColumnTitle": "Reference",
     "values":{
       "range" : {
         "min" : ["auto"],
@@ -312,6 +347,8 @@
     "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
+    "commentColumn":"magn_mantle_reference",
+    "commentColumnTitle": "Reference",
     "blanks":1,
     "single":1,
     "default":0,
@@ -334,6 +371,8 @@
     "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
+    "commentColumn":"magn_non-specific_reference",
+    "commentColumnTitle": "Reference",
     "blanks":1,
     "single":1,
     "default":0,
@@ -376,6 +415,9 @@
     "comboTitle":"Depth (range, km)",
     "comboTitleEqual":"Depth (km)",
     "comboColumnId":"depth_lower",
+    "certaintyColumn":"depth_certainty",
+    "commentColumn":"depth_comment",
+    "commentColumnTitle": "Comment/details",
     "blanks":1,
     "single":1,
     "filterable":1,
@@ -391,6 +433,91 @@
       "max" : "depth_max"
     },
     "specified": 1
+  },
+  {
+    "id":"completeness",
+    "title":"Completeness",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"event_summary",
+    "title":"Event summary",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"impact_summary",
+    "title":"Impact summary",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"impact_summary",
+    "title":"Impact summary",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"photographs_available",
+    "title":"Photographs available?",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"ngdc_event_id",
+    "title":"NGDC Event ID",
+    "description":"TODO: description",
+    "type":"link",
+    "url":"//www.ngdc.noaa.gov/hazel/view/hazards/tsunami/event-more-info/[value]",
+    "group":"other",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"refs",
+    "title":"Refs",
+    "description":"TODO: description",
+    "type":"text",
+    "group":"other",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"previous_db_listing",
+    "title":"Previous database listing(s)",
+    "type":"text",
+    "group":"other",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"primary_id",
+    "title":"Primary source event",
+    "type":"reverse",
+    "blanks":1,
+    "filterable":0,
+    "group":"other",
+    "table":0,
+    "sortable":0
   },
   {
     "id":"related-records",

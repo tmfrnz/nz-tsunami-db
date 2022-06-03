@@ -33,7 +33,7 @@
   {
     "id":"tg-metrics",
     "section":"tide-gauge-records",
-    "title":"Tide Gauge: Measurements",
+    "title":"Tide Gauge: Metrics",
     "hint":"Attributes related to the record's measurements as per tide gauge"
   },
   {
@@ -52,7 +52,7 @@
   {
     "id":"obs-metrics",
     "section":"observations",
-    "title":"Obs: Measurements",
+    "title":"Obs: Metrics",
     "hint":"Attributes related to the record's measurements as observed"
   },
   {

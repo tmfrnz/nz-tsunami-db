@@ -19,9 +19,21 @@
   },
   {
     "id":"metrics",
-    "section":"general",
-    "title":"Measurements",
+    "section":"metrics",
+    "title":"Event metrics",
     "hint":"TODO"
+  },
+  {
+    "id":"metrics",
+    "section":"metrics",
+    "title":"Event metrics",
+    "hint":"TODO"
+  },
+  {
+    "id":"summary",
+    "section":"summary",
+    "title":"Further information",
+    "filter":false
   },
   {
     "id":"other",

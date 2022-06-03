@@ -11,6 +11,16 @@
     "group":"id"
   },
   {
+    "id":"trigger_event_id",
+    "title":"Source event",
+    "description":"Source event",
+    "type":"index",
+    "group":"other",
+    "multiples":0,
+    "filterable":0,
+    "sortable":0
+  },
+  {
     "id":"date_from",
     "title":"Date, earliest",
     "description":"Earliest date.",
@@ -1214,16 +1224,6 @@
       ]
     },
     "certaintyColumn":"obs_threat_level_certainty"
-  },
-  {
-    "id":"trigger_event_id",
-    "title":"Source event",
-    "description":"Source event",
-    "type":"index",
-    "group":"other",
-    "multiples":0,
-    "filterable":0,
-    "sortable":0
   },
   {
     "id":"references",
