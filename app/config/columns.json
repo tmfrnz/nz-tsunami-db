@@ -41,15 +41,15 @@
     "commentColumns":[
       {
         "column": "year_comment",
-        "title": "Year (previous database)"
+        "title": "Year (as entered)"
       },
       {
         "column": "month_comment",
-        "title": "Month (previous database)"
+        "title": "Month (as entered)"
       },
       {
         "column": "day_comment",
-        "title": "Day (previous database)"
+        "title": "Day (as entered)"
       }
     ],
     "default":1,
@@ -928,7 +928,7 @@
         "maxColumn":"obs_time_max_height_inundation_to",
         "specificityColumn":"obs_time_max_height_inundation_specificity",
         "certaintyColumn":"obs_time_max_height_inundation_certainty",
-        "commentColumn":"obs_time_max_heighobs_time_max_height_inundation_comment"
+        "commentColumn":"obs_time_max_height_inundation_comment"
       }
     ],
     "unit": "m",
@@ -1098,8 +1098,8 @@
     "group":"obs-metrics",
     "separator": ",",
     "values":{
-      "values":["RRF","BW","BC","BS","BR"],
-      "labels":["Rapid Rise & Fall","Breaking Wave","Bore/wall of smooth water on the Coast","Bore in coastal Stream or River","Bore in coastal River"]
+      "values":["RRF","BW","BC","BS"],
+      "labels":["Rapid Rise & Fall","Breaking Wave","Bore/wall of smooth water on the Coast","Bore in coastal Stream or River"]
     },
     "certaintyColumn":"obs_wave_type_certainty"
   },
@@ -1108,7 +1108,17 @@
     "title":"Measurement type",
     "description":"TODO",
     "type":"categorical",
-    "group":"obs-metrics"
+    "group":"obs-metrics",
+    "values":{
+      "values":["1a","1b","1c","2a","2b"],
+      "labels":[
+        "1a: specific observation",
+        "1b: at or nearshore observation",
+        "1c: 1/2 peak-trough at or nearshore observation",
+        "2a: specifc zero-peak tide gauge",
+        "2b: 1/2 peak-trough tide gauge"
+      ]
+    }
   },
   {
     "id":"obs_fatalities",

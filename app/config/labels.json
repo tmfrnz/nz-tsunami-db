@@ -60,6 +60,13 @@
       "pre" : "Please ",
       "anchor": "contact us",
       "post": " for more information"
+    },
+    "comment":"Comment/details",
+    "comment_time":"Time (as entered)",
+    "certainty_title": "Certainty",
+    "certainty_values": {
+      "1": "1 (good)",
+      "2": "2 (questionable/uncertain/range)"
     }
   },
   "sections": {

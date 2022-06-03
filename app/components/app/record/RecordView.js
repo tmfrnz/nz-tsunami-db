@@ -53,6 +53,7 @@ define([
       // var that = this
       var columnSections = this.model.getSections();
       var record = this.model.get("record");
+      var labels = this.model.getLabels();
       var that = this;
       var columnSectionGroups = _.map(
         columnSections,
@@ -157,7 +158,7 @@ define([
                                           res = res.concat(
                                             that.getCertaintyColumnHtml(
                                               dateCol.certaintyColumn,
-                                              '&mdash; Certainty'
+                                              '&mdash; ' + labels.record.certainty_title
                                             )
                                           );
                                         }
@@ -169,7 +170,7 @@ define([
                                           return res.concat(
                                             that.getCommentColumnHtml(
                                               dateCol.commentColumn,
-                                              'Time comment (previous database)'
+                                              labels.record.time_comment
                                             )
                                           );
                                         }
@@ -203,7 +204,7 @@ define([
                                         result = result.concat(
                                           that.getCertaintyColumnHtml(
                                             col.certaintyColumn,
-                                            '&mdash; Certainty'
+                                            '&mdash; ' + labels.record.certainty_title
                                           )
                                         );
                                       }
@@ -280,34 +281,31 @@ define([
       this.$('[data-toggle="tooltip"]').tooltip()
     },
     getCommentColumnHtml:function(commentCol, title){
-      var record = this.model.get("record")
+      var record = this.model.get("record");
+      var labels = this.model.getLabels();
       return _.template(templateColumnTextSecondary)({
-        t:this.model.getLabels(),
-        title: title || 'Comment/details',
+        t:labels,
+        title: title || labels.record.comment,
         value: record.get(commentCol),
         id:commentCol
       })
     },
     getAuxRangeColumnHTML:function(id, minValue, maxValue, title){
+      var labels = this.model.getLabels();
       return _.template(templateColumnTextSecondary)({
-        t:this.model.getLabels(),
-        title: title || 'Comment/details',
+        t:labels,
+        title: title || labels.record.comment,
         value:minValue === maxValue ? minValue : minValue + ' - ' + maxValue,
         id:id,
       })
     },
     getCertaintyColumnHtml:function(certCol, title){
       var record = this.model.get("record")
-      var value;
-      if (record.get(certCol) === 1 || record.get(certCol) === '1') {
-        value = '1 (definite/certain/exact)';
-      }
-      if (record.get(certCol) === 2 || record.get(certCol) === '2') {
-        value = '2 (questionable/uncertain/range)';
-      }
+      var labels = this.model.getLabels();
+      var value = labels.record.certainty_values[record.get(certCol)]
       return _.template(templateColumnTextSecondary)({
-        t:this.model.getLabels(),
-        title: title || 'Certainty',
+        t:labels,
+        title: title || labels.record.certainty_title,
         value: value,
         id:certCol
       })
