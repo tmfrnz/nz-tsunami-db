@@ -9,6 +9,7 @@ define([
   'text!./recordColumnRecords.html',
   // 'text!./recordColumnProxies.html',
   'text!./recordColumnReferences.html',
+  'text!./recordColumnLink.html',
 ], function (
   $, _, Backbone,
   bootstrap,
@@ -18,7 +19,8 @@ define([
   templateColumnTextSecondary,
   templateColumnSource,
   templateColumnRecords,
-  templateColumnReferences
+  templateColumnReferences,
+  templateColumnLink
 ) {
 
   var RecordView = Backbone.View.extend({
@@ -92,7 +94,7 @@ define([
                                 if (column.get('commentColumn')) {
                                   var commentValue = record.getColumnValue(column.get('commentColumn'))
                                   if (commentValue && commentValue !== '') {
-                                    result = result.concat(that.getCommentColumnHtml(column.get('commentColumn')))
+                                    result = result.concat(that.getCommentColumnHtml(column.get('commentColumn'), column.get('commentColumnTitle')))
                                   }
                                 }
                                 if (column.get('commentColumns') && column.get('commentColumns').length > 0) {
@@ -112,10 +114,6 @@ define([
                                     },
                                     result,
                                   )
-                                  var commentValue = record.getColumnValue(column.get('commentColumn'))
-                                  if (commentValue && commentValue !== '') {
-                                    result = result.concat(that.getCommentColumnHtml(column.get('commentColumn')))
-                                  }
                                 }
                                 if (column.get('dateColumns') && column.get('dateColumns').length > 0) {
                                   result = _.reduce(
@@ -352,6 +350,23 @@ define([
               hint:column.get("hint")
             })
           }
+          if (column.id === 'primary_id') {
+            if (record.getColumnValue(column.get("column")) && record.getColumnValue(column.get("column")) !== '') {
+              console.log()
+              return _.template(templateColumnSource)({
+                t:this.model.getLabels(),
+                title:column.get("title"),
+                source:null,
+                source_id:record.getColumnValue(column.get("column")),
+                id:column.id,
+                tooltip:column.get("description"),
+                tooltip_more:column.hasMoreDescription(),
+                hint:column.get("hint")
+              });
+            } else {
+              return false
+            }
+          }
           // TODO source
           break
         case "date" :
@@ -471,7 +486,19 @@ define([
             tooltip_more:column.hasMoreDescription(),
             hint:column.get("hint")
           })
-
+          break
+        case "link":
+          const url = column.get("url");
+          return _.template(templateColumnLink)({
+            t: this.model.getLabels(),
+            title: column.get("title"),
+            url: url.replace('[value]', record.getColumnValue(column.get("column"))),
+            value: record.getColumnValue(column.get("column")),
+            id: column.id,
+            tooltip: column.get("description"),
+            tooltip_more: column.hasMoreDescription(),
+            hint: column.get("hint")
+          })
           break
         default:
           return false

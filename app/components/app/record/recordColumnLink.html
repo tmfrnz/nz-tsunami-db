@@ -1,0 +1,25 @@
+<div class="record-column record-column-text record-column-link">
+  <div class="row">
+    <div class="col-xs-5">
+      <span class="column-title">
+        <%= title %>
+        <% if(tooltip !== "" && false) {%><a
+          data-toggle="tooltip"
+          data-placement="top"
+          title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
+          data-html="true"
+          href="#"
+          class="nav-link toggle-tooltip"
+          data-page-anchor="<%= id %>"
+          data-id="attributes">
+         <span class="icon-icon_info" aria-hidden="true"></span>
+       </a><% } %>
+      </span>
+    </div>
+    <div class="col-xs-7">
+      <a title="<%= value %>" href="<%= url %>" target="_blank" class="reference-link">
+        <%= value %>
+      </a>
+    </div>
+  </div>
+</div>
