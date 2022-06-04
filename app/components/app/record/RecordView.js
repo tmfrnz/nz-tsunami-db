@@ -352,7 +352,6 @@ define([
           }
           if (column.id === 'primary_id') {
             if (record.getColumnValue(column.get("column")) && record.getColumnValue(column.get("column")) !== '') {
-              console.log()
               return _.template(templateColumnSource)({
                 t:this.model.getLabels(),
                 title:column.get("title"),
@@ -519,7 +518,7 @@ define([
       e.preventDefault()
       var id = $(e.currentTarget).attr("data-recordid");
       var type = $(e.currentTarget).attr("data-recordtype");
-      console.log(type, id)
+      // console.log(type, id)
       if (type === 'source') {
         this.$el.trigger('sourceSelect',{id: 's' + id})
       } else {

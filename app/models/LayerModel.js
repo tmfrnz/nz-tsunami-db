@@ -109,7 +109,7 @@ define([
     },
     pointLayerClick:function(e){
       if (typeof this.attributes.eventContext !== "undefined") {
-        console.log("layer::pointLayerClick: " + this.id)
+        // console.log("layer::pointLayerClick: " + this.id)
 
         var containerPoint = this.attributes.mapLayer._map.layerPointToContainerPoint(e.layerPoint)
 

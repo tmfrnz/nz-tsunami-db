@@ -1232,7 +1232,7 @@ window.timeFromUpdate = Date.now()
     // select record from map marker
     pointLayerClick : function(e,args){
       // check if location a casestudy
-      console.log("pointLayerClick", args)
+      // console.log("pointLayerClick", args)
       var layerId = args.id
 
       if (layerId !== "") {
