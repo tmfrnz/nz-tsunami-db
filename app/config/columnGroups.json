@@ -62,6 +62,12 @@
     "hint":"Attributes related to the record's impacts as observed"
   },
   {
+    "id":"summary",
+    "section":"summary",
+    "title":"Further information",
+    "filter":false
+  },
+  {
     "id":"other",
     "section":"other",
     "title":"Related source event & references",

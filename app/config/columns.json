@@ -1226,6 +1226,33 @@
     "certaintyColumn":"obs_threat_level_certainty"
   },
   {
+    "id":"completeness",
+    "title":"Completeness",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"impact_summary",
+    "title":"Impact summary",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"previous_db_listing",
+    "title":"Previous database listing(s)",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
     "id":"references",
     "column":"reference_ids",
     "title":"Reference(s)",
