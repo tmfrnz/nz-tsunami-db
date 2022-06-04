@@ -14,7 +14,7 @@ define([
         title :           this.attributes.title || this.attributes.id,
         placeholders :    this.attributes.placeholders || null,
         addons :          this.attributes.addons || null,
-        description :     this.attributes.description || this.attributes.title || this.attributes.hint ,
+        description :     this.attributes.description || this.attributes.hint || null,
         descriptionMore:  this.attributes.descriptionMore || "",
         hint :            this.attributes.hint || "",
         // column type

@@ -3,7 +3,7 @@
     <div class="col-xs-12">
       <div class="column-title">
         <%= title %>
-        <% if(tooltip !== "" && false) {%><a
+        <% if(tooltip && tooltip !== "") {%><a
           data-toggle="tooltip"
           data-placement="top"
           title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
