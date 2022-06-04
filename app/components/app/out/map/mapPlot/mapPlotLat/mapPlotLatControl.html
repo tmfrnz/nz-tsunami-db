@@ -10,7 +10,7 @@
     </td>
     <td class="select-label">
       <label><%= col.title %>
-        <!-- <a
+        <% if(tooltip && tooltip !== "") {%><a
           data-toggle="tooltip"
           data-placement="bottom"
           title="<%= col.tooltip_more ? col.tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : col.tooltip%>"
@@ -20,7 +20,7 @@
           data-page-anchor="<%= col.id %>"
           data-id="attributes">
           <span class="icon-icon_info" aria-hidden="true"></span>
-        </a> -->
+        </a><% } %>
       </label>
     </td>
   </tr>
