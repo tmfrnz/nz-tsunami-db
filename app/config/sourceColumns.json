@@ -62,7 +62,7 @@
     "title":"Region",
     "description":"region description TODO",
     "type":"categorical",
-    "certaintyColumn":"date_certainty",
+    "certaintyColumn":"region_certainty",
     "commentColumn":"location_reference",
     "commentColumnTitle":"Location reference",
     "group":"site",
