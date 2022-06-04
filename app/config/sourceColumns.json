@@ -485,7 +485,7 @@
     "description":"TODO: description",
     "type":"link",
     "url":"//www.ngdc.noaa.gov/hazel/view/hazards/tsunami/event-more-info/[value]",
-    "group":"other",
+    "group":"summary",
     "filterable":0,
     "searchable":1,
     "sortable":0
@@ -495,7 +495,7 @@
     "title":"Refs",
     "description":"TODO: description",
     "type":"text",
-    "group":"other",
+    "group":"summary",
     "filterable":0,
     "searchable":1,
     "sortable":0
@@ -504,7 +504,7 @@
     "id":"previous_db_listing",
     "title":"Previous database listing(s)",
     "type":"text",
-    "group":"other",
+    "group":"summary",
     "filterable":0,
     "searchable":1,
     "sortable":0
