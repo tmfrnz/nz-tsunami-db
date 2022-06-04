@@ -13,8 +13,6 @@
   {
     "id":"date_from",
     "title":"Date, earliest",
-    "description":"Earliest date.",
-    "descriptionMore":"More description (optional)",
     "type":"date",
     "group":"site",
     "combo":1,
@@ -28,7 +26,6 @@
   {
     "id":"date_to",
     "title":"Date, latest",
-    "description":"Latest date.",
     "comboDescription":"Showing date range when uncertain",
     "type":"date",
     "group":"site",
@@ -60,7 +57,6 @@
   {
     "id":"region",
     "title":"Region",
-    "description":"region description TODO",
     "type":"categorical",
     "certaintyColumn":"region_certainty",
     "commentColumn":"location_reference",
@@ -79,7 +75,6 @@
     "unit": "°",
     "title":"Latitude",
     "description":"Source location latitude using decimal degrees.",
-    "descriptionMore":"(4 decimal places)",
     "placeholders":{
       "min" : "South",
       "max" : "North"
@@ -103,7 +98,6 @@
     "unit": "°",
     "title":"Longitude",
     "description":"Source location longitude using decimal degrees.",
-    "descriptionMore":"(4 decimal places)",
     "placeholders":{
       "min" : "West",
       "max" : "East"
@@ -133,8 +127,6 @@
   {
     "id":"source_class",
     "title":"Source cause",
-    "description":"TODO",
-    "descriptionMore": "TODO: more description",
     "type":"ordinal",
     "default":1,
     "multiple": 1,
@@ -196,7 +188,6 @@
     "id":"class",
     "title":"Source class",
     "description":"Source class/proximity to nearest NZ coast, incl. Chatham Islands",
-    "descriptionMore": "TODO: more description",
     "type":"ordinal",
     "default":0,
     "colorable":1,
@@ -221,8 +212,6 @@
   {
     "id":"magn_moment_lower",
     "title":"Magnitude local, lower",
-    "description":"Magnitude local description",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
     "combo":1,
@@ -235,8 +224,6 @@
   {
     "id":"magn_moment_upper",
     "title":"Magnitude moment, upper",
-    "description":"Magnitude moment description",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
     "combo":1,
@@ -274,8 +261,6 @@
   {
     "id":"magn_local_lower",
     "title":"Magnitude local, lower",
-    "description":"Magnitude local description",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
     "combo":1,
@@ -288,8 +273,6 @@
   {
     "id":"magn_local_upper",
     "title":"Magnitude local, upper",
-    "description":"Magnitude local description",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
     "combo":1,
@@ -319,8 +302,6 @@
   {
     "id":"magn_surface_wave",
     "title":"Magnitude surface wave",
-    "description":"Magnitude surface wave description",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
     "blanks":1,
@@ -343,8 +324,6 @@
   {
     "id":"magn_mantle",
     "title":"Magnitude mantle",
-    "description":"Magnitude mantle description",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
     "commentColumn":"magn_mantle_reference",
@@ -367,8 +346,6 @@
   {
     "id":"magn_non-specific",
     "title":"Magnitude non-specific",
-    "description":"Magnitude non-specific description",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
     "commentColumn":"magn_non-specific_reference",
@@ -391,8 +368,6 @@
   {
     "id":"depth_lower",
     "title":"Depth, lower (km)",
-    "description":"Depth description",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
     "combo":1,
@@ -405,8 +380,6 @@
   {
     "id":"depth_upper",
     "title":"Depth, upper (km)",
-    "description":"Depth description",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"metrics",
     "combo":1,
@@ -480,9 +453,18 @@
     "sortable":0
   },
   {
+    "id":"source_material",
+    "title":"Source material",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
     "id":"ngdc_event_id",
     "title":"NGDC Event ID",
-    "description":"TODO: description",
+    "description":"Click to see event details on NOAA's NGDC (National Geophysical Data Center) - opens in new tab",
     "type":"link",
     "url":"//www.ngdc.noaa.gov/hazel/view/hazards/tsunami/event-more-info/[value]",
     "group":"summary",
@@ -522,7 +504,7 @@
   {
     "id":"related-records",
     "title":"Record(s)",
-    "description":"Records related to source event",
+    "description":"Records related to source event - click to explore details",
     "type":"reverse",
     "blanks":1,
     "filterable":0,

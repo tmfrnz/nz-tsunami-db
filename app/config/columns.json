@@ -13,7 +13,7 @@
   {
     "id":"trigger_event_id",
     "title":"Source event",
-    "description":"Source event",
+    "description":"Click to explore source event",
     "type":"index",
     "group":"other",
     "multiples":0,
@@ -23,8 +23,6 @@
   {
     "id":"date_from",
     "title":"Date, earliest",
-    "description":"Earliest date.",
-    "descriptionMore":"More description (optional)",
     "type":"date",
     "group":"site",
     "combo":1,
@@ -36,7 +34,6 @@
   {
     "id":"date_to",
     "title":"Date, latest",
-    "description":"Latest date.",
     "comboDescription":"Showing date range when uncertain",
     "type":"date",
     "group":"site",
@@ -98,7 +95,6 @@
     },
     "title":"Latitude",
     "description":"Site location latitude using decimal degrees.",
-    "descriptionMore":"(4 decimal places)",
     "hint":"Alternatively you can set the filter area by drawing a rectangle on the map.",
     "placeholders":{
       "min" : "South",
@@ -121,7 +117,6 @@
     },
     "title":"Longitude",
     "description":"Site location longitude using decimal degrees.",
-    "descriptionMore":"(4 decimal places)",
     "hint":"Alternatively you can set the filter area by drawing a rectangle on the map.",
     "placeholders":{
       "min" : "West",
@@ -138,7 +133,6 @@
     "id":"validity",
     "title":"Validity",
     "description":"Validity - Definite/Probable/Questionable/Very doubtful/Erroneous.",
-    "descriptionMore": "TODO: description",
     "type":"ordinal",
     "default":1,
     "colorable":1,
@@ -146,20 +140,12 @@
     "values":{
       "values":["4","3","2","1","0"],
       "labels":["Definite","Probable","Questionable/unlikely","Very doubtful/highly unlikely","Erroneous/definitely not"],
-      "descriptions":[
-        "Definite: description TODO",
-        "Probable: description TODO",
-        "Questionable/unlikely: description TODO",
-        "Very doubtful/highly unlikely: description TODO",
-        "Erroneous/definitely not: description TODO"
-      ],
       "colors":["#2EA563","#FFA700","#E34E4F","#8165B9","#969696"]
     }
   },
   {
     "id":"is_tsunami_observed",
     "title":"Tsunami observed?",
-    "description":"TODO: description",
     "type":"binary",
     "group":"class",
     "certaintyColumn":"is_tsunami_observed_certainty",
@@ -171,7 +157,6 @@
   {
     "id":"is_seiche_observed",
     "title":"Seiche observed?",
-    "description":"TODO: description",
     "type":"binary",
     "group":"class",
     "certaintyColumn":"is_seiche_observed_certainty",
@@ -183,7 +168,6 @@
   {
     "id":"source_material",
     "title":"Source Material",
-    "description":"TODO: description",
     "type":"text",
     "group":"source",
     "filterable":0,
@@ -193,7 +177,6 @@
   {
     "id":"discussion",
     "title":"Discussion of Data",
-    "description":"TODO: description",
     "type":"text",
     "group":"source",
     "filterable":0,
@@ -203,7 +186,6 @@
   {
     "id":"obs_photographs",
     "title":"Photographs available?",
-    "description":"TODO: description",
     "type":"text",
     "group":"source",
     "filterable":0,
@@ -214,7 +196,6 @@
     "id":"time_arrival_from",
     "title":"Time of arrival, earliest",
     "description":"Earliest time of arrival.",
-    "descriptionMore":"More description (optional)",
     "type":"date",
     "group":"tg-time",
     "combo":1,
@@ -255,7 +236,6 @@
   {
     "id":"time_elapsed",
     "title":"Time elapsed (h)",
-    "description":"Time elapsed (h)",
     "type":"quantitative",
     "group":"tg-time",
     "default":1,
@@ -276,7 +256,6 @@
     "id":"surge_duration_lower",
     "title":"Surge duration (h), lower",
     "description":"Earliest time of arrival.",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"tg-time",
     "combo":1,
@@ -286,7 +265,6 @@
   {
     "id":"surge_duration_upper",
     "title":"Surge duration (h), upper",
-    "description":"Surge duration.",
     "comboDescription":"Showing date range when uncertain",
     "type":"quantitative",
     "group":"tg-time",
@@ -312,8 +290,6 @@
   {
     "id":"max_effective_peak-trough_lower",
     "title":"Max effective peak-trough, min (m)",
-    "description":"Max effective peak-trough, min.",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"tg-metrics",
     "combo":1,
@@ -323,7 +299,6 @@
   {
     "id":"max_effective_peak-trough_upper",
     "title":"Max effective peak-trough, max (m)",
-    "description":"Max effective peak-trough",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"tg-metrics",
@@ -377,7 +352,6 @@
   {
     "id":"max_effective_zeropeak",
     "title":"Max effective zero peak",
-    "description":"Max effective zero peak",
     "type":"quantitative",
     "group":"tg-metrics",
     "certaintyColumn":"max_effective_zeropeak_certainty",
@@ -413,7 +387,6 @@
   {
     "id":"is_first_motion_up",
     "title":"First motion?",
-    "description":"TODO: description",
     "type":"categorical",
     "group":"tg-metrics",
     "colorable":1,
@@ -426,7 +399,6 @@
   {
     "id":"predominant_periods",
     "title":"Predominant Periods (s)",
-    "description":"TODO: description",
     "type":"text",
     "group":"tg-metrics",
     "filterable":0,
@@ -435,7 +407,6 @@
   {
     "id":"tidal_records",
     "title":"Tidal Records",
-    "description":"TODO: description",
     "type":"text",
     "group":"tg-metrics",
     "filterable":0,
@@ -445,7 +416,6 @@
   {
     "id":"reference_datasource",
     "title":"Reference (tide gauge)",
-    "description":"TODO: description",
     "type":"text",
     "group":"tg-metrics",
     "filterable":0,
@@ -455,7 +425,6 @@
   {
     "id":"obs_time_first_arrival_from",
     "title":"Observed time of arrival, earliest",
-    "description":"TODO",
     "type":"date",
     "group":"obs-time",
     "combo":1,
@@ -466,7 +435,6 @@
   {
     "id":"obs_time_first_arrival_to",
     "title":"Observed time of arrival, latest",
-    "description":"TODO",
     "comboDescription":"Showing date range when uncertain",
     "type":"date",
     "group":"obs-time",
@@ -494,7 +462,6 @@
   {
     "id":"obs_first_arrival_comments",
     "title":"First arrival: comments",
-    "description":"TODO: description",
     "type":"text",
     "group":"obs-time",
     "filterable":0,
@@ -504,7 +471,6 @@
   {
     "id":"time_arrival_expected_from",
     "title":"Expected time of arrival, earliest",
-    "description":"TODO",
     "type":"date",
     "group":"obs-time",
     "combo":1,
@@ -514,7 +480,6 @@
   {
     "id":"time_arrival_expected_to",
     "title":"Expected time of arrival, latest",
-    "description":"TODO",
     "comboDescription":"Showing date range when uncertain",
     "type":"date",
     "group":"obs-time",
@@ -543,8 +508,6 @@
   {
     "id":"obs_observed_time_lapsed_lower",
     "title":"Time elapsed from generation, min (h)",
-    "description":"TODO",
-    "descriptionMore":"TODO (optional)",
     "type":"quantitative",
     "group":"obs-time",
     "combo":1,
@@ -555,8 +518,6 @@
   {
     "id":"obs_observed_time_lapsed_upper",
     "title":"Time elapsed from generation, max (h)",
-    "description":"TODO",
-    "comboDescription":"TODO (optional)",
     "type":"quantitative",
     "group":"obs-time",
     "combo":1,
@@ -582,8 +543,6 @@
   {
     "id":"traveltime_firstarrival_lower",
     "title":"Expected travel time, min (h)",
-    "description":"TODO",
-    "descriptionMore":"TODO (optional)",
     "type":"quantitative",
     "group":"obs-time",
     "combo":1,
@@ -593,8 +552,6 @@
   {
     "id":"traveltime_firstarrival_upper",
     "title":"Expected travel time, max (h)",
-    "description":"TODO",
-    "comboDescription":"TODO (optional)",
     "type":"quantitative",
     "group":"obs-time",
     "combo":1,
@@ -619,8 +576,6 @@
   {
     "id":"obs_surge_duration_min_lower",
     "title":"Duration of noticeable surges, min (h)",
-    "description":"TODO",
-    "descriptionMore":"TODO (optional)",
     "type":"quantitative",
     "group":"obs-time",
     "combo":1,
@@ -630,8 +585,6 @@
   {
     "id":"obs_surge_duration_min_upper",
     "title":"Duration of noticeable surges, max (h)",
-    "description":"TODO",
-    "comboDescription":"TODO (optional)",
     "type":"quantitative",
     "group":"obs-time",
     "combo":1,
@@ -657,8 +610,6 @@
   {
     "id":"obs_max_peak-trough_lower",
     "title":"Obs. max effective peak-trough, min (m)",
-    "description":"Obs. max Eff. Peak/Trough.",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"obs-metrics",
     "combo":1,
@@ -668,7 +619,6 @@
   {
     "id":"obs_max_peak-trough_upper",
     "title":"Obs. max effective peak-trough, max (m)",
-    "description":"Obs. max Eff. Peak/Trough.",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
@@ -712,8 +662,6 @@
   {
     "id":"obs_water_elevation_shore_lower",
     "title":"Max water elevation, min (m)",
-    "description":"Max water elevation",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"obs-metrics",
     "combo":1,
@@ -723,7 +671,6 @@
   {
     "id":"obs_water_elevation_shore_upper",
     "title":"Max water elevation, max (m)",
-    "description":"obs_water_elevation_shore.",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
@@ -764,8 +711,6 @@
   {
     "id":"obs_height_max_at-inundation_lower",
     "title":"Max height reached at inundation limit, min (m)",
-    "description":"Max water elevation",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"obs-metrics",
     "combo":1,
@@ -775,7 +720,6 @@
   {
     "id":"obs_height_max_at-inundation_upper",
     "title":"Max height reached at inundation limit, max (m)",
-    "description":"obs_water_elevation_shore.",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
@@ -813,8 +757,6 @@
   {
     "id":"obs_waterheight_at-inundation_proxy_min",
     "title":"Waterheight at inundation (proxy), min (m)",
-    "description":"Max water elevation",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"obs-metrics",
     "combo":1,
@@ -824,7 +766,6 @@
   {
     "id":"obs_waterheight_at-inundation_proxy_max",
     "title":"Waterheight at inundation (proxy), max (m)",
-    "description":"obs_water_elevation_shore.",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
@@ -850,7 +791,6 @@
   {
     "id":"obs_height_onshore",
     "title":"Max onshore height reached relative to sea level (m)",
-    "description":"TODO",
     "type":"quantitative",
     "group":"obs-metrics",
     "unit": "m",
@@ -869,8 +809,6 @@
   {
     "id":"obs_extent_inundation_lower",
     "title":"Max horizontal extent of inundation, min (m)",
-    "description":"Max water elevation",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"obs-metrics",
     "combo":1,
@@ -880,7 +818,6 @@
   {
     "id":"obs_extent_inundation_upper",
     "title":"Max horizontal extent of inundation, max (m)",
-    "description":"TODO",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
@@ -908,8 +845,6 @@
   {
     "id":"obs_height_max_inundation_lower",
     "title":"Max observed height of inundation above MSL, min (m)",
-    "description":"TODO",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"obs-metrics",
     "combo":1,
@@ -919,7 +854,6 @@
   {
     "id":"obs_height_max_inundation_upper",
     "title":"Max observed height of inundation above MSL, max (m)",
-    "description":"TODO",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
@@ -957,8 +891,6 @@
   {
     "id":"obs_distance_travelled_lower",
     "title":"Distance travelled up stream/river, min (km)",
-    "description":"TODO",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"obs-metrics",
     "combo":1,
@@ -968,7 +900,6 @@
   {
     "id":"obs_distance_travelled_upper",
     "title":"Distance travelled up stream/river, max (km)",
-    "description":"TODO",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
@@ -996,8 +927,6 @@
   {
     "id":"obs_height_max_bore_lower",
     "title":"Max height of bore in stream/river, min (km)",
-    "description":"TODO",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"obs-metrics",
     "combo":1,
@@ -1007,7 +936,6 @@
   {
     "id":"obs_height_max_bore_upper",
     "title":"Max height of bore in stream/river, max (km)",
-    "description":"TODO",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
@@ -1034,7 +962,6 @@
   {
     "id":"obs_is_first_motion-up",
     "title":"First motion (observed)?",
-    "description":"TODO: description",
     "type":"categorical",
     "group":"obs-metrics",
     "certaintyColumn":"obs_is_first_motion-up_certainty",
@@ -1046,8 +973,6 @@
   {
     "id":"obs_predominant_period_lower",
     "title":"Predominant periods, min (s)",
-    "description":"TODO",
-    "descriptionMore":"More description (optional)",
     "type":"quantitative",
     "group":"obs-metrics",
     "combo":1,
@@ -1057,7 +982,6 @@
   {
     "id":"obs_predominant_period_upper",
     "title":"Predominant periods, max (s)",
-    "description":"TODO",
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
@@ -1085,7 +1009,6 @@
   {
     "id":"obs_no_sig-waves",
     "title":"No of significant waves",
-    "description":"TODO",
     "type":"discrete",
     "group":"obs-metrics",
     "values":{
@@ -1103,7 +1026,6 @@
   {
     "id":"obs_wave_type",
     "title":"Wave type",
-    "description":"TODO",
     "type":"categorical",
     "group":"obs-metrics",
     "separator": ",",
@@ -1116,7 +1038,6 @@
   {
     "id":"obs_measurement_type",
     "title":"Measurement type",
-    "description":"TODO",
     "type":"categorical",
     "group":"obs-metrics",
     "values":{
@@ -1133,7 +1054,6 @@
   {
     "id":"obs_fatalities",
     "title":"Fatalities",
-    "description":"TODO",
     "type":"discrete",
     "group":"obs-impacts",
     "values":{
@@ -1153,7 +1073,6 @@
   {
     "id":"obs_injuries",
     "title":"Injuries",
-    "description":"TODO",
     "type":"discrete",
     "group":"obs-impacts",
     "values":{
@@ -1172,7 +1091,6 @@
   {
     "id":"obs_damage",
     "title":"Damage",
-    "description":"TODO: description",
     "type":"text",
     "group":"obs-impacts",
     "filterable":0,
@@ -1209,7 +1127,6 @@
   {
     "id":"obs_threat_level",
     "title":"Threat level",
-    "description":"TODO",
     "type":"ordinal",
     "group":"obs-impacts",
     "values":{
@@ -1257,7 +1174,6 @@
     "column":"reference_ids",
     "title":"Reference(s)",
     "type":"index",
-    "description":"TODO: reference description",
     "group":"other",
     "filterable":0,
     "table":0,
