@@ -528,6 +528,7 @@
     "filterable":0,
     "group":"other",
     "table":0,
+    "export":0,
     "sortable":0
   },
   {

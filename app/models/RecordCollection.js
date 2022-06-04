@@ -234,6 +234,11 @@ define([
       var keys = _.reduce(
         columns.models,
         function(memo, col) {
+          if (
+            typeof col.get('export') !== 'undefined' && (col.get('export') === 0 || col.get('export') === '0')
+          ) {
+            return memo;
+          }
           var result = memo.concat(col.getQueryColumn());
           if (
             col.get('combo') === 1 &&
