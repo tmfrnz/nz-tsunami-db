@@ -969,7 +969,10 @@ window.timeFromUpdate = Date.now()
       ))
       var that = this
       waitFor(
-        function(){ return that.model.recordsConfigured() },
+        function(){
+          return that.model.recordsConfigured() &&
+          that.model.sourcesConfigured()
+        },
         //then
         function(){
 // console.log("done... configureReferences")
