@@ -78,7 +78,6 @@
     "id":"placename",
     "column":"placename",
     "title":"Placename",
-    "description":"Placename",
     "type":"categorical",
     "group":"site",
     "searchable":1,
