@@ -313,7 +313,7 @@ define([
       // console.log('getColumnHtml', column.get('type'))
       switch (column.get("type")){
         // lookup related records
-        case "reverse":
+        case "related":
           if (column.id === 'related-records') {
             // console.log('getColumnHtml', record.getChildren(), record)
             return _.template(templateColumnRecords)({

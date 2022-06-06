@@ -50,9 +50,15 @@ a.close-page {
 }
 
 #page h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 80px;
+    padding-top: 80px;
+    border-top: 1px solid #E5E7E9;
+}
+#page h3 {
     font-size: 20px;
     font-weight: 700;
-    margin-top: 40px;
 }
 
 #page .group hr {
@@ -60,9 +66,11 @@ a.close-page {
     margin-bottom: 10px;
     margin-top: 10px;
 }
-#page h3 {
+#page h4 {
     font-size: 18px;
+    margin-top: 20px;
     margin-bottom: 5px;
+    text-transform: none;
 }
 
 #page .group p {
@@ -80,14 +88,18 @@ a.close-page {
     border-bottom: none;
 }
 
-#page .record-column .hint {
+#page .record-column .column-hint {
     font-family: 'Titillium Web', sans-serif;
     font-size: 100%;
     font-weight: 600;
     margin-top: 10px
 }
+#page .record-column .hint {
+    margin-top: 10px;
+    font-style: italic;
+}
 
-#page .record-column h4 {
+#page .record-column h5 {
     color: #808990;
     font-size: 17px;
     text-transform: none;

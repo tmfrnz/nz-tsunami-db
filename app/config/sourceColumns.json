@@ -167,19 +167,14 @@
           "color": "#69321E"
         },
         {
-          "values": ["0"],
-          "label": "Unknown",
-          "color": "#969696"
-        },
-        {
-          "values": ["3", "4", "5", "7"],
-          "label": "Multiple causes",
-          "color": "#412417"
-        },
-        {
           "values": ["2", "9", "10", "11", "12", "13", "14"],
           "label": "Other causes",
           "color": "#022C5A"
+        },
+        {
+          "values": ["0"],
+          "label": "Unknown",
+          "color": "#969696"
         }
       ]
     }
@@ -201,7 +196,7 @@
       "values":["LOCAL","REGIONAL","DISTANT","UNKNOWN", "multiple", "null"],
       "labels":["Local","Regional","Distant","Unknown", "Multiple classes", "Unspecified"],
       "colors":["#D16800","#AA4E13","#69321E","#969696", "#222222", "#ff00ee"],
-      "description":[
+      "descriptions":[
         "Local: < 1h travel time",
         "Regional: 1-3h travel time",
         "Distant: > 3h travel time",
@@ -211,7 +206,7 @@
   },
   {
     "id":"magn_moment_lower",
-    "title":"Magnitude local, lower",
+    "title":"Magnitude moment, lower",
     "type":"quantitative",
     "group":"metrics",
     "combo":1,
@@ -464,7 +459,7 @@
   {
     "id":"ngdc_event_id",
     "title":"NGDC Event ID",
-    "description":"Click to see event details on NOAA's NGDC (National Geophysical Data Center) - opens in new tab",
+    "hint":"Click to see event details on NOAA's NGDC (National Geophysical Data Center) - opens in new tab",
     "type":"link",
     "url":"//www.ngdc.noaa.gov/hazel/view/hazards/tsunami/event-more-info/[value]",
     "group":"summary",
@@ -475,7 +470,6 @@
   {
     "id":"refs",
     "title":"Refs",
-    "description":"TODO: description",
     "type":"text",
     "group":"summary",
     "filterable":0,
@@ -494,7 +488,8 @@
   {
     "id":"primary_id",
     "title":"Primary source event",
-    "type":"reverse",
+    "description":"The primary source event",
+    "type":"related",
     "blanks":1,
     "filterable":0,
     "group":"other",
@@ -504,8 +499,9 @@
   {
     "id":"related-records",
     "title":"Record(s)",
-    "description":"Records related to source event - click to explore details",
-    "type":"reverse",
+    "description":"Records related to source event.",
+    "hint":"Click to explore details",
+    "type":"related",
     "blanks":1,
     "filterable":0,
     "group":"other",
@@ -516,9 +512,9 @@
   {
     "id":"references",
     "column":"reference_ids",
+    "dbDescription":"Storing reference ids in comma-separated list",
     "title":"Reference(s)",
     "type":"index",
-    "description":"TODO: reference description",
     "blanks":1,
     "filterable":0,
     "group":"other",

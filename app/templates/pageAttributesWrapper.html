@@ -1,0 +1,95 @@
+<h1 id="frameworkandattributes">Framework and Attributes</h1>
+<blockquote>
+  <p>The framework for the New Zealand Tsunami Database (Database) is based on a series of key data attributes which help to clarify the nature of the published and unpublished data, including records and source events. These attributes are defined below.</p>
+</blockquote>
+<p>
+  In addition to the attributes for records and source events, a section on auxiliary attributes is included at the end of this page for attributes providing additional information on their related primary attributes.
+</p>
+<div class="row">
+  <div class="col-sm-12">
+    <h2><%= t.pages.attributes.records %></h2>
+  </div>
+</div>
+<%= records %>
+<div class="row">
+  <div class="col-sm-12">
+    <h2><%= t.pages.attributes.sources %></h2>
+  </div>
+</div>
+<%= sources %>
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Auxiliary attributes</h2>
+    <p>For some attributes additional information is stored in auxiliary columns that help with their interpretation. While the individual database column names are given below for each attribute, here a quick overview of the different auxiliary columns and possible values</p>
+    <div class="record-column">
+      <h4>Specificity</h4>
+      <p>Indicating the relevant specificity of related date/time attributes</p>
+      <h5><%= t.pages.attributes.values %></h5>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Database value</th>
+              <th>Label</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>y</code></td>
+              <td>Year</td>
+              <td>ignore month, day & time</td>
+            </tr>
+            <tr>
+              <td><code>m</code></td>
+              <td>Month</td>
+              <td>ignore day & time</td>
+            </tr>
+            <tr>
+              <td><code>d</code></td>
+              <td>Day</td>
+              <td>ignore time</td>
+            </tr>
+            <tr>
+              <td><code>t</code></td>
+              <td>Time</td>
+              <td>fully specified</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="record-column">
+      <h4>Certainty</h4>
+      <p>Indicating certainty of related quantitative or categorical attributes</p>
+      <h5><%= t.pages.attributes.values %></h5>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Database value</th>
+              <th>Label</th>
+              <!-- <th>Description</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>1</code></td>
+              <td>Good</td>
+              <!-- <td></td> -->
+            </tr>
+            <tr>
+              <td><code>2</code></td>
+              <td>Questionable/uncertain/range</td>
+              <!-- <td></td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="record-column">
+      <h4>Comment/details</h4>
+      <p>Additional information, often storing values "as entered"</p>
+    </div>
+  </div>
+</div>

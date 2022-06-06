@@ -142,7 +142,16 @@
   },
   "pages": {
     "attributes": {
-      "db_column_hint": "Database column name",
+      "records": "Record attributes",
+      "sources": "Source event attributes",
+      "type_hint": "Column type",
+      "db_column_hint": "Database column",
+      "db_columns_hint": "Database columns",
+      "spec_column_hint": "Specificity column (auxiliary attribute)",
+      "certainty_column_hint": "Certainty column (auxiliary attribute)",
+      "comment_column_hint": "Comment column (auxiliary attribute)",
+      "comment_columns_hint": "Comment columns (auxiliary attributes)",
+      "aux_hint": "Please refer to the end of this page for more information on and possible values of the auxiliary attributes",
       "values": "Values",
       "label": "Label",
       "proxy": "Proxy",

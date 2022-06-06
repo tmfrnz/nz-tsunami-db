@@ -13,7 +13,7 @@
   {
     "id":"trigger_event_id",
     "title":"Source event",
-    "description":"Click to explore source event",
+    "hint":"Click to explore source event",
     "type":"index",
     "group":"other",
     "multiples":0,
@@ -254,7 +254,6 @@
   {
     "id":"surge_duration_lower",
     "title":"Surge duration (h), lower",
-    "description":"Earliest time of arrival.",
     "type":"quantitative",
     "group":"tg-time",
     "combo":1,
@@ -405,9 +404,9 @@
   },
   {
     "id":"tidal_records",
-    "title":"Tidal Records",
+    "title":"Tidal Records available?",
     "type":"text",
-    "group":"tg-metrics",
+    "group":"tg-sources",
     "filterable":0,
     "searchable":1,
     "sortable":0
@@ -416,7 +415,7 @@
     "id":"reference_datasource",
     "title":"Reference (tide gauge)",
     "type":"text",
-    "group":"tg-metrics",
+    "group":"tg-sources",
     "filterable":0,
     "searchable":1,
     "sortable":0
@@ -1171,6 +1170,7 @@
     "id":"references",
     "column":"reference_ids",
     "title":"Reference(s)",
+    "dbDescription":"Storing reference ids in comma-separated list",
     "type":"index",
     "group":"other",
     "filterable":0,

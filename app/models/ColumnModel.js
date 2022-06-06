@@ -14,7 +14,7 @@ define([
         title :           this.attributes.title || this.attributes.id,
         placeholders :    this.attributes.placeholders || null,
         addons :          this.attributes.addons || null,
-        description :     this.attributes.description || this.attributes.hint || null,
+        description :     this.attributes.description || null,
         descriptionMore:  this.attributes.descriptionMore || "",
         hint :            this.attributes.hint || "",
         // column type
@@ -47,6 +47,10 @@ define([
         combo:            typeof this.attributes.combo !== "undefined" ? this.attributes.combo : 0,
         comboMain:        this.attributes.comboMain || 0,
         comboColumnId:    this.attributes.comboColumnId || null,
+        certaintyColumn:    this.attributes.certaintyColumn || null,
+        specificityColumn:    this.attributes.specificityColumn || null,
+        commentColumn:    this.attributes.commentColumn || null,
+        commentColumns:    this.attributes.commentColumns || null,
         comboType:        this.attributes.comboType || null,
         comboTitle:       this.attributes.comboTitle || this.attributes.title || this.attributes.id,
         comboDescription: this.attributes.comboDescription || this.attributes.description || "",
@@ -146,6 +150,12 @@ define([
     hasMoreDescription: function(){
       return this.attributes.descriptionMore !== ""
       || (typeof this.attributes.values.descriptions !== "undefined" && this.attributes.values.descriptions.length > 0)
+    },
+    hasAuxColumns: function(){
+      return this.attributes.specificityColumn
+        || this.attributes.certaintyColumn
+        || this.attributes.commentColumn
+        || this.attributes.commentColumns
     },
     getColor:function(value){
       if(this.get("colorable") === 1) {

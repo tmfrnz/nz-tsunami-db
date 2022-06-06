@@ -1,10 +1,12 @@
 define([
   'jquery', 'underscore', 'backbone','leaflet',
   './ContentModel',
-  'text!templates/pageAttributes.html'
+  'text!templates/pageAttributes.html',
+  'text!templates/pageAttributesWrapper.html'
 ], function($,_, Backbone,leaflet,
   ContentModel,
-  templatePageAttributes
+  templatePageAttributes,
+  templatePageAttributesWrapper
 ){
 
   var PageModel = ContentModel.extend({
@@ -52,26 +54,46 @@ define([
         } else {
           this.isContentLoading = true
           this.loadContent(function(content){
-
             if (that.id === "attributes") {
               var columnCollection = that.get("columnCollection")
-              that.set('content', _.template(templatePageAttributes)({
+              var sourceColumnCollection = that.get("sourceColumnCollection")
+              var sourceColumnGroupCollection = that.get("sourceColumnGroupCollection")
+              that.set('content', _.template(templatePageAttributesWrapper)({
                 t:that.collection.options.labels,
-                content: content,
-                columnGroups:_.map(that.get("columnGroupCollection").models,function(group){
-                  // group classes
-                  var classes = "group-" + group.id
+                records: _.template(templatePageAttributes)({
+                  t:that.collection.options.labels,
+                  columnGroups:_.map(that.get("columnGroupCollection").models,function(group){
+                    // group classes
+                    var classes = "group-" + group.id
 
-                  var columnsByGroup = columnCollection.byGroup(group.id).models
+                    var columnsByGroup = columnCollection.byGroup(group.id).models
 
-                  return {
-                    title:group.get("title"),
-                    hint:group.get("hint"),
-                    id:group.id,
-                    classes: classes,
-                    groupColumns: columnsByGroup
-                  }
-                })
+                    return {
+                      title:group.get("title"),
+                      hint:group.get("hint"),
+                      id:group.id,
+                      classes: classes,
+                      groupColumns: columnsByGroup
+                    }
+                  }),
+                }),
+                sources: _.template(templatePageAttributes)({
+                  t:that.collection.options.labels,
+                  columnGroups:_.map(that.get("sourceColumnGroupCollection").models,function(group){
+                    // group classes
+                    var classes = "source-group-" + group.id
+
+                    var columnsByGroup = sourceColumnCollection.byGroup(group.id).models
+                    console.log(columnsByGroup)
+                    return {
+                      title:group.get("title"),
+                      hint:group.get("hint"),
+                      id:group.id,
+                      classes: classes,
+                      groupColumns: columnsByGroup
+                    }
+                  }),
+              }),
               }))
             } else {
               that.set('content', that.setupContent($(content)))

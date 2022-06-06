@@ -9,7 +9,6 @@ define([
   "text!templates/content_usage.html",
   "text!templates/content_contact.html",
   "text!templates/content_basemap.html",
-  "text!templates/content_attributes.html",
   "text!templates/not_found.html",
 ], function(
   $,
@@ -22,7 +21,6 @@ define([
   templateContentUsage,
   templateContentContact,
   templateContentBasemap,
-  templateContentAttributes,
   templateNotFound,
 ) {
   var PageView = Backbone.View.extend({
@@ -67,15 +65,18 @@ define([
               }
               break;
             case "attributes":
-              that
-                .$(".page-outer")
-                .html(_.template(templateContentAttributes)({}));
-              that.$(".page-outer").removeClass("loading");
-              if (that.model.getPageAnchor() === "") {
-                that.$el.scrollTop(0);
-              } else {
-                  this.handlePageAnchorChange();
-              }
+              var content;
+              var that = this
+              page.getContent(function(content){
+                that.$('.page-outer').html(_.template(templateContent)({
+                  t:that.model.getLabels(),
+                }))
+                that.$('.page-outer').removeClass('loading')
+                that.$('.placeholder-content').html(content)
+                if (that.model.getPageAnchor() === "") {
+                  that.$el.scrollTop(0)
+                }
+              })
               break;
             case "usage":
               that.$(".page-outer").html(_.template(templateContentUsage)({}));

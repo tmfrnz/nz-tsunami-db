@@ -1,76 +1,113 @@
-<%= content %>
 <div class="row">
   <div class="col-sm-12">
     <% _.each(columnGroups,function(group){ %>
-    <div class="group <%= group.classes %>">          
-      <h2><%= group.title %></h2>
+    <div class="group <%= group.classes %>">
+      <h3><%= group.title %></h3>
       <hr>
-      <% if(group.hint) { %>      
+      <% if(group.hint) { %>
       <p class="hint"><%= group.hint %></p>
       <% } %>
-      <div class="record-columns"> 
+      <div class="record-columns">
       <% _.each(group.groupColumns,function(column){ %>
-      <% if (column) { %>   
-        <div class="record-column"> 
-          <h3 id="<%= column.id %>">
-            <%= column.get("title") %> 
-          </h3>
+      <% if (column && (column.get('combo') !== 1 || column.get('comboMain') === 1)) { %>
+        <div class="record-column">
+          <h4 class="column-title" id="<%= column.id %>">
+            <% if (column.get('combo') === 1) { %>
+              <%= column.get("comboTitle") %>
+            <% } else { %>
+              <%= column.get("title") %>
+            <% } %>
+          </h4>
+          <% if (column.get("dbDescription")) {%>
+            <p><%= column.get("dbDescription") %></p>
+          <% } %>
           <p><%= column.get("description") %> <%= column.get("descriptionMore") %></p>
-          <p class="hint"><%= t.pages.attributes.db_column_hint %>: <code><%= column.getQueryColumn() %></code></p>
-          <% if(column.get('showOnPage').values) { %>   
-          <h4><%= t.pages.attributes.values %></h4>
+          <p class="column-hint"><%= t.pages.attributes.type_hint %>: <code><%= column.get('type') %></code></p>
+          <% if (column.get('combo') === 1) { %>
+            <p class="column-hint">
+              <%= t.pages.attributes.db_columns_hint %>:
+              <code><%= column.get('comboColumnId') %></code><span>,&nbsp;</span><code><%= column.getQueryColumn() %></code>
+            </p>
+          <% } else { %>
+            <p class="column-hint"><%= t.pages.attributes.db_column_hint %>: <code><%= column.getQueryColumn() %></code></p>
+          <% } %>
+          <% if(column.get("specificityColumn")) {%>
+            <p class="column-hint"><%= t.pages.attributes.spec_column_hint %>: <code><%= column.get("specificityColumn") %></code></p>
+          <% } %>
+          <% if(column.get("certaintyColumn")) {%>
+            <p class="column-hint"><%= t.pages.attributes.certainty_column_hint %>: <code><%= column.get("certaintyColumn") %></code></p>
+          <% } %>
+          <% if(column.get("commentColumn")) {%>
+            <p class="column-hint"><%= t.pages.attributes.comment_column_hint %>: <code><%= column.get("commentColumn") %></code></p>
+          <% } %>
+          <% if(column.get("commentColumns")) {%>
+            <p class="column-hint">
+              <%= t.pages.attributes.comment_columns_hint %>:
+              <% _.each(column.get("commentColumns"), function(ccol, index) {%>
+                <code><%= ccol.column %></code>
+                <% if (index < column.get("commentColumns").length - 1) {%>
+                  <span>,&nbsp;</span>
+                <% }%>
+              <% })%>
+            </p>
+          <% } %>
+          <% if(column.hasAuxColumns()) {%>
+            <p class="hint"><%= t.pages.attributes.aux_hint %></p>
+          <% } %>
+          <% if(column.get('showOnPage').values) { %>
+          <h5><%= t.pages.attributes.values %></h5>
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
+                  <th><%= t.pages.attributes.db_value %></th>
                   <th><%= t.pages.attributes.label %></th>
                   <% if(column.get('showOnPage').valueDescription) { %>
                   <th><%= t.pages.attributes.description %></th>
-                  <% } %>                    
-                  <th><%= t.pages.attributes.db_value %></th>
+                  <% } %>
                 </tr>
               </thead>
               <tbody>
                 <% _.each(column.getValues().labels,function(label,i){ %>
-                <% if(column.getValues().values[i] !== "null") { %>
+                <% if(column.getValues().values[i] !== "multiple" ) { %>
                 <tr>
+                  <td><code><%= column.getValues().values[i] %></code></td>
                   <td><%= label %></td>
                   <% if(column.get('showOnPage').valueDescription) { %>
-                  <td><%= column.getValues().descriptions[i] %></td>                    
-                  <% } %>                    
-                  <td><code><%= column.getValues().values[i] %></code></td>
+                  <td><%= column.getValues().descriptions[i] %></td>
+                  <% } %>
                 </tr>
                 <% } %>
                 <% }) %>
-              </tbody>                
-            </table>                
-          </div>             
+              </tbody>
+            </table>
+          </div>
           <% } %>
-          <% if(column.id === "proxies") { %>   
-          <h4><%= t.pages.attributes.values %></h4>
+          <% if(column.id === "proxies") { %>
+          <h5><%= t.pages.attributes.values %></h5>
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th><%= t.pages.attributes.proxy %></th>                  
+                  <th><%= t.pages.attributes.proxy %></th>
                   <th><%= t.pages.attributes.description %></th>
                 </tr>
               </thead>
               <tbody>
                 <% _.each(proxies,function(proxy){ %>
                 <tr>
-                  <td><%= proxy.id %></td>               
-                  <td><%= proxy.getDescription() %></code></td>
+                  <td><%= proxy.id %></td>
+                  <td><code><%= proxy.getDescription() %></code></td>
                 </tr>
                 <% }) %>
-              </tbody>                
-            </table>                
-          </div>         
-        <% } %>  
-        </div> 
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+        </div>
       <% } %>
       <% }) %>
-    </div>                  
-    <% }) %>       
+    </div>
+    <% }) %>
   </div>
 </div>

@@ -623,7 +623,9 @@ window.timeFromUpdate = Date.now()
           model:PageModel,
           labels:this.model.getLabels(),
           columnCollection: this.model.get("columnCollection"),
-          columnGroupCollection: this.model.get("columnGroupCollection")
+          columnGroupCollection: this.model.get("columnGroupCollection"),
+          sourceColumnCollection: this.model.get("sourceColumnCollection"),
+          sourceColumnGroupCollection: this.model.get("sourceColumnGroupCollection"),
         })
 
       _.each(this.model.getConfig().navitems,function(item){

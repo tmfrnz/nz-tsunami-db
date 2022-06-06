@@ -38,7 +38,7 @@
   },
   {
     "id":"tg-sources",
-    "section":"tide-gauge-records",
+    "section":"tide-gauge-sources",
     "title":"Tide Gauge: Data Sources",
     "hint":"Attributes related to the record's measurements as per tide gauge",
     "filter":false

@@ -1,21 +1,23 @@
 define([
   'jquery', 'underscore', 'backbone',
-  './ContentCollection',  
+  './ContentCollection',
 ], function(
   $, _, Backbone, ContentCollection
 ){
   var PageCollection = ContentCollection.extend({
-    initialize: function(models,options) {      
-      
-      this.options = options || {};     
-      
+    initialize: function(models,options) {
+
+      this.options = options || {};
+
       this.on("add", function(model){
         model.set('proxyCollection',this.options.proxyCollection)
         model.set('columnCollection',this.options.columnCollection)
-        model.set('columnGroupCollection',this.options.columnGroupCollection)      
+        model.set('columnGroupCollection',this.options.columnGroupCollection)
+        model.set('sourceColumnCollection',this.options.sourceColumnCollection)
+        model.set('sourceColumnGroupCollection',this.options.sourceColumnGroupCollection)      
       });
-      
-    },    
+
+    },
   });
 
   return PageCollection;

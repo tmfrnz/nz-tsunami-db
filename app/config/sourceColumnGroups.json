@@ -9,25 +9,19 @@
     "id":"site",
     "section":"general",
     "title":"Time & location",
-    "hint":"TODO"
+    "hint":"Attributes related to the source event's time and duration"
   },
   {
     "id":"class",
     "section":"general",
     "title":"Classification",
-    "hint":"Attributes related to the record's classification"
+    "hint":"Attributes related to the source event's classification"
   },
   {
     "id":"metrics",
     "section":"metrics",
     "title":"Event metrics",
-    "hint":"TODO"
-  },
-  {
-    "id":"metrics",
-    "section":"metrics",
-    "title":"Event metrics",
-    "hint":"TODO"
+    "hint":"Attributes related to the source event's measurements"
   },
   {
     "id":"summary",
