@@ -7,19 +7,6 @@ Code: https://github.com/niwa/tsunami-db
 
 --
 
-### Issues
-Issues are used for
-- User Stories to specify functional requirements (labels: story, story must, story should, story could, story wont)
-- Tasks to help stay on top of things (label: tasks)
-- Discussion threads to keep all on the same page (label: discussion)
-- Bugs to track any software related bugs and issues (label: bug)
-
-The list of issues can be found here
-
-__https://github.com/dumparkltd/tsunami-db/issues__
-
---
-
 ### Deploy
 #### Optimise and bundle
 Optimisation and bundling is done using requirejs optimizer (see http://requirejs.org/docs/optimization.html for installing requirejs). Once installed, run from the repository root (branch master or whatever branch/tag you are seeking to deploy)
