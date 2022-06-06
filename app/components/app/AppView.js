@@ -181,7 +181,10 @@ define([
       )
       waitFor(
         //when
-        function(){ return that.model.columnsConfigured() },
+        function(){
+          return that.model.columnsConfigured()
+            && that.model.sourceColumnsConfigured()
+        },
         //then
         function(){ that.configurePages() }
       )
