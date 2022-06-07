@@ -1,0 +1,24 @@
+<ul class="list-unstyled">
+  <% _.each(layers,function(layer){ %>
+  <li>
+    <a href="#"
+       class="layer-select <% if (layer.selected) { %> active <% } %><% if (layer.mouseOver) { %> hover <% } %>"
+       data-layerid="<%= layer.id %>"
+    >
+      <% if (layer.icon) {%>
+      <span class="key-icon-wrap">
+        <%= layer.icon %>
+      </span>
+      <% } else { %>
+      <span class="key-color"
+            style="border-color:<%= layer.color %>;background-color:<%= layer.fillColor %>">
+      </span>
+      <% } %>
+      <span class="key-label" ><%= layer.label %></span>
+    </a>
+  </li>
+  <% }) %>
+</ul>
+<% if (noNotShowing > 0) { %>
+<div class="hint"> + <%= noNotShowing %> more</div>
+<% } %>

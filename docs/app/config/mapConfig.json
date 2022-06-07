@@ -1,0 +1,81 @@
+{
+  "mapID" : "map-container",
+  "attribution" : "<a class='nav-link basemap-info' href='#' data-route='page' date-type='page' data-id='basemap'>Basemap attribution</a>",
+  "layerGroups" : {
+    "base" : { "basemap" : true},
+    "records" : { "isRecordLayer" : true},
+    "sources" : { "isSourceLayer" : true},
+    "default" : true
+  },
+  "mapOptions" : {
+    "minZoom":2,
+    "maxZoom":10,
+    "attributionControl": false,
+    "worldCopyJump" :false,
+    "zoomAnimationThreshold" : 9,
+    "dragging":true
+  },
+  "views" : {
+    "default" : {
+      "center" : { "lat": -40, "lng": 175},
+      "zoom" : 5,
+      "dimensions" : [600,400]
+    }
+  },
+  "layerStyles" : {
+    "default": {
+      "color": "black",
+      "weight":1,
+      "opacity":0.8,
+      "fillOpacity":0.3
+    },
+    "marker": {
+      "fillColor": "#05a4db",
+      "fillOpacity":1,
+      "color": "#000",
+      "weight":1,
+      "opacity":0.4,
+      "width":15,
+      "height":25
+    },
+    "triangle": {
+      "color":"yellow",
+      "fillOpacity": 0.3,
+      "height":10,
+      "width":10
+    },
+    "circle": {
+      "color": "black",
+      "weight":1,
+      "opacity":0.8,
+      "fillOpacity":0.1,
+      "radius":12
+    },
+    "polygon": {
+      "color": "black",
+      "weight":0,
+      "opacity":0.8,
+      "fillOpacity":0.5,
+      "lineJoin":"round"
+    },
+    "raster" : {
+      "opacity" : 1
+    },
+    "query" : {
+      "fillOpacity": 0,
+      "weight":1,
+      "opacity": 1,
+      "color":"#0483B0",
+      "dashArray":"5,5",
+      "interactive":false
+    },
+    "querySources" : {
+      "fillOpacity": 0,
+      "weight":1,
+      "opacity": 1,
+      "color":"#E34E4F",
+      "dashArray":"10,10",
+      "interactive":false
+    }
+  }
+}

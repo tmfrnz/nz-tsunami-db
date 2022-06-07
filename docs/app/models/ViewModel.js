@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone"],function(t,e,i){return i.Model.extend({initialize:function(t){this.options=t||{}},setActive:function(t){t=void 0===t||t,this.set("active",t)},isActive:function(){return this.get("active")},setLabels:function(t){this.set("labels",t)},getLabels:function(){return this.attributes.labels}})});

@@ -1,0 +1,524 @@
+[
+  {
+    "id":"id",
+    "column":"id",
+    "title":"ID",
+    "description":"Source identification number.",
+    "type":"id",
+    "default":1,
+    "filterable":0,
+    "searchable":1,
+    "group":"id"
+  },
+  {
+    "id":"date_from",
+    "title":"Date, earliest",
+    "type":"date",
+    "group":"site",
+    "combo":1,
+    "comboType":"min",
+    "specificityColumn":"date_specificity",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"date_to",
+    "title":"Date, latest",
+    "comboDescription":"Showing date range when uncertain",
+    "type":"date",
+    "group":"site",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Date (range)",
+    "comboTitleEqual":"Date",
+    "comboColumnId":"date_from",
+    "specificityColumn":"date_specificity",
+    "certaintyColumn":"date_certainty",
+    "commentColumn":"date_comment",
+    "commentColumnTitle":"Date (as entered)",
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto", 86400000],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "date_min",
+      "max" : "date_max"
+    },
+    "specified": 0
+  },
+  {
+    "id":"region",
+    "title":"Region",
+    "type":"categorical",
+    "certaintyColumn":"region_certainty",
+    "commentColumn":"location_reference",
+    "commentColumnTitle":"Location reference",
+    "group":"site",
+    "filterable":1,
+    "searchable":1,
+    "sortable":1,
+    "table":1,
+    "default":1,
+    "separator": ","
+  },
+  {
+    "id":"lat",
+    "column":"latitude",
+    "unit": "°",
+    "title":"Latitude",
+    "description":"Source location latitude using decimal degrees.",
+    "placeholders":{
+      "min" : "South",
+      "max" : "North"
+    },
+    "addons":{
+      "min" : "S",
+      "max" : "N"
+    },
+    "query":{
+      "min" : "south",
+      "max" : "north"
+    },
+    "type":"spatial",
+    "group":"site",
+    "blanks":1,
+    "filterable":1
+  },
+  {
+    "id":"lng",
+    "column":"longitude",
+    "unit": "°",
+    "title":"Longitude",
+    "description":"Source location longitude using decimal degrees.",
+    "placeholders":{
+      "min" : "West",
+      "max" : "East"
+    },
+    "addons":{
+      "min" : "W",
+      "max" : "E"
+    },
+    "query":{
+      "min" : "west",
+      "max" : "east"
+    },
+    "type":"spatial",
+    "group":"site",
+    "blanks":1,
+    "filterable":1
+  },
+  {
+    "id":"lat-lon_comment",
+    "title":"Latitude/longitude comment",
+    "type":"text",
+    "group":"site",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"source_class",
+    "title":"Source cause",
+    "type":"ordinal",
+    "default":1,
+    "multiple": 1,
+    "colorable":1,
+    "separator": ",",
+    "group":"class",
+    "certaintyColumn":"source_class_certainty",
+    "commentColumn":"source_class_comment",
+    "values":{
+      "values":["1","2","6","8","9","10","11","12","13","14","0"],
+      "labels":[
+        "Earthquake",
+        "Questionable Earthquake",
+        "Volcano",
+        "Landslide",
+        "Meteo-tsunami",
+        "Explosion",
+        "Astronomical",
+        "Earthquake shaking induced seiche",
+        "Storm",
+        "Gas emission",
+        "Unknown"
+      ],
+      "colorGroups": [
+        {
+          "values": ["1"],
+          "label": "Earthquake",
+          "color": "#D16800"
+        },
+        {
+          "values": ["6"],
+          "label": "Volcano",
+          "color": "#AA4E13"
+        },
+        {
+          "values": ["8"],
+          "label": "Landslide",
+          "color": "#69321E"
+        },
+        {
+          "values": ["2", "9", "10", "11", "12", "13", "14"],
+          "label": "Other causes",
+          "color": "#022C5A"
+        },
+        {
+          "values": ["0"],
+          "label": "Unknown",
+          "color": "#969696"
+        }
+      ]
+    }
+  },
+  {
+    "id":"class",
+    "title":"Source class",
+    "description":"Source class/proximity to nearest NZ coast, incl. Chatham Islands",
+    "type":"ordinal",
+    "default":0,
+    "colorable":1,
+    "multiple": 1,
+    "auto-multiple": 1,
+    "separator": ",",
+    "group":"class",
+    "certaintyColumn":"class_certainty",
+    "commentColumn":"class_comment",
+    "values":{
+      "values":["LOCAL","REGIONAL","DISTANT","UNKNOWN", "multiple", "null"],
+      "labels":["Local","Regional","Distant","Unknown", "Multiple classes", "Unspecified"],
+      "colors":["#D16800","#AA4E13","#69321E","#969696", "#222222", "#ff00ee"],
+      "descriptions":[
+        "Local: < 1h travel time",
+        "Regional: 1-3h travel time",
+        "Distant: > 3h travel time",
+        "Unknown"
+      ]
+    }
+  },
+  {
+    "id":"magn_moment_lower",
+    "title":"Magnitude moment, lower",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"magn_moment_upper",
+    "title":"Magnitude moment, upper",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Magnitude moment",
+    "comboTitleEqual":"Magnitude moment",
+    "comboColumnId":"magn_moment_lower",
+    "certaintyColumn":"magn_moment_certainty",
+    "commentColumns":[
+      {
+        "column": "magn_moment_comment",
+        "title": "Comment/details"
+      },
+      {
+        "column": "magn_moment_reference",
+        "title": "Reference"
+      }
+    ],
+    "blanks":1,
+    "single":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_moment_min",
+      "max" : "magn_moment_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"magn_local_lower",
+    "title":"Magnitude local, lower",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"magn_local_upper",
+    "title":"Magnitude local, upper",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Magnitude local",
+    "comboTitleEqual":"Magnitude local",
+    "comboColumnId":"magn_local_lower",
+    "certaintyColumn":"magn_local_certainty",
+    "commentColumn":"magn_local_reference",
+    "commentColumnTitle": "Reference",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_local_min",
+      "max" : "magn_local_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"magn_surface_wave",
+    "title":"Magnitude surface wave",
+    "type":"quantitative",
+    "group":"metrics",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "commentColumn":"magn_surface_wave_reference",
+    "commentColumnTitle": "Reference",
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_surface_wave_min",
+      "max" : "magn_surface_wave_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"magn_mantle",
+    "title":"Magnitude mantle",
+    "type":"quantitative",
+    "group":"metrics",
+    "commentColumn":"magn_mantle_reference",
+    "commentColumnTitle": "Reference",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_mantle_min",
+      "max" : "magn_mantle_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"magn_non-specific",
+    "title":"Magnitude non-specific",
+    "type":"quantitative",
+    "group":"metrics",
+    "commentColumn":"magn_non-specific_reference",
+    "commentColumnTitle": "Reference",
+    "blanks":1,
+    "single":1,
+    "default":0,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "magn_non-specific_min",
+      "max" : "magn_non-specific_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"depth_lower",
+    "title":"Depth, lower (km)",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboType":"min",
+    "single":1,
+    "blanks":1,
+    "filterable":0,
+    "default":1
+  },
+  {
+    "id":"depth_upper",
+    "title":"Depth, upper (km)",
+    "type":"quantitative",
+    "group":"metrics",
+    "combo":1,
+    "comboMain":1,
+    "comboType":"max",
+    "comboTitle":"Depth (range, km)",
+    "comboTitleEqual":"Depth (km)",
+    "comboColumnId":"depth_lower",
+    "certaintyColumn":"depth_certainty",
+    "commentColumn":"depth_comment",
+    "commentColumnTitle": "Comment/details",
+    "blanks":1,
+    "single":1,
+    "filterable":1,
+    "default":1,
+    "values":{
+      "range" : {
+        "min" : ["auto"],
+        "max" : ["auto"]
+      }
+    },
+    "query":{
+      "min" : "depth_min",
+      "max" : "depth_max"
+    },
+    "specified": 1
+  },
+  {
+    "id":"completeness",
+    "title":"Completeness",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"event_summary",
+    "title":"Event summary",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"impact_summary",
+    "title":"Impact summary",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"impact_summary",
+    "title":"Impact summary",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"photographs_available",
+    "title":"Photographs available?",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"source_material",
+    "title":"Source material",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"ngdc_event_id",
+    "title":"NGDC Event ID",
+    "hint":"Click to see event details on NOAA's NGDC (National Geophysical Data Center) - opens in new tab",
+    "type":"link",
+    "url":"//www.ngdc.noaa.gov/hazel/view/hazards/tsunami/event-more-info/[value]",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"refs",
+    "title":"Refs",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"previous_db_listing",
+    "title":"Previous database listing(s)",
+    "type":"text",
+    "group":"summary",
+    "filterable":0,
+    "searchable":1,
+    "sortable":0
+  },
+  {
+    "id":"primary_id",
+    "title":"Primary source event",
+    "description":"The primary source event",
+    "type":"related",
+    "blanks":1,
+    "filterable":0,
+    "group":"other",
+    "table":0,
+    "sortable":0
+  },
+  {
+    "id":"related-records",
+    "title":"Record(s)",
+    "description":"Records related to source event.",
+    "hint":"Click to explore details",
+    "type":"related",
+    "blanks":1,
+    "filterable":0,
+    "group":"other",
+    "table":0,
+    "export":0,
+    "sortable":0
+  },
+  {
+    "id":"references",
+    "column":"reference_ids",
+    "dbDescription":"Storing reference ids in comma-separated list",
+    "title":"Reference(s)",
+    "type":"index",
+    "blanks":1,
+    "filterable":0,
+    "group":"other",
+    "table":0,
+    "sortable":0
+  }
+]

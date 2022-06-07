@@ -1,0 +1,29 @@
+<div class="attribute-title">
+  <%= title %>
+  <% if(tooltip && tooltip !== "") {%><a
+    data-toggle="tooltip"
+    data-placement="top"
+    title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
+    data-html="true"
+    href="#"
+    class="nav-link toggle-tooltip"
+    data-page-anchor="<%= id %>"
+    data-id="attributes">
+   <span class="icon-icon_info" aria-hidden="true"></span>
+ </a><% } %>
+</div>
+<ul class="list-unstyled">
+  <% _.each(values,function(value){ %>
+  <li>
+    <% if (value.icon) {%>
+      <span class="key-icon-wrap">
+        <%= value.icon %>
+      </span>
+    <% } else { %>
+    <span class="key-color"
+          style="border-color:<%= value.color %>;background-color:<%= value.fillColor %>"></span>
+    <% } %>
+    <span class="key-label" ><%= value.label %></span>
+  </li>
+  <% }) %>
+</ul>
