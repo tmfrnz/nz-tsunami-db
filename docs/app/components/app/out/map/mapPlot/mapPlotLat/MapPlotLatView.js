@@ -72,12 +72,13 @@ define([
       this.$("#plot-control").html(_.template(templateControl)({
         t:this.model.getLabels(),
         columns : _.map(this.model.get("columnCollection").models,function(col){
+          console.log(col.get("description") || '')
           return {
             id:col.id,
             title: col.getTitle(),
             active:this.model.get("outPlotColumns").indexOf(col.id) > -1 ,
             color:col.get("plotColor"),
-            tooltip:col.get("description"),
+            tooltip:col.get("description") || '',
             tooltip_more:col.hasMoreDescription(),
           }
         },this)
@@ -253,7 +254,7 @@ define([
       e.preventDefault()
       this.$el.trigger('recordMouseOver',{id:$(e.currentTarget).attr("data-recordid")})
     },
-    mouseOutRecord:function(e){      
+    mouseOutRecord:function(e){
       e.preventDefault()
       this.$el.trigger('recordMouseOut',{id:$(e.currentTarget).attr("data-recordid")})
     },

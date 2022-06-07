@@ -194,13 +194,23 @@
 	background-repeat: no-repeat;
 }
 
-.icon-icon_table-active {
-	background-image: url('svgs/icon_table-active.svg');
+.icon-icon_table {
+	background-image: url('svgs/icon_table-records.svg');
 	background-repeat: no-repeat;
 }
 
-.icon-icon_table {
-	background-image: url('svgs/icon_table.svg');
+.icon-icon_table-active {
+	background-image: url('svgs/icon_table-records-active.svg');
+	background-repeat: no-repeat;
+}
+
+.icon-icon_sources-table {
+	background-image: url('svgs/icon_table-sources.svg');
+	background-repeat: no-repeat;
+}
+
+.icon-icon_sources-table-active {
+	background-image: url('svgs/icon_table-sources-active.svg');
 	background-repeat: no-repeat;
 }
 
@@ -211,5 +221,25 @@
 
 .icon-icon_twitter {
 	background-image: url('svgs/icon_twitter.svg');
+	background-repeat: no-repeat;
+}
+
+.icon-icon_section-general {
+	background-image: url('svgs/icon_section-general.svg');
+	background-repeat: no-repeat;
+}
+
+.icon-icon_section-metrics {
+	background-image: url('svgs/icon_section-metrics.svg');
+	background-repeat: no-repeat;
+}
+
+.icon-icon_section-observations {
+	background-image: url('svgs/icon_section-observations.svg');
+	background-repeat: no-repeat;
+}
+
+.icon-icon_section-tide-gauge-records {
+	background-image: url('svgs/icon_section-tide-gauge-records.svg');
 	background-repeat: no-repeat;
 }

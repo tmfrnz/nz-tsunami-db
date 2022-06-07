@@ -55,13 +55,22 @@ xs: 16*/
 }
 
 .icon-icon_detail,
+.icon-icon_sources-table-active,
 .icon-icon_table-active,
 .icon-icon_nz-active,
 .icon-icon_nz,
 .icon-icon_table,
-.icon-icon_filter {
+.icon-icon_sources-table,
+.icon-icon_filter{
   width: 32px;
   height: 32px;
+}
+.icon-icon_section-general,
+.icon-icon_section-observations,
+.icon-icon_section-tide-gauge-records,
+.icon-icon_section-metrics{
+  width: 38px;
+  height: 38px;
 }
 
 .icon-icon_info {

@@ -72,7 +72,8 @@
   "sections": {
     "r": {
       "general": "General attributes",
-      "tide-gauge-records": "Tide Gauge Records",
+      "tide-gauge-records": "Tide gauge records",
+      "tide-gauge-sources": "Tide gauge data sources",
       "observations": "Observations",
       "summary": "Further information",
       "other": "Related source & references"

@@ -331,9 +331,6 @@
       "certaintyColumn":"time-elapsed_peak-trough-effective_certainty"
     },
     "defaultFilter":1,
-    "plot":1,
-    "plotMax":5,
-    "plotColor":"#A71930",
     "unit": "m",
     "values":{
       "range" : {
@@ -691,9 +688,6 @@
     ],
     "defaultFilter":1,
     "unit": "m",
-    "plot":1,
-    "plotMax":10,
-    "plotColor":"#7E0D1F",
     "values":{
       "range" : {
         "min" : ["auto"],
@@ -740,6 +734,9 @@
       }
     ],
     "unit": "m",
+    "plot":1,
+    "plotMax":10,
+    "plotColor":"#7E0D1F",
     "values":{
       "range" : {
         "min" : ["auto"],
@@ -780,6 +777,9 @@
         "max" : ["auto"]
       }
     },
+    "plot":1,
+    "plotMax":5,
+    "plotColor":"#A71930",
     "query":{
       "min" : "obs_w_height_proxy_min",
       "max" : "obs_w_height_proxy_max"
