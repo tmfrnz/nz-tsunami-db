@@ -1,1 +1,16 @@
-define(["jquery","underscore","backbone","./ColumnGroupModel"],function(e,n,o,i){return o.Collection.extend({model:i,initialize:function(e,n){this.options=n||{}}})});
+define([
+  'jquery', 'underscore', 'backbone',
+  './ColumnGroupModel'
+], function(
+  $, _, Backbone,model
+){
+  var ColumnGroupCollection = Backbone.Collection.extend({
+    model:model,    
+    initialize: function(models,options) {            
+      this.options = options || {}; 
+    }
+    
+  });
+
+  return ColumnGroupCollection;
+});

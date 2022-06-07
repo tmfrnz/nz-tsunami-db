@@ -112,7 +112,7 @@ define([
                                       }
                                       return memo;
                                     },
-                                    result,
+                                    result
                                   )
                                 }
                                 if (column.get('dateColumns') && column.get('dateColumns').length > 0) {
@@ -149,7 +149,7 @@ define([
                                             dateCol.minColumn,
                                             minValue,
                                             maxValue,
-                                            dateCol.title,
+                                            dateCol.title
                                           )
                                         );
                                         if (dateCol.certaintyColumn) {
@@ -176,7 +176,7 @@ define([
                                       }
                                       return memo;
                                     },
-                                    result,
+                                    result
                                   )
                                   var commentValue = record.getColumnValue(column.get('commentColumn'))
                                   if (commentValue && commentValue !== '') {
@@ -195,7 +195,7 @@ define([
                                           col.minColumn,
                                           minValue,
                                           maxValue,
-                                          col.title,
+                                          col.title
                                         )
                                       );
                                       if (col.certaintyColumn) {
@@ -213,7 +213,7 @@ define([
                             }
                             return result;
                           },
-                          [],
+                          []
                         ),
                         function(html){
                           return html !== false
@@ -294,7 +294,7 @@ define([
         t:labels,
         title: title || labels.record.comment,
         value:minValue === maxValue ? minValue : minValue + ' - ' + maxValue,
-        id:id,
+        id:id
       })
     },
     getCertaintyColumnHtml:function(certCol, title){
@@ -488,7 +488,7 @@ define([
           })
           break
         case "link":
-          const url = column.get("url");
+          var url = column.get("url");
           return _.template(templateColumnLink)({
             t: this.model.getLabels(),
             title: column.get("title"),

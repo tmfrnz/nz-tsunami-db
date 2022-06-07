@@ -156,16 +156,16 @@ function truncateText (text, limit, keepWords) {
   limit = typeof limit !== "undefined" ? limit : 100;
   if (text.length > limit) {
     if (!keepWords) {
-      return `${text.substring(0, limit).trim()}\u2026`;
+      return text.substring(0, limit).trim() + "\u2026";
     }
     var words = text.split(' ');
     var truncated = '';
     while (truncated.length <= limit) {
       var word = words.shift();
-      truncated = truncated.length > 0 ? `${truncated} ${word}` : word;
+      truncated = truncated.length > 0 ? truncated + " " + word : word;
     }
     // check if really truncated (not a given as we accept full words)
-    return text.length > truncated.length ? `${truncated}\u2026` : text;
+    return text.length > truncated.length ? truncated + "\u2026" : text;
   }
   return text;
 };

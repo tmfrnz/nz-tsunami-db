@@ -1,1 +1,180 @@
-define(["jquery","underscore","backbone"],function(t,i,s){return s.Model.extend({initialize:function(t){this.options=t||{},this.set({column:this.attributes.column||this.attributes.id,title:this.attributes.title||this.attributes.id,placeholders:this.attributes.placeholders||null,addons:this.attributes.addons||null,description:this.attributes.description||null,descriptionMore:this.attributes.descriptionMore||"",hint:this.attributes.hint||"",type:this.attributes.type||"text",group:this.attributes.group||"meta",separator:void 0!==this.attributes.separator?this.attributes.separator:null,filterable:void 0!==this.attributes.filterable?this.attributes.filterable:1,colorable:void 0!==this.attributes.colorable?this.attributes.colorable:0,table:void 0!==this.attributes.table?this.attributes.table:1,single:void 0!==this.attributes.single?this.attributes.single:1,isDefault:void 0!==this.attributes.default?this.attributes.default:0,isDefaultFilter:void 0!==this.attributes.defaultFilter?this.attributes.defaultFilter:0,searchable:void 0!==this.attributes.searchable?this.attributes.searchable:0,sortable:void 0!==this.attributes.sortable?this.attributes.sortable:1,blanks:void 0!==this.attributes.blanks?this.attributes.blanks:0,multiples:void 0!==this.attributes.multiples?this.attributes.multiples:0,plot:void 0!==this.attributes.plot?this.attributes.plot:0,values:this.attributes.values||"auto",combo:void 0!==this.attributes.combo?this.attributes.combo:0,comboMain:this.attributes.comboMain||0,comboColumnId:this.attributes.comboColumnId||null,certaintyColumn:this.attributes.certaintyColumn||null,specificityColumn:this.attributes.specificityColumn||null,commentColumn:this.attributes.commentColumn||null,commentColumns:this.attributes.commentColumns||null,comboType:this.attributes.comboType||null,comboTitle:this.attributes.comboTitle||this.attributes.title||this.attributes.id,comboDescription:this.attributes.comboDescription||this.attributes.description||"",plotMax:this.attributes.plotMax||null,plotColor:this.attributes.plotColor||"#fff",unit:this.attributes.unit||null,showOnPage:{values:!1,valueDescription:!1}}),1===this.get("isDefault")&&this.set("isDefaultFilter",1),this.set("queryColumn",this.attributes.queryColumn||this.attributes.column),"object"==typeof this.attributes.query?this.set("queryColumnByType",{value:this.attributes.queryColumn,min:this.attributes.query.min,max:this.attributes.query.max}):this.set("queryColumnByType",{value:this.attributes.queryColumn,min:null,max:null}),"spatial"!==this.attributes.type&&"quantitative"!==this.attributes.type&&"count"!==this.attributes.type||null===this.attributes.placeholders&&this.set("placeholders",{min:"Min",max:"Max"}),"spatial"===this.attributes.type&&null===this.attributes.addons&&this.set("addons",{min:"Min",max:"Max"}),"date"===this.attributes.type&&null===this.attributes.placeholders&&this.set("placeholders",{min:"After (yyyy-mm-dd)",max:"Before (yyyy-mm-dd)"}),"auto"===this.attributes.values?this.attributes.showOnPage.values=!1:void 0!==this.attributes.values.values&&(this.attributes.showOnPage.values=!0,void 0===this.attributes.values.labels&&(this.attributes.showOnPage.values=!1,this.attributes.values.labels=i.clone(this.attributes.values.values)),void 0===this.attributes.values.hints&&(this.attributes.values.hints=[]),void 0===this.attributes.values.descriptions&&(this.attributes.values.descriptions=this.attributes.values.hints),this.attributes.values.descriptions.length>0&&(this.attributes.showOnPage.values=!0,this.attributes.showOnPage.valueDescription=!0))},getQueryColumnByType:function(t){return t=void 0!==t?t:"value",this.attributes.queryColumnByType[t]},getQueryColumn:function(){return this.attributes.queryColumn},getValues:function(){return this.attributes.values},getType:function(){return this.attributes.type},getTitle:function(){return this.attributes.title},getUnit:function(){return this.attributes.unit},hasMoreDescription:function(){return""!==this.attributes.descriptionMore||void 0!==this.attributes.values.descriptions&&this.attributes.values.descriptions.length>0},hasAuxColumns:function(){return this.attributes.specificityColumn||this.attributes.certaintyColumn||this.attributes.commentColumn||this.attributes.commentColumns},getColor:function(t){if(1===this.get("colorable")){if(t=null===t?"null":t,this.attributes.values.colors){var i=this.attributes.values.values.indexOf(t);return this.attributes.values.colors[i]}if(this.attributes.values.colorGroups){return this.getColorGroup(t).color}}},getColorGroup:function(t){return i.find(this.attributes.values.colorGroups,function(i){return i.values.indexOf(t)>-1})||{label:"color group not found",color:"#000000"}}})});
+define([
+  'jquery', 'underscore', 'backbone'
+], function($,_, Backbone
+){
+
+  return Backbone.Model.extend({
+    initialize : function(options) {
+      this.options = options || {};
+
+
+      //default settings
+      this.set({
+        column :          this.attributes.column || this.attributes.id,
+        title :           this.attributes.title || this.attributes.id,
+        placeholders :    this.attributes.placeholders || null,
+        addons :          this.attributes.addons || null,
+        description :     this.attributes.description || null,
+        descriptionMore:  this.attributes.descriptionMore || "",
+        hint :            this.attributes.hint || "",
+        // column type
+        type :            this.attributes.type || "text",
+        // content group
+        group :           this.attributes.group || "meta",
+        // how multiple values are separated
+        separator :       typeof this.attributes.separator !== "undefined" ? this.attributes.separator : null,
+        // offer as filter option
+        filterable :      typeof this.attributes.filterable !== "undefined" ? this.attributes.filterable : 1,
+        // offer as colorable map marker option
+        colorable :       typeof this.attributes.colorable !== "undefined" ? this.attributes.colorable : 0,
+        // show in table
+        table :           typeof this.attributes.table !== "undefined" ? this.attributes.table : 1,
+        // show on single record view
+        single :          typeof this.attributes.single !== "undefined" ? this.attributes.single : 1,
+        // also show when not expanded
+        isDefault:        typeof this.attributes['default'] !== "undefined" ? this.attributes['default'] : 0,
+        isDefaultFilter:  typeof this.attributes.defaultFilter !== "undefined" ? this.attributes.defaultFilter : 0,
+        // allow keyword search
+        searchable :      typeof this.attributes.searchable !== "undefined" ? this.attributes.searchable : 0,
+        // allow sorting in table
+        sortable :        typeof this.attributes.sortable !== "undefined" ? this.attributes.sortable : 1,
+        blanks :          typeof this.attributes.blanks !== "undefined" ? this.attributes.blanks : 0,
+        // column can have multiple values
+        multiples :       typeof this.attributes.multiples !== "undefined" ? this.attributes.multiples : 0,
+        // column can be plotted in marginal plot
+        plot :            typeof this.attributes.plot !== "undefined" ? this.attributes.plot : 0,
+        values :          this.attributes.values || "auto",
+        combo:            typeof this.attributes.combo !== "undefined" ? this.attributes.combo : 0,
+        comboMain:        this.attributes.comboMain || 0,
+        comboColumnId:    this.attributes.comboColumnId || null,
+        certaintyColumn:    this.attributes.certaintyColumn || null,
+        specificityColumn:    this.attributes.specificityColumn || null,
+        commentColumn:    this.attributes.commentColumn || null,
+        commentColumns:    this.attributes.commentColumns || null,
+        comboType:        this.attributes.comboType || null,
+        comboTitle:       this.attributes.comboTitle || this.attributes.title || this.attributes.id,
+        comboDescription: this.attributes.comboDescription || this.attributes.description || "",
+        plotMax:          this.attributes.plotMax || null,
+        plotColor:        this.attributes.plotColor || "#fff",
+        unit:             this.attributes.unit || null,
+        showOnPage:       {
+          values: false,
+          valueDescription: false
+        }
+      })
+      if (this.get('isDefault') === 1) {
+        this.set('isDefaultFilter', 1);
+      }
+      // set
+      this.set('queryColumn', this.attributes.queryColumn || this.attributes.column)
+      if (typeof this.attributes.query === "object") {
+        this.set('queryColumnByType', {
+          value: this.attributes.queryColumn,
+          min: this.attributes.query.min,
+          max: this.attributes.query.max
+        })
+      } else {
+        this.set('queryColumnByType', {
+          value:this.attributes.queryColumn,
+          min: null,
+          max: null
+        })
+      }
+
+
+      if (
+        this.attributes.type === "spatial" ||
+        this.attributes.type === "quantitative" ||
+        this.attributes.type === "count" 
+      ) {
+        if (this.attributes.placeholders === null){
+          this.set("placeholders", {min:"Min",max:"Max"})
+        }
+      }
+      if (this.attributes.type === "spatial") {
+        if (this.attributes.addons === null){
+          this.set("addons", {min:"Min",max:"Max"})
+        }
+      }
+      if (this.attributes.type === "date") {
+        if (this.attributes.placeholders === null){
+          this.set("placeholders", {min:"After (yyyy-mm-dd)",max:"Before (yyyy-mm-dd)"})
+        }
+      }
+
+
+      if (this.attributes.values === "auto") {
+        this.attributes.showOnPage.values = false
+      } else {
+        if(typeof this.attributes.values.values !== "undefined") {
+          this.attributes.showOnPage.values = true
+          if(typeof this.attributes.values.labels === "undefined") {
+            this.attributes.showOnPage.values = false
+            this.attributes.values.labels = _.clone(this.attributes.values.values)
+          }
+          if(typeof this.attributes.values.hints === "undefined") {
+            this.attributes.values.hints = []
+          }
+          if(typeof this.attributes.values.descriptions === "undefined") {
+            this.attributes.values.descriptions = this.attributes.values.hints
+          }
+          if (this.attributes.values.descriptions.length > 0){
+            this.attributes.showOnPage.values = true
+            this.attributes.showOnPage.valueDescription = true
+          }
+        }
+      }
+
+
+
+    },
+    getQueryColumnByType: function(type){
+      type = typeof type !== "undefined" ? type : "value"
+      return this.attributes.queryColumnByType[type]
+    },
+    getQueryColumn: function(){
+      return this.attributes.queryColumn
+    },
+    getValues : function(){
+      return this.attributes.values
+    },
+    getType : function(){
+      return this.attributes.type
+    },
+    getTitle : function(){
+      return this.attributes.title
+    },
+    getUnit : function(){
+      return this.attributes.unit
+    },
+    hasMoreDescription: function(){
+      return this.attributes.descriptionMore !== ""
+      || (typeof this.attributes.values.descriptions !== "undefined" && this.attributes.values.descriptions.length > 0)
+    },
+    hasAuxColumns: function(){
+      return this.attributes.specificityColumn
+        || this.attributes.certaintyColumn
+        || this.attributes.commentColumn
+        || this.attributes.commentColumns
+    },
+    getColor:function(value){
+      if(this.get("colorable") === 1) {
+        value = value === null ? "null" : value
+        if(this.attributes.values.colors) {
+          var index = this.attributes.values.values.indexOf(value)
+          return this.attributes.values.colors[index]
+        } else if(this.attributes.values.colorGroups) {
+          var group = this.getColorGroup(value)
+          return group.color;
+        }
+      }
+    },
+    getColorGroup:function(value){
+      var group = _.find(this.attributes.values.colorGroups, function(group) {
+        return group.values.indexOf(value) > -1;
+      })
+      return group || { label: "color group not found", color: "#000000"};
+    }
+  });
+
+});

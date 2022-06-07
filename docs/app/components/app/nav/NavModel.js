@@ -1,1 +1,42 @@
-define(["jquery","underscore","backbone","models/ViewModel"],function(t,e,i,n){return n.extend({initialize:function(t){this.options=t||{},this.set("navItems",e.map(this.attributes.navItems,function(t){return t.type=void 0!==t.type?t.type:"page",t.route=void 0!==t.route?t.route:"page",t.navitems=void 0!==t.navitems&&e.map(t.navitems,function(t){return t.type=void 0!==t.type?t.type:"page",t.route=void 0!==t.route?t.route:"page",t}),t},this))},setActivePath:function(t){this.set("path",t)},getActivePath:function(){return this.attributes.path},setActiveRoute:function(t){this.set("activeRoute",t)},getActiveRoute:function(){return this.attributes.route},getNavItems:function(){return this.attributes.navItems}})});
+define([
+  'jquery', 'underscore', 'backbone',
+  'models/ViewModel'
+], function($,_, Backbone,ViewModel) {
+
+  return ViewModel.extend({
+    initialize : function(options){
+      this.options = options || {};
+      
+      this.set("navItems", _.map(this.attributes.navItems,function(item){
+          item.type = typeof item.type !== "undefined" ? item.type : "page"
+          item.route = typeof item.route !== "undefined" ? item.route : "page"
+          item.navitems = typeof item.navitems !== "undefined" 
+            ? _.map(item.navitems,function(childItem){
+                childItem.type = typeof childItem.type !== "undefined" ? childItem.type : "page"
+                childItem.route = typeof childItem.route !== "undefined" ? childItem.route : "page"
+                return childItem
+              }) 
+            : false           
+          return item
+        },this)
+      )
+    },
+    setActivePath : function (path) {
+      this.set('path', path)
+    },
+    getActivePath : function (){
+      return this.attributes.path
+    },   
+    setActiveRoute : function (route) {
+      this.set('activeRoute', route)
+    },
+    getActiveRoute : function (){
+      return this.attributes.route
+    },   
+    getNavItems : function (){
+      return this.attributes.navItems
+    },   
+  });
+  
+
+});

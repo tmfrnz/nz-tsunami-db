@@ -1,1 +1,116 @@
-define(["jquery","underscore","backbone","jquery.xml2json","showdown"],function(t,n,e,o,i){return e.Model.extend({initialize:function(t){this.options=t||{},this.isContentLoading=!1,this.isContentLoaded=!1},loadContent:function(n,e){if(this.getUrl()){var o=this;t.support.cors=!0,t.ajax({crossDomain:!0,dataType:this.getFormat(),url:this.getUrl(),success:function(e){switch(o.getFormat()){case"xml":var e=t.xml2json(e);void 0!==e["#document"]&&(e=""!==e["#document"].result.nodes?e["#document"].result.nodes.item.body.und.item.safe_value:"<p>ERROR LOADING RESOURCE: requested resource does not exist</p>"),n(e);break;default:n(e)}},error:function(){console.log("error loading content")}})}else if(void 0!==this.attributes.content)switch(this.getFormat()){case"markdown":var s=new i.Converter({ghCodeBlocks:!1,openLinksInNewWindow:!0});n(s.makeHtml(this.attributes.content));break;default:n(this.attributes.content)}},getFormat:function(){return"html"},isContentReady:function(){return!this.isContentLoading&&this.isContentLoaded},getUrl:function(){if(void 0!==this.attributes.url)return this.attributes.url},getContent:function(t){if(this.isContentLoaded&&void 0!==this.attributes.content&&""!==this.attributes.content[0].innerHTML)t(this.attributes.content);else{var n=this;this.isContentLoading?waitFor(function(){return n.isContentLoaded},function(){t(n.attributes.content,n)}):(this.isContentLoading=!0,this.loadContent(function(e){n.set("content",e),n.isContentLoading=!1,n.isContentLoaded=!0,t(n.attributes.content)}))}}})});
+define([
+  'jquery', 'underscore', 'backbone',
+  'jquery.xml2json',
+  'showdown'
+], function($,_, Backbone,xml2json,showdown
+){
+  
+  var ContentModel = Backbone.Model.extend({
+    initialize : function(options){ 
+      this.options = options || {};         
+      this.isContentLoading = false
+      this.isContentLoaded = false
+      
+    },    
+    loadContent : function (callback, selector){
+      if (!!this.getUrl()) {
+        // default: could be overridden in specific model to apply specific content transformation
+        var that = this
+        $.support.cors = true;
+        $.ajax({
+          crossDomain: true,
+          dataType:this.getFormat(),
+          url:this.getUrl(),
+          success:function(content) {
+
+            switch (that.getFormat()) {                    
+              case "xml":
+                var content = $.xml2json(content)
+                // according to NIWA's content XML structure
+                if (typeof content["#document"] !== "undefined") {
+                  if (content["#document"]["result"]["nodes"] !== "") {
+                    content = content["#document"]["result"]["nodes"]["item"]["body"]["und"]["item"]["safe_value"]
+                  } else {
+                    content = "<p>ERROR LOADING RESOURCE: requested resource does not exist</p>"
+                  }
+                }
+                callback(content)
+                break
+              default:
+                callback(content)
+                break                
+            }
+          },
+          error: function(){
+            console.log("error loading content")
+          }
+
+        })
+      } else {
+        if (typeof this.attributes.content !== "undefined") {
+          switch (this.getFormat()) {                    
+            case "markdown": 
+              var converter = new showdown.Converter({
+                ghCodeBlocks: false,
+                openLinksInNewWindow: true
+              });              
+              callback(converter.makeHtml(this.attributes.content))
+              break           
+            default:
+              callback(this.attributes.content)
+              break
+          }
+        } 
+      }
+    },
+    getFormat:function(){
+      return "html"
+    },    
+    isContentReady : function(){
+      return !this.isContentLoading && this.isContentLoaded
+      
+      
+    },
+    getUrl : function(){
+      if (typeof this.attributes.url !== 'undefined' ) {        
+        return this.attributes.url
+      }
+    },
+    getContent : function(callback){
+            
+      // temporary workaround #225
+      if (this.isContentLoaded && typeof this.attributes.content !== 'undefined' && this.attributes.content[0].innerHTML !== ''){        
+        callback(this.attributes.content)
+      } else {
+        var that = this
+        // already loading
+        if (this.isContentLoading) {
+          waitFor(
+            function(){ 
+              return that.isContentLoaded 
+            },
+            function(){ 
+              callback(that.attributes.content, that )
+            }
+          )
+        } else {	
+          this.isContentLoading = true
+          
+          this.loadContent(function(content){
+            // todo add error handling 
+            that.set('content', content)
+            that.isContentLoading = false
+            that.isContentLoaded = true
+            callback(that.attributes.content)
+          })        
+        }
+      }
+    }
+  });
+
+  return ContentModel;
+
+});
+
+
+

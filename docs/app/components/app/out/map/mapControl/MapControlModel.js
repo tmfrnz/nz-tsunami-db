@@ -1,1 +1,33 @@
-define(["jquery","underscore","backbone","models/ViewModel"],function(t,o,e,u){return u.extend({initialize:function(t){this.options=t||{},this.set("expanded",!1)},getOutColorColumn:function(){return this.attributes.outColorColumn},getOutSourceColorColumn:function(){return this.attributes.outSourceColorColumn},getShowRecords:function(){return this.attributes.outShowRecords},getShowSources:function(){return this.attributes.outShowSources},setShowRecords:function(t){return this.set("outShowRecords",t)},setShowSources:function(t){return this.set("outShowSources",t)}})});
+define([
+  'jquery', 'underscore', 'backbone',
+  'models/ViewModel'
+], function($,_, Backbone,ViewModel) {
+
+  return ViewModel.extend({
+    initialize : function(options){
+      this.options = options || {};
+      this.set('expanded',false)
+
+    },
+    getOutColorColumn:function(){
+      return this.attributes.outColorColumn
+    },
+    getOutSourceColorColumn:function(){
+      return this.attributes.outSourceColorColumn
+    },
+    getShowRecords:function(){
+      return this.attributes.outShowRecords
+    },
+    getShowSources:function(){
+      return this.attributes.outShowSources
+    },
+    setShowRecords:function(show){
+      return this.set('outShowRecords', show)
+    },
+    setShowSources:function(show){
+      return this.set('outShowSources', show)
+    },
+  });
+
+
+});

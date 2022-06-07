@@ -1,1 +1,29 @@
-define(["jquery","underscore","backbone","models/ViewModel"],function(t,e,n,i){return i.extend({initialize:function(t){this.options=t||{}},getSections:function(){return this.attributes.columnGroupCollection?e.groupBy(e.filter(this.attributes.columnGroupCollection.models,function(t){return t.get("section")}),function(t){return t.get("section")},this):{}}})});
+define([
+  'jquery', 'underscore', 'backbone',
+  'models/ViewModel'
+], function($,_, Backbone,ViewModel) {
+
+  return ViewModel.extend({
+    initialize : function(options){
+      this.options = options || {};
+    },
+    getSections: function(){
+      if (this.attributes.columnGroupCollection) {
+        // figure out sections from column groups
+        return _.groupBy(
+          _.filter(
+            this.attributes.columnGroupCollection.models,
+            function(group) {
+              return group.get('section')
+            }
+          ),
+          function(group) {
+            return group.get('section')
+          },
+          this
+        );
+      }
+      return {};
+    },
+  });
+});

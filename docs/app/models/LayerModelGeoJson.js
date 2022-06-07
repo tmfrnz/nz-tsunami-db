@@ -2,12 +2,12 @@ define([
   'jquery', 'underscore', 'backbone',
   'leaflet',
   './LayerModel',
-  'text!templates/triangleIcon.html',
+  'text!templates/triangleIcon.html'
 ], function(
   $,_, Backbone,
   leaflet,
   LayerModel,
-  templateTriangleIcon,
+  templateTriangleIcon
 ){
 
   var LayerModelGeoJson = LayerModel.extend({
@@ -89,7 +89,7 @@ define([
         console.log('no layerStyle', this.id, this.attributes)
       }
       if (this.attributes.marker === 'triangleIcon' && layerStyle) {
-        const divIcon = this.getTriangleIcon(layerStyle);
+        var divIcon = this.getTriangleIcon(layerStyle);
         return L.marker(latLng, { icon: divIcon })
       } else {
         return new L.circleMarker(

@@ -1,1 +1,961 @@
-define(["jquery","underscore","backbone","leaflet","esri.leaflet","leaflet.rrose","leaflet.draw","./mapControl/MapControlView","./mapControl/MapControlModel","./mapPlot/mapPlotLat/MapPlotLatView","./mapPlot/MapPlotModel","text!./map.html","text!./mapPopupMultipeRecords.html","text!./drawActions.html","text!templates/triangleIcon.html"],function(e,t,o,i,s,l,r,a,n,d,u,h,c,p,g){return o.View.extend({events:{"click .layer-select":"layerSelect","mouseenter .layer-select":"layerMouseOver","mouseleave .layer-select":"layerMouseOut","click .toggle-option":"toggleOptionClick","click .nav-link":"handleNavLink"},initialize:function(){this.handleActive(),this.viewUpdating=!1,this.views=this.model.getViews(),this.render(),this.listenTo(this.model,"change:active",this.handleActive),this.listenTo(this.model,"change:view",this.handleViewUpdate),this.listenTo(this.model,"change:outShowRecords",this.handleViewUpdate),this.listenTo(this.model,"change:outShowSources",this.handleViewUpdate),this.listenTo(this.model,"change:outColorColumn",this.updateViews),this.listenTo(this.model,"change:outSourceColorColumn",this.updateViews),this.listenTo(this.model,"change:outPlotColumns",this.updateViews),this.listenTo(this.model,"change:outType",this.updateViews),this.listenTo(this.model,"change:invalidateSize",this.invalidateSize),this.listenTo(this.model,"change:popupLayers",this.popupLayersUpdated),this.listenTo(this.model,"change:selectedLayerId",this.selectedLayerUpdated),this.listenTo(this.model,"change:mouseOverLayerId",this.mouseOverLayerUpdated),this.listenTo(this.model,"change:recordsUpdated",this.recordsUpdated),this.listenTo(this.model,"change:sourcesUpdated",this.sourcesUpdated),this.listenTo(this.model,"change:geoQuery",this.updateGeoQuery),this.listenTo(this.model,"change:geoQuerySources",this.updateGeoQuerySources)},render:function(){return this.$el.html(t.template(h)({t:this.model.getLabels()})),this.configureMap(),this.updateViews(),this.initDraw(),this},initDraw:function(){var o=this.model.getMap(),i=this.model.getLabels();L.drawLocal.draw.handlers.rectangle.tooltip.start=i.out.map.draw.start,L.drawLocal.draw.handlers.simpleshape.tooltip.end=i.out.map.draw.end;var s=new L.Draw.Rectangle(o);L.Control.CustomDraw=L.Control.extend({options:{position:"topleft"},onAdd:function(e){var t=L.DomUtil.create("div","custom-draw-toolbar leaflet-bar");return L.DomEvent.addListener(t,"click",L.DomEvent.stopPropagation).addListener(t,"click",L.DomEvent.preventDefault),t}});var l=new L.Control.CustomDraw;o.addControl(l),this.$(".custom-draw-toolbar").html(t.template(p)({t:this.model.getLabels()}));var r=this;this.$(".toggle-draw-options").on("click",t.bind(function(e){this.toggleDrawOptions()},this)),this.$(".action-filter-records").on("click",function(e){r.model.set("drawActiveType","records"),s.enable()}),this.$(".action-filter-sources").on("click",function(e){r.model.set("drawActiveType","sources"),s.enable()}),this.$(".action-cancel-draw").on("click",function(e){s.disable(),r.toggleDrawOptions(!1)}),o.on("draw:created",t.bind(this.onDrawCreated,this)),L.Control.CustomDelete=L.Control.extend({options:{position:"topleft"},onAdd:function(){var o=L.DomUtil.create("div","leaflet-bar leaflet-control leaflet-control-delete"),s=L.DomUtil.create("a","",o);return e(s).attr("href","#"),e(s).attr("title",i.out.map.draw.clear),L.DomUtil.create("span","icon-icon_draw-reset",s),s.onclick=t.bind(r.queryDeleteClicked,r),o}}),this.model.set("queryDeleteControl",new L.Control.CustomDelete)},toggleDrawOptions:function(e){var t=this.$(".custom-draw-actions"),o=!t.hasClass("hide");void 0===e?o?t.addClass("hide"):t.removeClass("hide"):e?t.removeClass("hide"):t.addClass("hide")},initMapControlView:function(){this.$("#map-control").length>0&&(this.views.control=this.views.control||new a({el:this.$("#map-control"),model:new n({labels:this.model.getLabels(),columnCollection:this.model.get("columnCollection"),sourceColumnCollection:this.model.get("sourceColumnCollection"),outShowRecords:this.model.getShowRecords(),outShowSources:this.model.getShowSources(),active:!1})}))},initMapPlotLatView:function(){if(this.$("#map-plot-lat").length>0){var e=this.model.get("columnCollection").byAttribute("plot");this.views.plotLat=this.views.plotLat||new d({el:this.$("#map-plot-lat"),model:new u({labels:this.model.getLabels(),columnCollection:e,currentRecordCollection:[],mouseOverLayerId:"",selectedLayerId:"",active:!1,outPlotColumns:t.pluck(e.models,"id")})})}},updateMapPlotLatView:function(){if(this.views.plotLat.model.set({outPlotColumns:void 0!==this.model.getOutPlotColumns()?this.model.getOutPlotColumns():t.pluck(this.model.get("columnCollection").byAttribute("plot").models,"id")}),void 0!==this.model.getCurrentRecords()){var e=this.model.getMap().getBounds().getNorthEast(),o=this.model.getMap().getBounds().getSouthWest();this.views.plotLat.model.setCurrentRecords(this.model.getCurrentRecords().byBounds({north:e.lat,east:e.lng,south:o.lat,west:o.lng}).models)}},updateMapControlView:function(){this.views.control.model.set({outColorColumn:this.model.getOutColorColumn(),outSourceColorColumn:this.model.getOutSourceColorColumn(),outShowRecords:this.model.getShowRecords(),outShowSources:this.model.getShowSources()})},updateViews:function(){switch(this.$("#map-options button").removeClass("active"),this.$('#map-options [data-option="'+this.model.getOutType()+'"]').addClass("active"),this.model.getOutType()){case"control":this.$el.removeClass("full-width"),this.initMapControlView(),this.views.plotLat&&this.views.plotLat.model.setActive(!1),this.views.control.model.setActive(),this.updateMapControlView();break;case"plot-lat":this.$el.removeClass("full-width"),this.initMapPlotLatView(),this.views.control&&this.views.control.model.setActive(!1),this.views.plotLat.model.setActive(),this.updateMapPlotLatView();break;default:this.$el.addClass("full-width"),this.views.control&&this.views.control.model.setActive(!1),this.views.plotLat&&this.views.plotLat.model.setActive(!1)}this.invalidateSize(!0),this.toggleDrawOptions(!1)},configureMap:function(){var e=this.model.getConfig(),o=L.map(e.mapID,e.mapOptions).on("popupclose",t.bind(this.onPopupClose,this)).on("zoomstart",t.bind(this.onZoomStart,this)).on("movestart",t.bind(this.onMoveStart,this)).on("zoomend",t.bind(this.onZoomEnd,this)).on("moveend",t.bind(this.onMoveEnd,this)).on("resize",t.debounce(t.bind(this.resize,this),500)),i=L.control.attribution({position:"bottomright"}).setPrefix("").addAttribution(e.attribution);o.addControl(i),this.model.setMap(o),this.initLayerGroups(),this.model.mapConfigured(!0),this.$el.trigger("mapConfigured")},checkLayers:function(){var e=this.model.getMap();this.model.getLayerGroup("records")&&("1"==this.model.getShowRecords()?this.model.getLayerGroup("records").addTo(e):this.model.getLayerGroup("records").remove()),this.model.getLayerGroup("sources")&&("1"==this.model.getShowSources()?this.model.getLayerGroup("sources").addTo(e):this.model.getLayerGroup("sources").remove())},initLayerGroups:function(){var e=this.model.getMap(),o=this.model.getConfig(),i=new L.featureGroup;i.addTo(e);var s={query:i};t.each(o.layerGroups,function(t,o){var i=new L.layerGroup;s[o]=i,i.addTo(e)}),this.model.setLayerGroups(s),t.each(this.model.getLayers().models,function(e){e.setLayerGroup(this.model.getLayerGroup("default"))},this),t.each(o.layerGroups,function(e,o){"default"!==o&&t.each(this.model.getLayers().where(e),function(e){e.setLayerGroup(this.model.getLayerGroup(o)),"base"===o&&e.addToMap()},this)},this),this.checkLayers()},updateMapView:function(){var e=this.model.getView(),t=this.model.getMap();if(null!==e&&"string"==typeof e&&(e=this.model.getConfigView(e)),null!==e&&void 0!==e)if(void 0!==e.center&&void 0!==e.zoom&&void 0!==e.dimensions)if(this.model.mapConfigured()){var o=this.getZoomForDimensions(e);t.getZoom()===o&&this.roundDegrees(t.getCenter().lat)===e.center.lat&&this.roundDegrees(t.getCenter().lng)===e.center.lng||t.setView(e.center,o,{animate:!0})}else this.zoomToDefault();else void 0!==e.south&&void 0!==e.west&&void 0!==e.north&&void 0!==e.east?t.fitBounds([[e.south,e.west],[e.north,e.east]]):this.zoomToDefault();else this.zoomToDefault();this.checkLayers(),this.updateViews(),this.triggerMapViewUpdated()},zoomToDefault:function(){var e=this.model.getDefaultView();this.model.getMap().setView(e.center,this.getZoomForDimensions(e),{animate:!0})},recordsUpdated:function(){this.updateViews()},sourcesUpdated:function(){this.updateViews()},handleActive:function(){if(this.model.isActive()){this.$el.show();var e=this;waitFor(function(){return e.model.mapConfigured()},function(){e.invalidateSize(!1)})}else this.$el.hide()},handleViewUpdate:function(){var e=this;waitFor(function(){return e.model.mapConfigured()},function(){e.updateMapView()})},mouseOverLayerUpdated:function(){"plot-lat"===this.model.getOutType()&&this.views.plotLat&&this.views.plotLat.model.set("mouseOverRecordId",this.model.get("mouseOverLayerId"))},selectedLayerUpdated:function(){this.updatePopupContent(),"plot-lat"===this.model.getOutType()&&this.views.plotLat&&this.views.plotLat.model.set("selectedRecordId",this.model.get("selectedLayerId"))},popupLayersUpdated:function(){var e=this.model.get("popupLayers"),t=this.model.getMap();if(t.closePopup(),e.length>0){var o=e[0],i=new L.Rrose({offset:"source"===o.recordType?new L.Point(0,-12):new L.Point(0,-4),closeButton:!1,autoPan:!1}).setContent(this.getMultiplesPopupContent()).setLatLng(o.layer.getLayers()[0].getLatLng()).openOn(t);this.model.set("multipleTooltip",i)}},updatePopupContent:function(){void 0!==this.model.get("multipleTooltip")&&null!==this.model.get("multipleTooltip")&&this.model.get("multipleTooltip").setContent(this.getMultiplesPopupContent())},getMultiplesPopupContent:function(){var e=this.model.get("popupLayers"),o=e.length>20?e.length-20:0;return t.template(c)({layers:t.map(e.slice(0,20),function(e){var o=e.color.colorToRgb();return{label:e.label,color:e.color,fillColor:"rgba("+o[0]+","+o[1]+","+o[2]+",0.4)",id:e.id,selected:this.model.get("selectedLayerId")===e.id,mouseOver:this.model.get("mouseOverLayerId")===e.id,icon:"source"===e.recordType&&g&&t.template(g)({fill:e.color,color:e.color})}},this),noNotShowing:o})},updateGeoQuery:function(){var e=this.model.get("geoQuery"),t=this.model.get("queryLayer"),o=this.model.get("queryDeleteControl"),i=this.model.getLayerGroups().query,s=this.model.getMap();void 0!==t&&i.hasLayer(t)&&i.removeLayer(t),void 0!==o&&o.remove(),void 0!==e&&(void 0===e.north&&void 0===e.south&&void 0===e.west&&void 0===e.east||(t=L.rectangle(L.latLngBounds(L.latLng(void 0!==e.south?parseFloat(e.south):-90,void 0!==e.west?e.west<0?parseFloat(e.west)+360:parseFloat(e.west):0),L.latLng(void 0!==e.north?parseFloat(e.north):90,void 0!==e.east?e.east<0?parseFloat(e.east)+360:parseFloat(e.east):360)),this.model.getConfig().layerStyles.query),i.addLayer(t),t.bringToBack(),this.model.set("queryLayer",t),s.addControl(o)))},updateGeoQuerySources:function(){var e=this.model.get("geoQuerySources"),t=this.model.get("queryLayerSources"),o=this.model.get("queryDeleteControl"),i=this.model.getLayerGroups().query,s=this.model.getMap();void 0!==t&&i.hasLayer(t)&&i.removeLayer(t),void 0!==e&&(void 0===e.north&&void 0===e.south&&void 0===e.west&&void 0===e.east||(t=L.rectangle(L.latLngBounds(L.latLng(void 0!==e.south?parseFloat(e.south):-90,void 0!==e.west?e.west<0?parseFloat(e.west)+360:parseFloat(e.west):0),L.latLng(void 0!==e.north?parseFloat(e.north):90,void 0!==e.east?e.east<0?parseFloat(e.east)+360:parseFloat(e.east):360)),this.model.getConfig().layerStyles.querySources),i.addLayer(t),t.bringToBack(),this.model.set("queryLayerSources",t),s.addControl(o)))},resize:function(){this.updateMapView()},invalidateSize:function(e){e=void 0!==e&&e,void 0!==this.model.getMap()&&this.model.getMap().invalidateSize(e)},onPopupClose:function(e){this.model.set("multipleTooltip",null),this.$el.trigger("mapPopupClosed")},onZoomStart:function(e){this.zooming=!0},onMoveStart:function(e){this.moving=!0},onZoomEnd:function(e){this.zooming=!1,this.triggerMapViewUpdated()},onMoveEnd:function(e){this.moving=!1,this.triggerMapViewUpdated()},triggerMapViewUpdated:function(){var e=this.model.getMap();if(!this.viewUpdating){var o=this;this.viewUpdating=!0,waitFor(function(){return o.model.mapConfigured()&&null!==o.model.getView()},function(){o.viewUpdating=!1;var i=o.model.getView();void 0===i||i.zoom===e.getZoom()&&i.center.lat===o.roundDegrees(e.getCenter().lat)&&i.center.lng===o.roundDegrees(e.getCenter().lng)&&t.isEqual(i.dimensions,o.getDimensions())||o.$el.trigger("mapViewUpdated",{view:{zoom:e.getZoom(),center:{lat:o.roundDegrees(e.getCenter().lat),lng:o.roundDegrees(e.getCenter().lng)},dimensions:o.getDimensions()}})})}},queryDeleteClicked:function(e){e.preventDefault(),this.$el.trigger("geoQueryDelete"),this.$el.trigger("geoQuerySourcesDelete")},layerSelect:function(t){t.preventDefault(),this.$el.trigger("mapLayerSelect",{id:e(t.currentTarget).attr("data-layerid")})},layerMouseOver:function(t){t.preventDefault(),this.$el.trigger("mapLayerMouseOver",{id:e(t.currentTarget).attr("data-layerid")})},layerMouseOut:function(t){t.preventDefault(),this.$el.trigger("mapLayerMouseOut",{id:e(t.currentTarget).attr("data-layerid")})},toggleOptionClick:function(t){t.preventDefault(),this.$el.trigger("mapOptionToggled",{option:e(t.currentTarget).attr("data-option")})},toggleShowRecordsClick:function(t){t.preventDefault(),this.$el.trigger("mapShowRecordsToggled",{option:e(t.currentTarget).attr("data-option")})},toggleShowSourcesClick:function(t){t.preventDefault(),this.$el.trigger("mapShowSourcesToggled",{option:e(t.currentTarget).attr("data-option")})},onDrawStart:function(t){var o=this.model.getMap();o.closePopup(),e(o.getPane("popupPane")).hide()},onDrawCreated:function(t){var o=this.model.getMap(),i=this.model.get("drawActiveType");o.closePopup(),e(o.getPane("popupPane")).show(),this.$el.trigger("sources"===i?"geoQuerySourcesSubmit":"geoQuerySubmit",{geoQuery:{north:this.roundDegrees(t.layer.getBounds().getNorth()),south:this.roundDegrees(t.layer.getBounds().getSouth()),west:this.roundDegrees(t.layer.getBounds().getWest()),east:this.roundDegrees(t.layer.getBounds().getEast())}});var s=this.model.getLayerGroups().query;o.fitBounds(s.getBounds(),{padding:[20,20]})},handleNavLink:function(t){t.preventDefault(),t.stopPropagation();var o=e(t.target).data("id"),i=e(t.target).data("route"),s=e(t.target).data("type");this.$el.trigger("navLink",{target:t.target,id:o,route:i,type:s})},getDimensions:function(){return[this.$el.innerWidth(),this.$el.innerHeight()]},getZoomOffset:function(e){var t=this.getDimensions(),o=[e.dimensions[0],e.dimensions[1]],i=1,s=0,l=1;if(1===(i=t[0]/t[1]>o[0]/o[1]?t[1]/o[1]:t[0]/o[0]))return s;if(i>1)for(;1.9*l<i;)l*=2,s++;else for(var s=0,l=1;l>i;)l/=2,s--;return s},getZoomForDimensions:function(e){var t=this.model.getMap();return Math.max(Math.min(e.zoom+this.getZoomOffset(e),t.getMaxZoom()),t.getMinZoom())},setZoomClass:function(){this.$el.removeClass(function(e,t){return(t.match(/\bzoom-level-\S+/g)||[]).join(" ")}),this.$el.addClass("zoom-level-"+this.model.getZoom())},roundDegrees:function(e){return Math.round(1e4*e)/1e4}})});
+define([
+  'jquery','underscore','backbone',
+  'leaflet',
+  'esri.leaflet',
+  'leaflet.rrose',
+  'leaflet.draw',
+  './mapControl/MapControlView', './mapControl/MapControlModel',
+  './mapPlot/mapPlotLat/MapPlotLatView', './mapPlot/MapPlotModel',
+  'text!./map.html',
+  'text!./mapPopupMultipeRecords.html',
+  'text!./drawActions.html',
+  'text!templates/triangleIcon.html'
+], function(
+  $, _, Backbone,
+  leaflet,
+  esriLeaflet,
+  rrose,
+  ldraw,
+  MapControlView, MapControlModel,
+  MapPlotLatView, MapPlotModel,
+  template,
+  templatePopupMultiple,
+  templateDrawActions,
+  templateTriangleIcon
+){
+  var MapView = Backbone.View.extend({
+    events:{
+      "click .layer-select" : "layerSelect",
+      "mouseenter .layer-select" : "layerMouseOver",
+      "mouseleave .layer-select" : "layerMouseOut",
+      "click .toggle-option" : "toggleOptionClick",
+      "click .nav-link" : "handleNavLink"
+    },
+    initialize : function(){
+//      console.log('MapView.initialize')
+      this.handleActive()
+
+      // set up an empty layer group for all our overlay and basemap layers
+      this.viewUpdating = false
+      this.views = this.model.getViews()
+
+      this.render()
+
+
+      this.listenTo(this.model, "change:active",        this.handleActive);
+      this.listenTo(this.model, "change:view",          this.handleViewUpdate);
+      this.listenTo(this.model, "change:outShowRecords",this.handleViewUpdate);
+      this.listenTo(this.model, "change:outShowSources",this.handleViewUpdate);
+      this.listenTo(this.model, "change:outColorColumn",this.updateViews);
+      this.listenTo(this.model, "change:outSourceColorColumn",this.updateViews);
+      this.listenTo(this.model, "change:outPlotColumns",this.updateViews);
+      this.listenTo(this.model, "change:outType",       this.updateViews);
+
+      this.listenTo(this.model, "change:invalidateSize",this.invalidateSize);
+//      this.listenTo(this.model, "change:layersUpdated",this.layersUpdated);
+      this.listenTo(this.model, "change:popupLayers",this.popupLayersUpdated)
+
+      this.listenTo(this.model, "change:selectedLayerId", this.selectedLayerUpdated);
+      this.listenTo(this.model, "change:mouseOverLayerId", this.mouseOverLayerUpdated);
+
+      this.listenTo(this.model, "change:recordsUpdated", this.recordsUpdated);
+      this.listenTo(this.model, "change:sourcesUpdated", this.sourcesUpdated);
+//      this.listenTo(this.model, "change:currentRecordCollection", this.updateViews);
+      this.listenTo(this.model, "change:geoQuery", this.updateGeoQuery);
+      this.listenTo(this.model, "change:geoQuerySources", this.updateGeoQuerySources);
+
+
+    },
+
+    render : function(){
+//      console.log('MapView.render')
+      this.$el.html(_.template(template)({t:this.model.getLabels()}))
+      this.configureMap()
+      this.updateViews()
+      this.initDraw()
+      // this.initDrawSources()
+
+      return this
+    },
+
+    initDraw : function() {
+      var _map = this.model.getMap()
+      var labels = this.model.getLabels()
+      // init draw tool
+      L.drawLocal.draw.handlers.rectangle.tooltip.start = labels.out.map.draw.start
+      L.drawLocal.draw.handlers.simpleshape.tooltip.end = labels.out.map.draw.end
+      var rectangleDrawer = new L.Draw.Rectangle(_map);
+      // add draw control
+      L.Control.CustomDraw = L.Control.extend({
+        options: { position: 'topleft' },
+        onAdd: function (map) {
+          var controlDiv = L.DomUtil.create('div', 'custom-draw-toolbar leaflet-bar');
+          L.DomEvent
+            .addListener(controlDiv, 'click', L.DomEvent.stopPropagation)
+            .addListener(controlDiv, 'click', L.DomEvent.preventDefault)
+          return controlDiv;
+        }
+      });
+      var customDrawControl = new L.Control.CustomDraw();
+      _map.addControl(customDrawControl);
+      // set up draw events
+      this.$('.custom-draw-toolbar').html(
+        _.template(templateDrawActions)({t:this.model.getLabels()})
+      );
+      var that = this
+      this.$('.toggle-draw-options').on(
+        'click',
+        _.bind(function(e) {this.toggleDrawOptions()}, this)
+      );
+      this.$('.action-filter-records').on(
+        'click',
+        function(e) {
+          that.model.set('drawActiveType', 'records')
+          rectangleDrawer.enable();
+        }
+      );
+      this.$('.action-filter-sources').on(
+        'click',
+        function(e) {
+          that.model.set('drawActiveType', 'sources')
+          rectangleDrawer.enable();
+        }
+      );
+      this.$('.action-cancel-draw').on(
+        'click',
+        function(e) {
+          rectangleDrawer.disable();
+          that.toggleDrawOptions(false);
+        }
+      );
+      _map.on('draw:created', _.bind(this.onDrawCreated,this));
+
+      // add delete control but do not yet add to map
+      L.Control.CustomDelete = L.Control.extend({
+        options: {
+          position: 'topleft'
+        },
+        onAdd: function () {
+          var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-delete');
+          var deleteLink = L.DomUtil.create('a', '',container);
+          $(deleteLink).attr('href',"#");
+          $(deleteLink).attr('title', labels.out.map.draw.clear);
+          L.DomUtil.create('span', 'icon-icon_draw-reset', deleteLink);
+          deleteLink.onclick = _.bind(that.queryDeleteClicked,that);
+          return container;
+        },
+      });
+      this.model.set("queryDeleteControl", new L.Control.CustomDelete())
+    },
+    toggleDrawOptions: function(open){
+      // console.log('toggleDrawOptions', open)
+      var $el = this.$('.custom-draw-actions');
+      var isOpen = !$el.hasClass('hide');
+      // classic toggle: hide if open, open if hidden
+      if (typeof open === 'undefined') {
+        if (isOpen) {
+          // hide
+          $el.addClass('hide');
+
+        } else {
+          // show
+          $el.removeClass('hide');
+        }
+
+      // explicit open/close
+      } else if (open) {
+        // show
+        $el.removeClass('hide');
+      } else {
+        // hide
+        $el.addClass('hide');
+      }
+    },
+
+    initMapControlView : function(){
+      // console.log("MapView.initMapControlView", this.model.getShowRecords());
+      var componentId = '#map-control'
+
+      if (this.$(componentId).length > 0) {
+
+        this.views.control = this.views.control || new MapControlView({
+          el:this.$(componentId),
+          model: new MapControlModel({
+            labels: this.model.getLabels(),
+            columnCollection:this.model.get("columnCollection"),
+            sourceColumnCollection:this.model.get("sourceColumnCollection"),
+            outShowRecords: this.model.getShowRecords(),
+            outShowSources: this.model.getShowSources(),
+            active: false
+          })
+        });
+      }
+    },
+    initMapPlotLatView : function(){
+      var componentId = '#map-plot-lat'
+
+      if (this.$(componentId).length > 0) {
+        var plotColumns = this.model.get("columnCollection").byAttribute("plot")
+        this.views.plotLat = this.views.plotLat || new MapPlotLatView({
+          el:this.$(componentId),
+          model: new MapPlotModel({
+            labels: this.model.getLabels(),
+            columnCollection: plotColumns,
+            currentRecordCollection:[],
+            mouseOverLayerId : "",
+            selectedLayerId : "",
+            active: false,
+            outPlotColumns: _.pluck(plotColumns.models,"id")
+          })
+        });
+      }
+    },
+    updateMapPlotLatView:function(){
+//      console.log("MapView.updateMapPlotLatView 1", Date.now() - window.timeFromUpdate);
+      this.views.plotLat.model.set({outPlotColumns:
+        typeof this.model.getOutPlotColumns() !== "undefined"
+        ? this.model.getOutPlotColumns()
+        : _.pluck(this.model.get("columnCollection").byAttribute("plot").models,"id")
+      })
+      if (typeof this.model.getCurrentRecords() !== "undefined") {
+        var ne = this.model.getMap().getBounds().getNorthEast()//.wrap()
+        var sw = this.model.getMap().getBounds().getSouthWest()//.wrap()
+//        console.log("MapView.updateMapPlotLatView 2", Date.now() - window.timeFromUpdate);
+        this.views.plotLat.model.setCurrentRecords(this.model.getCurrentRecords().byBounds({
+          north:ne.lat,
+          east:ne.lng,
+          south:sw.lat,
+          west:sw.lng
+        }).models)
+//        console.log("MapView.updateMapPlotLatView 3", Date.now() - window.timeFromUpdate);
+      }
+    },
+    updateMapControlView:function(){
+      // console.log("MapView.updateMapControlView", this.model.getOutSourceColorColumn())
+      this.views.control.model.set({
+        outColorColumn: this.model.getOutColorColumn(),
+        outSourceColorColumn: this.model.getOutSourceColorColumn(),
+        outShowRecords: this.model.getShowRecords(),
+        outShowSources: this.model.getShowSources(),
+      })
+    },
+    updateViews:function(){
+//      console.log("OutView.updateOutType")
+
+      this.$('#map-options button').removeClass('active')
+      this.$('#map-options [data-option="'+this.model.getOutType()+'"]').addClass('active')
+
+      switch(this.model.getOutType()){
+        case "control":
+          this.$el.removeClass('full-width')
+          this.initMapControlView()
+          if (this.views.plotLat) {
+            this.views.plotLat.model.setActive(false)
+          }
+          this.views.control.model.setActive()
+
+          this.updateMapControlView()
+
+          break
+        case "plot-lat":
+          this.$el.removeClass('full-width')
+          this.initMapPlotLatView()
+          if (this.views.control) {
+            this.views.control.model.setActive(false)
+          }
+          this.views.plotLat.model.setActive()
+          this.updateMapPlotLatView()
+          break
+        default:
+          this.$el.addClass('full-width')
+          if (this.views.control) {
+            this.views.control.model.setActive(false)
+          }
+          if (this.views.plotLat) {
+            this.views.plotLat.model.setActive(false)
+          }
+          break
+      }
+      this.invalidateSize(true)
+      this.toggleDrawOptions(false)
+    },
+
+
+    // map configuration has been read
+    configureMap : function(){
+//      console.log('MapView.configureMap')
+
+      // set map options
+      var config = this.model.getConfig()
+
+      // initialise leaflet map
+      var _map = L.map(
+        config.mapID,
+        config.mapOptions
+      )
+      .on('popupclose', _.bind(this.onPopupClose, this))
+      .on('zoomstart', _.bind(this.onZoomStart, this))
+      .on('movestart', _.bind(this.onMoveStart, this))
+      .on('zoomend', _.bind(this.onZoomEnd, this))
+      .on('moveend', _.bind(this.onMoveEnd, this))
+      .on("resize",  _.debounce(_.bind(this.resize, this), 500))
+
+      var attControl =
+        L.control.attribution({position:'bottomright'})
+        .setPrefix('')
+        .addAttribution(config.attribution)
+      _map.addControl(attControl)
+
+      this.model.setMap(_map)
+
+      this.initLayerGroups()
+
+      // position map on current view
+//      this.updateMapView()
+
+//      console.log('MapView.configureMap  mapConfigured')
+      this.model.mapConfigured(true)
+      this.$el.trigger('mapConfigured')
+    },
+    checkLayers : function(){
+      // console.log('checkLayers')
+      var _map = this.model.getMap()
+      // show/hide records layer
+      if (this.model.getLayerGroup('records')) {
+        if (this.model.getShowRecords() == '1') {
+          this.model.getLayerGroup('records').addTo(_map)
+        } else {
+          this.model.getLayerGroup('records').remove()
+        }
+      }
+      if (this.model.getLayerGroup('sources')) {
+        if (this.model.getShowSources() == '1') {
+          this.model.getLayerGroup('sources').addTo(_map)
+        } else {
+          this.model.getLayerGroup('sources').remove()
+        }
+      }
+    },
+    initLayerGroups: function (){
+      // console.log('MapView.initLayerGroups')
+
+      var _map = this.model.getMap()
+      var config = this.model.getConfig()
+
+      // init layer groups
+      var queryFeatureGroup = new L.featureGroup();
+      queryFeatureGroup.addTo(_map);
+      var layerGroups = {
+        query: queryFeatureGroup
+      }
+      _.each(config.layerGroups,function(conditions,id){
+        var layerGroup = new L.layerGroup()
+        layerGroups[id] = layerGroup
+        layerGroup.addTo(_map)
+      })
+      this.model.setLayerGroups(layerGroups)
+
+      // set default layer group
+      _.each(this.model.getLayers().models,function(layerModel){
+        layerModel.setLayerGroup(this.model.getLayerGroup("default"))
+      },this)
+      // set specific layer groups
+      _.each(config.layerGroups,function(conditions,id){
+        // console.log('initLayerGroups', id, conditions)
+        if (id !== "default") {
+          _.each(this.model.getLayers().where(conditions), function(layerModel){
+            layerModel.setLayerGroup(this.model.getLayerGroup(id))
+            if (id === "base") {
+              layerModel.addToMap()
+            }
+          },this)
+        }
+      },this)
+
+      this.checkLayers()
+    },
+
+
+
+    updateMapView : function(){
+      // console.log('MapView.updateMapView ')
+      var currentView = this.model.getView()
+      var _map = this.model.getMap()
+
+
+      // check if pre-configured view
+      if (currentView !== null && typeof currentView === 'string') {
+        currentView = this.model.getConfigView(currentView)
+      }
+
+      if ( currentView !== null && typeof currentView !== 'undefined' ) {
+
+        // xyz view
+        if ( typeof currentView.center !== 'undefined'
+              && typeof currentView.zoom !== 'undefined'
+              && typeof currentView.dimensions !== 'undefined' ){
+
+          if (this.model.mapConfigured()){
+            var zoomUpdated = this.getZoomForDimensions(currentView)
+
+            // check if change really necessary
+            if ( _map.getZoom() !== zoomUpdated
+                  || this.roundDegrees(_map.getCenter().lat) !== currentView.center.lat
+                  || this.roundDegrees(_map.getCenter().lng) !== currentView.center.lng) {
+              _map.setView(currentView.center, zoomUpdated,{animate:true})
+
+            }
+          } else {
+            // todo not sure about this one
+            this.zoomToDefault()
+          }
+
+
+        // bounds view
+        } else if (typeof currentView.south !== 'undefined'
+              && typeof currentView.west !== 'undefined'
+              && typeof currentView.north !== 'undefined'
+              && typeof currentView.east !== 'undefined') {
+          _map.fitBounds(
+            [
+              [currentView.south,currentView.west],
+              [currentView.north,currentView.east]
+            ]
+          )
+        } else {
+          this.zoomToDefault()
+        }
+      } else {
+        this.zoomToDefault()
+      }
+      this.checkLayers()
+
+      this.updateViews()
+      this.triggerMapViewUpdated()
+
+    },
+    zoomToDefault:function(){
+      var defaultView = this.model.getDefaultView()
+      this.model.getMap().setView(defaultView.center,this.getZoomForDimensions(defaultView),{animate:true})
+    },
+
+    recordsUpdated:function(){
+//      console.log('recordsUpdated')
+//          console.log("MapView.recordsUpdated 1", Date.now() - window.timeFromUpdate);
+
+      this.updateViews()
+//      console.log("MapView.recordsUpdated 2", Date.now() - window.timeFromUpdate);
+    },
+    sourcesUpdated:function(){
+//      console.log('recordsUpdated')
+//          console.log("MapView.recordsUpdated 1", Date.now() - window.timeFromUpdate);
+
+      this.updateViews()
+//      console.log("MapView.recordsUpdated 2", Date.now() - window.timeFromUpdate);
+    },
+
+
+
+
+
+
+
+    // event handlers for model change events
+    handleActive : function(){
+      //console.log('MapView.handleActive')
+      if (this.model.isActive()) {
+        this.$el.show()
+        var that = this
+        waitFor(
+          function(){
+            return that.model.mapConfigured()
+          },
+          function(){
+            that.invalidateSize(false);
+          }
+        )
+      } else {
+        this.$el.hide()
+      }
+    },
+
+    handleViewUpdate : function(){
+      //console.log('MapView.handleViewUpdate')
+      var that = this
+      // wait for config files to be read
+      waitFor(
+        function(){
+          return that.model.mapConfigured()
+        },
+        function(){
+          that.updateMapView()
+        }
+      )
+    },
+    mouseOverLayerUpdated:function(){
+//      this.updatePopupContent()
+      if (this.model.getOutType() === "plot-lat" && this.views.plotLat) {
+        this.views.plotLat.model.set("mouseOverRecordId",this.model.get("mouseOverLayerId"))
+      }
+    },
+    selectedLayerUpdated:function(){
+      this.updatePopupContent()
+      if (this.model.getOutType() === "plot-lat" && this.views.plotLat) {
+        this.views.plotLat.model.set("selectedRecordId",this.model.get("selectedLayerId"))
+      }
+    },
+    popupLayersUpdated:function(){
+      var layers = this.model.get("popupLayers")
+      // console.log("MapView.popupLayers", layers)
+      var map = this.model.getMap()
+      map.closePopup()
+      if(layers.length > 0){
+        var anchorLayer = layers[0]
+        var multiple_tooltip = new L.Rrose({
+          offset: anchorLayer.recordType === 'source'
+            ? new L.Point(0,-12) // TODO use config instead
+            : new L.Point(0,-4),
+          closeButton: false,
+          autoPan: false
+        }).setContent(this.getMultiplesPopupContent())
+          .setLatLng(anchorLayer.layer.getLayers()[0].getLatLng())
+          .openOn(map)
+        this.model.set("multipleTooltip",multiple_tooltip)
+      }
+    },
+
+    updatePopupContent:function(){
+//      console.log("MapView.selectedLayerIdChanged")
+      if(typeof this.model.get("multipleTooltip") !== "undefined"
+      && this.model.get("multipleTooltip") !== null){
+        this.model.get("multipleTooltip").setContent(this.getMultiplesPopupContent())
+      }
+    },
+    getMultiplesPopupContent:function(){
+      var layers = this.model.get("popupLayers")
+      var noNotShowing = layers.length > 20 ? layers.length - 20 : 0;
+      return _.template(templatePopupMultiple)({
+        layers:_.map(layers.slice(0,20), function(layer){
+          var crgba = layer.color.colorToRgb()
+          // TODO check config for icon rendering not recordType
+          return {
+            label:layer.label,
+            color:layer.color,
+            fillColor: 'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)',
+            id:layer.id,
+            selected:this.model.get("selectedLayerId") === layer.id,
+            mouseOver:this.model.get("mouseOverLayerId") === layer.id,
+            icon: layer.recordType === 'source' && templateTriangleIcon && _.template(templateTriangleIcon)({
+              fill: layer.color,
+              color: layer.color,
+            })
+          }
+        },this),
+        noNotShowing: noNotShowing,
+      })
+    },
+
+    updateGeoQuery:function(){
+      var geoQuery = this.model.get("geoQuery")
+      var queryLayer = this.model.get("queryLayer")
+      var deleteControl = this.model.get("queryDeleteControl")
+      var layerGroup = this.model.getLayerGroups()["query"]
+      var _map = this.model.getMap()
+
+      // remove layer from map
+      if (typeof queryLayer !== "undefined") {
+        if (layerGroup.hasLayer(queryLayer)){
+          layerGroup.removeLayer(queryLayer)
+        }
+      }
+      if (typeof deleteControl !== "undefined") {
+          deleteControl.remove()
+      }
+
+      // add layer from map if at least one boundary defined
+      if (typeof geoQuery !== "undefined") {
+        // have at least one undefined
+        if (typeof geoQuery.north !== "undefined"
+        || typeof geoQuery.south !== "undefined"
+        || typeof geoQuery.west !== "undefined"
+        || typeof geoQuery.east !== "undefined" ) {
+
+
+          queryLayer = L.rectangle(
+            L.latLngBounds(
+              L.latLng(
+                typeof geoQuery.south !== "undefined" ? parseFloat(geoQuery.south) : -90,
+                typeof geoQuery.west !== "undefined"
+                  ? geoQuery.west < 0
+                    ? parseFloat(geoQuery.west) + 360
+                    : parseFloat(geoQuery.west)
+                  : 0
+              ),
+              L.latLng(
+                typeof geoQuery.north !== "undefined" ? parseFloat(geoQuery.north) : 90,
+                typeof geoQuery.east !== "undefined"
+                    ? geoQuery.east < 0
+                      ? parseFloat(geoQuery.east) + 360
+                      : parseFloat(geoQuery.east)
+                    : 360
+              )
+            ),
+            this.model.getConfig().layerStyles.query
+          )
+
+          layerGroup.addLayer(queryLayer)
+          queryLayer.bringToBack()
+          this.model.set("queryLayer",queryLayer)
+          _map.addControl(deleteControl)
+        }
+      }
+
+    },
+    updateGeoQuerySources:function(){
+      var geoQuery = this.model.get("geoQuerySources")
+      var queryLayer = this.model.get("queryLayerSources")
+      var deleteControl = this.model.get("queryDeleteControl")
+      var layerGroup = this.model.getLayerGroups()["query"]
+      var _map = this.model.getMap()
+
+      // remove layer from map
+      if (typeof queryLayer !== "undefined") {
+        if (layerGroup.hasLayer(queryLayer)){
+          layerGroup.removeLayer(queryLayer)
+        }
+      }
+      // if (typeof deleteControl !== "undefined") {
+      //     deleteControl.remove()
+      // }
+
+      // add layer from map if at least one boundary defined
+      if (typeof geoQuery !== "undefined") {
+        // have at least one undefined
+        if (typeof geoQuery.north !== "undefined"
+        || typeof geoQuery.south !== "undefined"
+        || typeof geoQuery.west !== "undefined"
+        || typeof geoQuery.east !== "undefined" ) {
+
+
+          queryLayer = L.rectangle(
+            L.latLngBounds(
+              L.latLng(
+                typeof geoQuery.south !== "undefined" ? parseFloat(geoQuery.south) : -90,
+                typeof geoQuery.west !== "undefined"
+                  ? geoQuery.west < 0
+                    ? parseFloat(geoQuery.west) + 360
+                    : parseFloat(geoQuery.west)
+                  : 0
+              ),
+              L.latLng(
+                typeof geoQuery.north !== "undefined" ? parseFloat(geoQuery.north) : 90,
+                typeof geoQuery.east !== "undefined"
+                    ? geoQuery.east < 0
+                      ? parseFloat(geoQuery.east) + 360
+                      : parseFloat(geoQuery.east)
+                    : 360
+              )
+            ),
+            this.model.getConfig().layerStyles.querySources
+          )
+
+          layerGroup.addLayer(queryLayer)
+          queryLayer.bringToBack()
+          this.model.set("queryLayerSources",queryLayer)
+
+          _map.addControl(deleteControl)
+          // _map.fitBounds(
+          //   layerGroup.getBounds(),
+          //   {
+          //     padding: [ 20, 20 ]
+          //   }
+          // )
+        }
+      }
+
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // event Handlers for view events
+    resize : function (){
+      //console.log('MapView.resize')
+      this.updateMapView()
+    },
+
+//    layersUpdated : function (){
+//      var _map = this.model.getMap()
+//
+//
+//
+//    },
+    invalidateSize : function (animate){
+      animate = typeof animate !== 'undefined' ? animate : false
+      //console.log('MapView.invalidateSize')
+      if (typeof this.model.getMap() !== 'undefined' ) {
+        this.model.getMap().invalidateSize(animate)
+      }
+    },
+
+
+    onPopupClose:function(e){
+//      console.log("MapView.onPopupClose")
+      this.model.set("multipleTooltip",null)
+      this.$el.trigger('mapPopupClosed')
+
+
+    },
+
+    onZoomStart : function(e) {
+//      console.log('MapView.onZoomStart')
+      // make sure map state really changed
+      this.zooming = true
+
+    },
+    onMoveStart : function(e) {
+      //console.log('MapView.onMoveStart')
+      this.moving = true
+    },
+    onZoomEnd : function(e) {
+//      console.log('MapView.onZoomEnd')
+      this.zooming = false
+      this.triggerMapViewUpdated()
+
+    },
+    onMoveEnd : function(e) {
+      //console.log('MapView.onMoveEnd')
+      this.moving = false
+      this.triggerMapViewUpdated()
+    },
+
+    // event triggers (upstream)
+    triggerMapViewUpdated : function() {
+
+      //console.log('MapView.triggerMapViewUpdated ')
+      var _map = this.model.getMap()
+      // make sure only one event gets broadcasted
+      // when map is moved and zoomed at the same time
+      if (!this.viewUpdating) {
+        var that = this
+        this.viewUpdating = true
+        waitFor(
+          function(){
+            return that.model.mapConfigured() && that.model.getView()!== null
+          },
+          function(){
+            that.viewUpdating = false
+            var view = that.model.getView()
+            if (typeof view !== 'undefined'
+              && (view.zoom !== _map.getZoom()
+              || view.center.lat !== that.roundDegrees(_map.getCenter().lat)
+              || view.center.lng !== that.roundDegrees(_map.getCenter().lng)
+              || !_.isEqual(view.dimensions, that.getDimensions()))) {
+              that.$el.trigger('mapViewUpdated',{
+                view: {
+                  zoom : _map.getZoom(),
+                  center : {
+                    lat:that.roundDegrees(_map.getCenter().lat),
+                    lng:that.roundDegrees(_map.getCenter().lng)
+                  },
+                  dimensions : that.getDimensions()
+                }
+              })
+            }
+          }
+        )
+      }
+    },
+
+
+
+    queryDeleteClicked:function(e){
+      e.preventDefault()
+      this.$el.trigger('geoQueryDelete')
+      this.$el.trigger('geoQuerySourcesDelete')
+    },
+
+    layerSelect:function(e){
+      // console.log("MapView.layerSelect")
+
+      e.preventDefault()
+      this.$el.trigger('mapLayerSelect',{
+        id: $(e.currentTarget).attr("data-layerid")
+      })
+    },
+
+    layerMouseOver:function(e){
+      e.preventDefault()
+      this.$el.trigger('mapLayerMouseOver',{id:$(e.currentTarget).attr("data-layerid")})
+    },
+    layerMouseOut:function(e){
+      e.preventDefault()
+      this.$el.trigger('mapLayerMouseOut',{id:$(e.currentTarget).attr("data-layerid")})
+    },
+
+    toggleOptionClick:function(e){
+      e.preventDefault()
+
+      this.$el.trigger('mapOptionToggled',{
+        option: $(e.currentTarget).attr("data-option")
+      })
+    },
+    toggleShowRecordsClick:function(e){
+      e.preventDefault()
+
+      this.$el.trigger('mapShowRecordsToggled',{
+        option: $(e.currentTarget).attr("data-option")
+      })
+    },
+    toggleShowSourcesClick:function(e){
+      e.preventDefault()
+
+      this.$el.trigger('mapShowSourcesToggled',{
+        option: $(e.currentTarget).attr("data-option")
+      })
+    },
+
+
+
+    onDrawStart : function(e) {
+      var map = this.model.getMap()
+      map.closePopup()
+      $(map.getPane("popupPane")).hide()
+
+    },
+    onDrawCreated : function(e) {
+      var map = this.model.getMap()
+      var drawActiveType = this.model.get('drawActiveType')
+      map.closePopup()
+      $(map.getPane("popupPane")).show()
+      this.$el.trigger(drawActiveType === 'sources'
+        ? 'geoQuerySourcesSubmit'
+        : 'geoQuerySubmit',
+        {
+          geoQuery: {
+            north:this.roundDegrees(e.layer.getBounds().getNorth()),
+            south:this.roundDegrees(e.layer.getBounds().getSouth()),
+            west:this.roundDegrees(e.layer.getBounds().getWest()),
+            east:this.roundDegrees(e.layer.getBounds().getEast())
+          }
+        }
+      )
+      var layerGroup = this.model.getLayerGroups()["query"]
+      // zoom to query group
+      map.fitBounds(
+        layerGroup.getBounds(),
+        {
+          padding: [ 20, 20 ]
+        }
+      )
+    },
+
+    handleNavLink : function(e){
+      e.preventDefault()
+      e.stopPropagation()
+
+      var id = $(e.target).data('id')
+      var route = $(e.target).data('route')
+      var type = $(e.target).data('type')
+
+      this.$el.trigger('navLink',{
+        target:e.target,
+        id:id,
+        route:route,
+        type:type
+      })
+    },
+
+
+
+
+
+    // UTILS
+    getDimensions : function() {
+      return [this.$el.innerWidth(),this.$el.innerHeight()]
+    },
+    // figure out best zoom for dimensions
+    getZoomOffset : function(view) {
+
+      var dimActual = this.getDimensions()
+      var dim = [view.dimensions[0], view.dimensions[1]]
+
+      var factor = 1
+      var offset = 0
+      var zoomed = 1
+
+      // if actual dimensions wider > scale height
+      if (dimActual[0]/dimActual[1] > dim[0]/dim[1]){
+        factor = dimActual[1]/dim[1]
+      } else {
+        factor = dimActual[0]/dim[0]
+      }
+
+      // factor 1 >> no zoom level change for factor 1
+      if (factor === 1) {
+        return offset
+
+      // factor > 1  >> test higher zoom levels
+      } else if (factor > 1) {
+
+        while (zoomed*1.9 < factor) {
+          zoomed = zoomed*2
+          offset++
+        }
+
+      // factor < 1  >> test lower zoom levels
+      } else {
+
+        var offset = 0
+        var zoomed = 1
+
+        while (zoomed > factor) {
+          zoomed = zoomed/2
+          offset--
+        }
+      }
+      return offset
+    },
+    getZoomForDimensions : function(view) {
+      var _map = this.model.getMap()
+      return Math.max(
+        Math.min(
+          view.zoom + this.getZoomOffset(view),
+          _map.getMaxZoom()
+        ),
+        _map.getMinZoom()
+      )
+
+    },
+    setZoomClass : function(){
+      // remove previous zoom class
+      this.$el.removeClass (function (index, classes) {
+        return (classes.match (/\bzoom-level-\S+/g) || []).join(' ');
+      });
+      // set new zoom class
+      this.$el.addClass('zoom-level-' + this.model.getZoom());
+    },
+    roundDegrees : function(value){
+      //round to 4 decimals
+      return Math.round(value * 10000) / 10000
+    }
+
+
+
+  });
+
+  return MapView;
+
+});

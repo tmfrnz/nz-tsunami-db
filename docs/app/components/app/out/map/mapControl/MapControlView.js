@@ -13,7 +13,7 @@ define([
   template,
   templateColorSelect,
   templateColorKey,
-  templateTriangleIcon,
+  templateTriangleIcon
 ) {
 
   return Backbone.View.extend({

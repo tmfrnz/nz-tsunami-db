@@ -1,1 +1,46 @@
-define(["jquery","underscore","backbone"],function(t,i,e){return e.Model.extend({initialize:function(t){this.options=t||{},this.initAttributes(),void 0!==this.attributes.attributeMap&&this.mapAttributes(this.attributes.attributeMap)},initAttributes:function(){i.each(this.attributes,function(t,i){""===t&&this.set(i,null)},this)},mapAttributes:function(t){i.each(t,function(t,i){this.set(i,null!==this.attributes[t]?this.attributes[t]:"")},this)},getDescription:function(){return this.attributes.description}})});
+define([
+  'jquery', 'underscore', 'backbone'
+], function($,_, Backbone){
+
+  var ProxyModel = Backbone.Model.extend({
+    initialize : function(options) {
+      this.options = options || {};
+      // map data attributes
+      this.initAttributes()
+      if (typeof this.attributes.attributeMap !== 'undefined'){
+        this.mapAttributes(this.attributes.attributeMap)
+      }
+
+    },
+    initAttributes:function(){
+      _.each(
+        this.attributes,
+        function(value,key){
+          if (value === '') {
+            this.set(key, null)
+          }
+        },
+        this
+      )
+    },
+    mapAttributes:function(attributeMap){
+      _.each(
+        attributeMap,
+        function(attr,key){
+          this.set(key, this.attributes[attr] !== null
+            ? this.attributes[attr]
+            : ''
+          )
+
+        },
+        this
+      )
+    },
+    getDescription:function(){
+      return this.attributes.description
+    }
+  });
+
+  return ProxyModel;
+
+});
