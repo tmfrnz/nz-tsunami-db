@@ -1,1 +1,104 @@
-define(["jquery","underscore","backbone","./ColumnModel"],function(e,t,n,u){var r=n.Collection.extend({model:u,initialize:function(e,t){this.options=t||{}},initializeModels:function(e){t.each(this.models,function(n){if(n.get("queryColumn")||console.log(n.get("queryColumn")),"quantitative"===n.get("type")||"date"===n.get("type")||"count"===n.get("type")){if("auto"===n.getValues()){var u=e.getValuesForColumn(n);n.set("values",{range:{min:u[0],max:u[u.length-1]}})}else if(void 0!==n.getValues().range&&("auto"===n.getValues().range.min[0]||"auto"===n.getValues().range.max[0])){var u=e.getValuesForColumn(n);"auto"===n.getValues().range.min[0]&&(n.getValues().range.min[0]=u[0]),"auto"===n.getValues().range.max[0]&&(n.getValues().range.max[0]=u[u.length-1])}}else if("categorical"===n.get("type")||"ordinal"===n.get("type")){if("auto"===n.getValues()){var u=e.getValuesForColumn(n);n.set("values",{values:u,labels:t.clone(u),hints:[],colors:1===n.get("colorable")?t.map(u,function(){return"#969696"}):[]})}if(1===n.get("blanks")){var u=n.get("values");u.values.push("null"),u.labels.push("Unspecified"),void 0!==u.colors&&u.colors.push("#969696")}}},this)},byType:function(e){var t=this.filter(function(t){return t.get("type")===e});return new r(t)},byGroup:function(e){var t=this.filter(function(t){return t.get("group")===e});return new r(t)},byAttribute:function(t,n){n=void 0!==n?n:1;var u=this.filter(function(u){return e.isArray(n)?n.indexOf(u.get(t))>-1:u.get(t)===n});return new r(u)},byQueryColumn:function(e){return this.filter(function(t){return t.getQueryColumnByType("value")===e||t.getQueryColumnByType("min")===e||t.getQueryColumnByType("max")===e})[0]}});return r});
+define([
+  'jquery', 'underscore', 'backbone',
+  './ColumnModel'
+], function(
+  $, _, Backbone,model
+){
+  var ColumnCollection = Backbone.Collection.extend({
+    model:model,
+    initialize: function(models,options) {
+      this.options = options || {};
+    },
+    initializeModels:function(records){
+      _.each(this.models,function(column){
+        column.get('queryColumn') || console.log(column.get('queryColumn'))
+        // console.log('ColumnCollection initializeModels')
+        if (
+          column.get("type") === "quantitative" ||
+          column.get("type") === "date" ||
+          column.get("type") === "count" 
+        ) {
+          if(column.getValues() === 'auto'){
+            var values = records.getValuesForColumn(column)
+            column.set("values", {
+              "range": {
+                "min": values[0],
+                "max": values[values.length-1]
+              }
+            })
+          } else {
+            if (
+              typeof column.getValues().range !== "undefined"
+              && (column.getValues().range.min[0] === "auto" || column.getValues().range.max[0] === "auto")
+            ){
+              var values = records.getValuesForColumn(column)
+              if (column.getValues().range.min[0] === "auto") {
+                column.getValues().range.min[0] = values[0]
+              }
+              if (column.getValues().range.max[0] === "auto") {
+                column.getValues().range.max[0] = values[values.length-1]
+              }
+            }
+          }
+
+        } else if (column.get("type") === "categorical" || column.get("type") === "ordinal") {
+        // replace auto values (generate from actual record values where not explicitly set)
+          if(column.getValues() === 'auto'){
+            var values = records.getValuesForColumn(column)
+            column.set("values",{
+              "values":values,
+              "labels": _.clone(values),
+              "hints":[],
+              "colors":column.get("colorable") === 1
+                ? _.map(values,function(){
+                    return '#969696'
+                  })
+                : []
+            })
+          }
+          // add null classes where blanks are possible
+          if (column.get('blanks') === 1) {
+            var values = column.get("values")
+            values.values.push('null')
+            values.labels.push('Unspecified')
+            if (typeof values.colors !== "undefined") {
+              values.colors.push('#969696')
+            }
+          }
+        }
+      },this)
+    },
+    byType:function(type){
+      var filtered = this.filter(function(model){
+        return model.get("type") === type
+      })
+      return new ColumnCollection(filtered);
+    },
+    byGroup:function(groupId){
+      var filtered = this.filter(function(model){
+        return model.get("group") === groupId
+      })
+      return new ColumnCollection(filtered);
+    },
+    byAttribute:function(att,val){
+      val = typeof val !== "undefined" ? val : 1
+      var filtered = this.filter(function(model){
+        if ($.isArray(val)){
+          return val.indexOf(model.get(att)) > -1
+        } else {
+          return model.get(att) === val
+        }
+      })
+      return new ColumnCollection(filtered);
+    },
+    byQueryColumn:function(queryColumn){
+      return this.filter(function(model){
+        return model.getQueryColumnByType("value") === queryColumn
+          || model.getQueryColumnByType("min") === queryColumn
+          || model.getQueryColumnByType("max") === queryColumn
+      })[0]
+    }
+  });
+
+  return ColumnCollection;
+});

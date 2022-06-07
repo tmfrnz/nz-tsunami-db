@@ -171,7 +171,7 @@ define([
           // toggle expanded
         this.$('.form-section-'+section.id).toggleClass(
           "expanded-section",
-          this.model.isExpandedSection(section.id),
+          this.model.isExpandedSection(section.id)
         )
       }, this)
     },
@@ -218,7 +218,7 @@ define([
             })
           )
           // also toggle section reset button
-          const sectionFilterCount =  _.reduce(groups, function(memo, group){
+          var sectionFilterCount =  _.reduce(groups, function(memo, group){
               var columnsByGroup = columnCollection.byGroup(group.id).models
               var groupFilterCount = _.reduce(columnsByGroup, function(memo2, column){
                 return this.isColumnSet(column) ? memo2 + 1 : memo2;
@@ -240,7 +240,7 @@ define([
         sectionsWithGroups,
         function(groups, sectionId) {
           // also toggle section reset button
-          const sectionFilterCount =  _.reduce(groups, function(memo, group){
+          var sectionFilterCount =  _.reduce(groups, function(memo, group){
               var columnsByGroup = columnCollection.byGroup(group.id).models
               var groupFilterCount = _.reduce(columnsByGroup, function(memo2, column){
                 return this.isColumnSet(column) ? memo2 + 1 : memo2;
@@ -494,27 +494,21 @@ define([
               range,
               function(memo, value, key) {
                 if (Array.isArray(value) && typeof value[0] === 'string' && value[0].indexOf('-') > -1) {
-                  return Object.assign(
-                    {},
-                    memo,
-                    {
-                      [key]: _.map(value, function(val, index) {
-                        return index === 0 ? Date.parse(val) : val;
-                      })
-                    }
-                  );
+                  var o = {};
+                  o[key] = _.map(value, function(val, index) {
+                    return index === 0 ? Date.parse(val) : val;
+                  });
+                  return Object.assign({}, memo, o);
                 } else {
                   var v = typeof value === 'string' && value.indexOf('-') > -1
                     ? Date.parse(val)
                     : value;
-                  return Object.assign(
-                    {},
-                    memo,
-                    { [key]: v },
-                  );
+                  var o = {};
+                  o.key = v;
+                  return Object.assign({}, memo, o);
                 }
               },
-              {},
+              {}
             )
           }
           var value_min_formatted = queryMin;

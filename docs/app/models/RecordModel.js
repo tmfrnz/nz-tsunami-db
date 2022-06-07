@@ -38,9 +38,16 @@ define([
       // check if we have a time
       // TODO use better regex
       if (dateTimePattern.test(value)) {
-        var [date, time] = value.trim().split(' ');
-        var [day, month, year] = date.split('/');
-        var [h, m] = time.split(':')
+        var dateTime = value.trim().split(' ');
+        var date = dateTime[0];
+        var time = dateTime[1];
+        var dmy = date.split('/');
+        var day = dmy[0];
+        var month = dmy[1];
+        var year = dmy[2];
+        var hm = time.split(':')
+        var h = hm[0];
+        var m = hm[1];
         day = day.length === 1 ? '0' + day : day;
         month = month.length === 1 ? '0' + month : month;
         h = h.length === 1 ? '0' + h : h;
@@ -51,7 +58,10 @@ define([
       }
       if (dateOnlyPattern.test(value)) {
         var date = value.trim();
-        var [day, month, year] = date.split('/');
+        var dmy = date.split('/');
+        var day = dmy[0];
+        var month = dmy[1];
+        var year = dmy[2];
         day = day.length === 1 ? '0' + day : day;
         month = month.length === 1 ? '0' + month : month;
         var dateTimeProper = year + '-' + month + '-' + day + 'T00:00:00'
@@ -313,7 +323,7 @@ define([
                 this.attributes[col].split(columnModel.get('separator')),
                 function(val) {
                   return that.decodeValue(val.trim(), columnModel.get('values')).trim();
-                },
+                }
               ).join(columnModel.get('separator') + ' ')
             } else {
               return this.decodeValue(this.attributes[col], columnModel.get('values')).trim();

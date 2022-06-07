@@ -50,7 +50,7 @@ define([
       // console.log("recordCollection.updateRecords", args)
       // remember query but ignore queryRelated (only apply once)
       this.query = args.query || this.query
-      const query = args.queryRelated ? Object.assign({}, this.query, args.queryRelated) : this.query
+      var query = args.queryRelated ? Object.assign({}, this.query, args.queryRelated) : this.query
 
       var that = this;
       _.each(_.clone(this.models).reverse(),function(model){
@@ -265,7 +265,7 @@ define([
               function (memo, commentCol) {
                 return memo.concat(commentCol.column)
               },
-              result,
+              result
             );
           }
           if (col.get('dateColumns')) {
@@ -290,7 +290,7 @@ define([
                 }
                 return res;
               },
-              result,
+              result
             );
           }
           if (col.get('elapsedColumn')) {
@@ -307,7 +307,7 @@ define([
           }
           return result
         },
-        [],
+        []
       )
       csv += keys.join(columnDelimiter);
       csv += lineDelimiter;

@@ -1,1 +1,65 @@
-define(["jquery","underscore","backbone","models/ViewModel"],function(t,e,r,n){return n.extend({initialize:function(t){this.options=t||{},this.set("expanded",!1),this.set("tableSortOrder","1"),this.set("tableSortColumn","id")},setCurrentRecords:function(t){this.set("currentRecordCollection",t)},getCurrentRecords:function(){return this.attributes.currentRecordCollection},getSortedRecords:function(){var t=this.attributes.currentRecordCollection.clone(),e=parseInt(this.attributes.tableSortOrder),r=this;return t.comparator=function(t,n){var i=t.get(r.attributes.tableSortColumn),o=n.get(r.attributes.tableSortColumn);return null===i||""===i||null===o||""===o?null!==i&&""!==i||null===o||""===o?null===i||""===i||null!==o&&""!==o?(i>o?1:o>i?-1:0)*e:-1:1:isNumber(i)&&!isNumber(o)?1*e:isNumber(o)&&!isNumber(i)?-1*e:isNumber(o)&&isNumber(i)?(parseFloat(i)>parseFloat(o)?1:-1)*e:(i>o?1:-1)*e},t.sort(),t.models},allExpanded:function(){return this.attributes.expanded},setExpanded:function(t){return this.set("expanded",t)}})});
+define([
+  'jquery', 'underscore', 'backbone',
+  'models/ViewModel'
+], function($,_, Backbone,ViewModel) {
+
+  return ViewModel.extend({
+    initialize : function(options){
+      // console.log('TableModel', options)
+      this.options = options || {};
+      this.set('expanded',false)
+      this.set("tableSortOrder","1")
+      this.set("tableSortColumn","id")
+
+    },
+    setCurrentRecords : function(currentRecords){
+      // console.log('TableModel setCurrentRecords', currentRecords)
+      this.set('currentRecordCollection', currentRecords) // new active layers
+    },
+    getCurrentRecords : function(){
+      return this.attributes.currentRecordCollection
+    },
+    getSortedRecords : function(){
+      var records = this.attributes.currentRecordCollection.clone()
+      var order = parseInt(this.attributes.tableSortOrder)
+      var that = this
+      records.comparator = function(a,b){
+        var aval = a.get(that.attributes.tableSortColumn)
+        var bval = b.get(that.attributes.tableSortColumn)
+        if (aval === null || aval === "" || bval === null || bval === "" ) {
+          if ((aval === null || aval === "") && (bval !== null && bval !== "" )) {
+            return 1
+          }
+          if ((aval !== null && aval !== "") && (bval === null || bval === "" )) {
+            return -1
+          }
+          return (aval > bval ? 1 : (bval > aval) ? -1 : 0) * order;
+        }
+        if (isNumber(aval) && !isNumber(bval)) {
+          return 1 * order;
+        }
+        if (isNumber(bval) && !isNumber(aval)) {
+          return -1 * order;
+        }
+        if (isNumber(bval) && isNumber(aval)) {
+          return (parseFloat(aval) > parseFloat(bval) ? 1 : -1) * order
+        }
+        // if (isNumber(aval.toString()[0]) && isNumber(bval.toString()[0])) {
+        //   return (parseInt(aval) > parseInt(bval) ? 1 : -1) * order
+        // }
+        return (aval > bval ? 1 : -1) * order
+
+      }
+      records.sort()
+      return records.models
+    },
+    allExpanded : function(){
+      return this.attributes.expanded
+    },
+    setExpanded : function(bool){
+      return this.set("expanded",bool)
+    },
+  });
+
+
+});

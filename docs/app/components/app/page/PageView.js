@@ -9,7 +9,7 @@ define([
   "text!templates/content_usage.html",
   "text!templates/content_contact.html",
   "text!templates/content_basemap.html",
-  "text!templates/not_found.html",
+  "text!templates/not_found.html"
 ], function(
   $,
   _,
@@ -21,7 +21,7 @@ define([
   templateContentUsage,
   templateContentContact,
   templateContentBasemap,
-  templateNotFound,
+  templateNotFound
 ) {
   var PageView = Backbone.View.extend({
     events: {

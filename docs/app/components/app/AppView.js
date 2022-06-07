@@ -253,7 +253,7 @@ window.timeFromUpdate = Date.now()
             function(memo, source) {
               return _.union(memo, [source.get('id').toString()]);
             },
-            [],
+            []
           );
           // 2. then update records with active sources
           // filter sources by active/filtered records
@@ -275,7 +275,7 @@ window.timeFromUpdate = Date.now()
               function(memo, record) {
                 return _.union(memo, [record.get('trigger_event_id').toString()]);
               },
-              [],
+              []
             );
           }
           // 4. then update sources with active records
@@ -699,7 +699,7 @@ window.timeFromUpdate = Date.now()
             // console.log("success loading records data")
             var records = {
               type: "FeatureCollection",
-              features: dataObjects.map((d) => {
+              features: _.map(dataObjects, function(d) {
                 return {
                   type: "Feature",
                   id: d.id,
@@ -743,7 +743,7 @@ window.timeFromUpdate = Date.now()
             // console.log("success loading sources data")
             var sources = {
               type: "FeatureCollection",
-              features: dataObjects.map((d) => {
+              features: _.map(dataObjects, function(d) {
                 return {
                   type: "Feature",
                   id: d.id,

@@ -1,1 +1,45 @@
-define(["jquery","underscore","backbone","./ProxyModel"],function(t,e,n,i){return n.Collection.extend({model:i,initialize:function(t,e){this.options=e||{}},toCSV:function(){var t="",n=e.without(Object.keys(this.models[0].attributes),"attributeMap");return t+=n.join(","),t+="\n",e.each(this.models,function(i){e.each(n,function(e,n){n>0&&(t+=","),t+='"',t+=i.get(e)?i.get(e).toString().replace(/"/g,'""'):"",t+='"'}),t+="\n"}),t}})});
+define([
+  'jquery', 'underscore', 'backbone',
+  './ProxyModel'  
+], function(
+  $, _, Backbone, model
+){
+  var ProxyCollection = Backbone.Collection.extend({
+    model:model,
+    initialize: function(models,options) {            
+      this.options = options || {};       
+    
+    },    
+    toCSV:function(){
+      
+      var columnDelimiter = ',';
+      var lineDelimiter = '\n'
+      var csv = '';
+      
+      // add header
+      var keys = _.without(Object.keys(this.models[0].attributes),'attributeMap')
+      
+      csv += keys.join(columnDelimiter);
+      csv += lineDelimiter;
+      
+      // add rows 
+      // for each record
+      _.each(this.models,function(model){
+        // for each column
+        _.each(keys,function(key,i){
+          if (i > 0) {
+            csv += columnDelimiter
+          }
+          csv += '"'
+          csv += model.get(key) ? model.get(key).toString().replace(/"/g, '\""') : "";                  
+          csv += '"'
+        })
+        csv += lineDelimiter
+      })
+      return csv
+    }    
+    
+  });
+
+  return ProxyCollection;
+});
