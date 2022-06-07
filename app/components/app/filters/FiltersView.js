@@ -504,7 +504,7 @@ define([
                     ? Date.parse(val)
                     : value;
                   var o = {};
-                  o.key = v;
+                  o[key] = v;
                   return Object.assign({}, memo, o);
                 }
               },
@@ -688,6 +688,7 @@ define([
         var slider = this;
 
         var ranges = JSON.parse($(this).attr('data-value-range'))
+        console.log($(this).attr('data-value-range'), ranges)
         var colType = $(this).attr('data-column-type')
         var sliderOptions = {
           "start": [parseFloat($(this).attr('data-value-min')), parseFloat($(this).attr('data-value-max'))],
