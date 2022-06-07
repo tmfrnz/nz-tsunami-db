@@ -1,7 +1,7 @@
 ({
   appDir: "../",
   baseUrl: "app",
-  dir: "../build",
+  dir: "../docs",
   paths: {
     'domReady' : 'libs/domReady',
     'jquery': 'libs/jquery-1.12',
@@ -27,5 +27,8 @@
       name: "main"
     }
   ],
-  optimizeCss: 'standard'
+  skipDirOptimize: false,
+  optimizeCss: 'standard',
+  fileExclusionRegExp: /^\./,
+  dirExclusionRegExp: /^\./
 })
