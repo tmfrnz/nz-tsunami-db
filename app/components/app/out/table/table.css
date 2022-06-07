@@ -15,6 +15,14 @@
     margin-top: 15px;
     margin-bottom: 15px;
 }
+.table-top-buttons .btn-info{
+    color: #ffffff;
+    background-color: #a71930;
+}
+.table-top-buttons .btn-info:hover{
+    color: #ffffff;
+    background-color: #7e0d1f;
+}
 
 @-moz-document url-prefix() {
   fieldset { display: table-cell; }
