@@ -181,8 +181,8 @@ a.filter-top-menu-link.active{
 }
 
 .form-section .btn.expand-section {
-  width:26px;
-  height:26px;
+  width: 38px;
+  height: 38px;
   background-color: transparent;
   padding: 0;
 }
@@ -373,4 +373,8 @@ input[type="checkbox"] {
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.15);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.15);
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.15);
+}
+
+.section-icon {
+  margin-right: 5px;
 }
