@@ -504,7 +504,7 @@ define([
                     ? Date.parse(val)
                     : value;
                   var o = {};
-                  o.key = v;
+                  o[key] = v;
                   return Object.assign({}, memo, o);
                 }
               },
