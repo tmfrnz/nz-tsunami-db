@@ -399,8 +399,9 @@ define([
           }
           break
         case "binary":
+        case "boolean":
         case "quantitative":
-        case "discrete":
+        case "count":
         case "spatial":
         case "categorical":
         case "ordinal":

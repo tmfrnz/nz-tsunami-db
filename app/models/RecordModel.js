@@ -83,7 +83,7 @@ define([
                 this.set(column.get('queryColumn'), null)
               }
             } else if (
-              (column.get('type') === 'binary' || column.get('type') === 'categorical')
+              (column.get('type') === 'boolean' || column.get('type') === 'binary' || column.get('type') === 'categorical')
               && this.attributes[column.get('queryColumn')]) {
               var val = this.attributes[column.get('queryColumn')];
               if (val === '1' || val === 'true' || val === 'T' || val === 'TRUE') {

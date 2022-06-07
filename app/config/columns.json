@@ -145,7 +145,7 @@
   {
     "id":"is_tsunami_observed",
     "title":"Tsunami observed?",
-    "type":"binary",
+    "type":"boolean",
     "group":"class",
     "certaintyColumn":"is_tsunami_observed_certainty",
     "values": {
@@ -156,7 +156,7 @@
   {
     "id":"is_seiche_observed",
     "title":"Seiche observed?",
-    "type":"binary",
+    "type":"boolean",
     "group":"class",
     "certaintyColumn":"is_seiche_observed_certainty",
     "values": {
@@ -1006,8 +1006,8 @@
   },
   {
     "id":"obs_no_sig-waves",
-    "title":"No of significant waves",
-    "type":"discrete",
+    "title":"No. of significant waves",
+    "type":"count",
     "group":"obs-metrics",
     "values":{
       "range" : {
@@ -1052,7 +1052,7 @@
   {
     "id":"obs_fatalities",
     "title":"Fatalities",
-    "type":"discrete",
+    "type":"count",
     "group":"obs-impacts",
     "values":{
       "range" : {
@@ -1071,7 +1071,7 @@
   {
     "id":"obs_injuries",
     "title":"Injuries",
-    "type":"discrete",
+    "type":"count",
     "group":"obs-impacts",
     "values":{
       "range" : {

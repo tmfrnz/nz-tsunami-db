@@ -295,7 +295,7 @@ define([
             switch (column.get("type")){
               case "date":
               case "quantitative":
-              case "discrete":
+              case "count":
                 this.initRangeSlider($filter)
                 break
               case "categorical":
@@ -428,7 +428,7 @@ define([
 
         case "date":
         case "quantitative":
-        case "discrete":
+        case "count":
           //
           // range slider filter
           //
@@ -523,7 +523,7 @@ define([
             value_min_formatted = queryMin ? this.formatDate(queryMin) : queryMin;
             value_max_formatted = queryMax ? this.formatDate(queryMax) : queryMax;
           }
-          if (column.get("type") === 'discrete') {
+          if (column.get("type") === 'count') {
             value_min_formatted = queryMin ? parseInt(queryMin) : queryMin;
             value_max_formatted = queryMax ? parseInt(queryMax) : queryMax;
           }
@@ -617,6 +617,7 @@ define([
           }
           break
         case "binary":
+        case "boolean":
           //
           // checkbox
           //
@@ -709,7 +710,7 @@ define([
             "from" : that.formatDateAsYear
           }
         }
-        if (colType === "discrete") {
+        if (colType === "count") {
           sliderOptions.step = 1;
         }
 
@@ -724,7 +725,7 @@ define([
           if(colType === "date") {
             that.$('input#text-'+colMin).val(that.formatDate(Math.round(values[0]), 'y'))
             that.$('input#text-'+colMax).val(that.formatDate(Math.round(values[1]), 'y'))
-          } else if(colType === "discrete") {
+          } else if(colType === "count") {
             that.$('input#text-'+colMin).val(parseInt(Math.round(values[0])))
             that.$('input#text-'+colMax).val(parseInt(Math.round(values[1])))
           } else {
