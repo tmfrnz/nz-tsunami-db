@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone","./ColumnGroupModel"],function(e,n,o,i){return o.Collection.extend({model:i,initialize:function(e,n){this.options=n||{}}})});

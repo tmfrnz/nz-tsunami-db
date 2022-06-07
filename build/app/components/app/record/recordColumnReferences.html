@@ -1,0 +1,51 @@
+<div class="record-column record-column-list record-column-references">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="column-title">
+        <%= title %>
+        <% if(tooltip && tooltip !== "") {%><a
+          data-toggle="tooltip"
+          data-placement="top"
+          title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
+          data-html="true"
+          href="#"
+          class="nav-link toggle-tooltip"
+          data-page-anchor="<%= id %>"
+          data-id="attributes">
+         <span class="icon-icon_info" aria-hidden="true"></span>
+       </a><% } %>
+      </div>
+      <% if (references.length === 0 && recordType !== 'record') { %>
+          <p class="hint"><%= t.record.no_references_for_source %></p>
+      <% } %>
+      <% if (references.length === 0 && recordType === 'record') { %>
+          <p class="hint"><%= t.record.no_references_for_record %></p>
+      <% } %>
+      <% _.each(references,function(ref){ %>
+      <div class="reference-title"><%= ref.getTitle() %></div>
+      <% if (ref.getReference() !== null) { %>
+      <p><%= ref.getReference() %></p>
+      <% } else { %>
+      <p>
+        <%= t.record.contact_us.pre %>
+        <a title="<%= t.record.contact_us.anchor %>" class="nav-link" href="#" data-route="page" data-type="page" data-id="contact">
+          <%= t.record.contact_us.anchor %>
+        </a>
+        <%= t.record.contact_us.post %>
+      </p>
+
+      <% } %>
+      <% if (ref.getUrl() !== null) { %>
+      <p>
+        <a title="<%= ref.getTitle() %>" href="<%= ref.getUrl() %>" target="_blank" class="reference-link">
+          <%= ref.getUrl(true) %>
+        </a>
+      </p>
+      <% } %>
+      <% }) %>
+      <% if (references.length > 0 && recordType === 'record') { %>
+          <p class="hint"><%= t.record.see_source_for_reference %></p>
+      <% } %>
+    </div>
+  </div>
+</div>

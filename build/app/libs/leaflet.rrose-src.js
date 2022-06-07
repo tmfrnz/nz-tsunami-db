@@ -1,0 +1,18 @@
+/*
+  Copyright (c) 2012 Eric S. Theise
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the 
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit 
+  persons to whom the Software is furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the 
+  Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
+  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+L.Rrose=L.Popup.extend({_initLayout:function(){var t,i,o="leaflet-rrose",n=this._container=L.DomUtil.create("div",o+" "+this.options.className+" leaflet-zoom-animated");this.options.closeButton&&(t=this._closeButton=L.DomUtil.create("a",o+"-close-button",n),t.href="#close",t.innerHTML="&#215;",L.DomEvent.on(t,"click",this._onCloseButtonClick,this));this.options.position="n",80-this._map.latLngToContainerPoint(this._latlng).y>0&&(this.options.position="s");var e=this._map.latLngToContainerPoint(this._latlng).x-(this._map.getSize().x-80);e>0?this.options.position+="w":(e=80-this._map.latLngToContainerPoint(this._latlng).x)>0&&(this.options.position+="e"),/s/.test(this.options.position)?("s"===this.options.position?(this._tipContainer=L.DomUtil.create("div",o+"-tip-container",n),i=this._wrapper=L.DomUtil.create("div",o+"-content-wrapper",n)):(this._tipContainer=L.DomUtil.create("div",o+"-tip-container "+o+"-tip-container-"+this.options.position,n),i=this._wrapper=L.DomUtil.create("div",o+"-content-wrapper "+o+"-content-wrapper-"+this.options.position,n)),this._tip=L.DomUtil.create("div",o+"-tip "+o+"-tip-"+this.options.position,this._tipContainer),L.DomEvent.disableClickPropagation(i),this._contentNode=L.DomUtil.create("div",o+"-content",i),L.DomEvent.on(this._contentNode,"mousewheel",L.DomEvent.stopPropagation)):("n"===this.options.position?(i=this._wrapper=L.DomUtil.create("div",o+"-content-wrapper",n),this._tipContainer=L.DomUtil.create("div",o+"-tip-container",n)):(i=this._wrapper=L.DomUtil.create("div",o+"-content-wrapper "+o+"-content-wrapper-"+this.options.position,n),this._tipContainer=L.DomUtil.create("div",o+"-tip-container "+o+"-tip-container-"+this.options.position,n)),L.DomEvent.disableClickPropagation(i),this._contentNode=L.DomUtil.create("div",o+"-content",i),L.DomEvent.on(this._contentNode,"mousewheel",L.DomEvent.stopPropagation),this._tip=L.DomUtil.create("div",o+"-tip "+o+"-tip-"+this.options.position,this._tipContainer))},_updatePosition:function(){var t=this._map.latLngToLayerPoint(this._latlng),i=L.Browser.any3d,o=this.options.offset;i&&L.DomUtil.setPosition(this._container,t),/s/.test(this.options.position)?this._containerBottom=-this._container.offsetHeight+o.y-(i?0:t.y):this._containerBottom=-o.y-(i?0:t.y),/e/.test(this.options.position)?this._containerLeft=o.x+(i?0:t.x):/w/.test(this.options.position)?this._containerLeft=-Math.round(this._containerWidth)+o.x+(i?0:t.x):this._containerLeft=-Math.round(this._containerWidth/2)+o.x+(i?0:t.x),this._container.style.bottom=this._containerBottom+"px",this._container.style.left=this._containerLeft+"px"}});

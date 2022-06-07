@@ -1,0 +1,66 @@
+<div class="data-outer container-fluid panel">
+  <div class="row data-header">
+    <div class="col-sm-12 text-center">
+      <h3><%= t.out.data.title %></h3>
+      <a href="#" title="<%= t.app.ui.close %>" class="pull-right close-data">
+        <span class="icon-icon_close"></span>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="data-option">
+      <div class="text-center">
+        <h5><%= t.out.data.download_title %></h5>
+      </div>
+      <div>
+        <% if (canDownload) { %>
+        <!-- Nav tabs
+        <ul class="nav nav-tabs" role="tablist">
+          <% _.each(download.formats, function(format){ %>
+            <li role="presentation" class="active">
+              <a href="#<%= format.id %>" aria-controls="<%= format.id %>" role="tab" data-toggle="tab">
+                <%= format.title %>
+              </a>
+            </li>
+          <% }) %>
+        </ul>-->
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tab-csv">
+            <p class="hint"><%= t.out.data.download_hint %></p>
+            <% _.each(download.tables, function(table){ %>
+            <h6><%= table.title %></h6>
+            <a href="#"
+               data-format="csv"
+               data-table="<%= table.id %>"
+               data-active="false"
+               class="download-data"
+            >
+              <% if (table.filterable) { %>
+              <%= t.out.data.all %> <%= table.title %> (<%= table.no_total %>)
+              <% } else { %>
+                <%= table.title %>
+              <% } %>
+              <span class="icon-icon_download-blue"></span>
+            </a>
+            <% if (table.filterable && table.filtered) { %>
+            <a href="#"
+               data-format="csv"
+               data-table="<%= table.id %>"
+               data-active="true"
+               class="download-data">
+              <%= t.out.data.filtered %> <%= table.title %> (<%= table.no_filtered %>)
+              <span class="icon-icon_download-blue"></span>
+            </a>
+            <% } %>
+            <% }) %>
+          </div>
+        </div>
+        <% } else { %>
+        <p class="hint"><%= t.out.data.noDownload %></p>
+        <% }%>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1 @@
+define(["jquery","underscore","backbone","models/ViewModel"],function(t,e,n,i){return i.extend({initialize:function(t){this.options=t||{}},getSections:function(){return this.attributes.columnGroupCollection?e.groupBy(e.filter(this.attributes.columnGroupCollection.models,function(t){return t.get("section")}),function(t){return t.get("section")},this):{}}})});

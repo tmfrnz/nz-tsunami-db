@@ -1,0 +1,36 @@
+<div class="record-column record-column-sources">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="column-title">
+        <%= title %>
+        <% if(tooltip && tooltip !== "") {%><a
+          data-toggle="tooltip"
+          data-placement="top"
+          title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
+          data-html="true"
+          href="#"
+          class="nav-link toggle-tooltip"
+          data-page-anchor="<%= id %>"
+          data-id="attributes">
+         <span class="icon-icon_info" aria-hidden="true"></span>
+       </a><% } %>
+      </div>
+      <div class="related-title">
+        <% if(source) { %><a href="#" class="select-record" data-recordid="<%= source.get('id') %>" data-recordtype="source">
+          <% if(!!source.getColumnValue('region') && !!source.getColumnValue('magn_moment_lower')) { %>
+            <%= source.get('id') %>: <%= source.getColumnValue('region', true) %> (<%= source.getColumnValue('magn_moment_lower', true) %>)
+          <% } else if(!!source.getColumnValue('region') && !source.getColumnValue('magn_moment_lower')) { %>
+            <%= source.get('id') %>: <%= source.getColumnValue('region', true) %>
+          <% } else if(!source.getColumnValue('region') && !!source.getColumnValue('magn_moment_lower')) { %>
+            <%= source.get('id') %> (<%= source.getColumnValue('magn_moment_lower', true) %>)
+          <% } else { %>
+            <%= source.get('id') %>
+          <% } %>
+        </a><% } %>
+        <% if(!source && source_id) { %><a href="#" class="select-record" data-recordid="<%= source_id %>" data-recordtype="source">
+          <%= source_id %>
+        </a><% } %>
+      </div>
+    </div>
+  </div>
+</div>

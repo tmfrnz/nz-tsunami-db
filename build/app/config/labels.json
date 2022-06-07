@@ -1,0 +1,162 @@
+{
+  "app": {
+    "title": "New Zealand Tsunami Database (beta)",
+    "ui": {
+      "close": "Close",
+      "tooltip_more": "Click for more information",
+      "loading": "Loading..."
+    }
+  },
+  "share": {
+    "title": "Share this website on social media",
+    "button_facebook": "facebook",
+    "button_twitter": "twitter",
+    "tweet": "The all new NZ Tsunami Database is live. View the website to learn about tsunamis in NZ",
+    "twitter_hashtags" : "",
+    "twitter_via": "",
+    "twitter_related": "niwa_nz,ECan",
+    "current_link": "Copy the URL below to share and reproduce the current view, including any current filter and map settings"
+  },
+  "filters": {
+    "name": "Filter and explore",
+    "title": {
+      "r": "Tsunami records",
+      "s": "Source events"
+    },
+    "reset": {
+      "r": "Reset record filters",
+      "s": "Reset source filters"
+    },
+    "all_filters": "All filter options",
+    "default_filters": "Less filter options",
+    "reset_group": "Reset group filters",
+    "reset_section": "Reset section filters",
+    "all_group_filters": "More",
+    "default_group_filters": "Less",
+    "button_submit": "Submit",
+    "input_hint" : "Press enter to submit",
+    "specified" : "Specified",
+    "unspecified" : "Unspecified",
+    "placeholder_select" : "Select",
+    "placeholder_search" : {
+      "r": "Search records by keyword or id",
+      "s": "Search sources by keyword or id"
+    }
+   },
+  "record": {
+    "name": {
+      "record": "Record detail",
+      "source": "Source event detail"
+    },
+    "title": {
+      "record": "Record",
+      "source": "Source event"
+    },
+    "references_doi": "DOI",
+    "no_references_for_source": "No reference(s) available",
+    "no_references_for_record": "No specific reference(s) available for record - please refer to the source event above",
+    "see_source_for_reference": "Please also refer to the source event for additional references",
+    "contact_us": {
+      "pre" : "Please ",
+      "anchor": "contact us",
+      "post": " for more information"
+    },
+    "comment":"Comment/details",
+    "comment_time":"Time (as entered)",
+    "certainty_title": "Certainty",
+    "certainty_values": {
+      "1": "1 (good)",
+      "2": "2 (questionable/uncertain/range)"
+    }
+  },
+  "sections": {
+    "r": {
+      "general": "General attributes",
+      "tide-gauge-records": "Tide Gauge Records",
+      "observations": "Observations",
+      "summary": "Further information",
+      "other": "Related source & references"
+    },
+    "s": {
+      "general": "General attributes",
+      "metrics": "Event metrics",
+      "summary": "Further information",
+      "other": "Related records & references"
+    }
+  },
+  "out": {
+    "nav": {
+      "records": "records",
+      "sources": "source events",
+      "map": "Map",
+      "table": "Records",
+      "tableSources": "Sources",
+      "data": "Data"
+    },
+    "data": {
+      "title": "Get the data",
+      "download_title": "Download data (CSV)",
+      "download_hint": "Download data tables: get the complete lists or use the filtering options for a custom selection (please note that the attributes are not yet fully configured)",
+      "all" : "All",
+      "filtered" : "Filtered",
+      "wfs_title": "Web Feature Service (WFS)",
+      "wfs_hint": "Use WFS endpoints for programmatic access",
+      "formats": {
+        "csv": "CSV",
+        "xml": "XML",
+        "json": "JSON"
+      },
+      "tables": {
+        "records": "Records",
+        "sources": "Source events",
+        "references": "References"
+      },
+      "noDownload": "We are sorry! Unfortunately the data table download feature is not currently supported by your browser. Please use the Web Feature Service or try a different browser."
+    },
+    "map": {
+      "control": {
+        "name": "Map settings",
+        "marker_title": "Configure layers",
+        "marker_hint": "Toggle layers and select marker colour attributes",
+        "marker_sources": "Sources",
+        "marker_records": "Records"
+      },
+      "plot": {
+        "name_lat": "Latitude Plot (records)",
+        "no_records_hint": "0 records with current zoom and filter settings",
+        "all_records": "Show all records",
+        "less_records": "Show less records",
+        "no_data": "no data"
+      },
+      "draw": {
+        "clear":"Reset all area filters",
+        "draw":"Draw a rectangle to filter records or sources by area",
+        "start":"Press mouse to start drawing area filter",
+        "end":"Release mouse to finish area filter"
+      }
+    },
+    "table": {
+      "all_columns": "More attribute columns",
+      "default_columns": "Less attribute columns"
+    }
+  },
+  "pages": {
+    "attributes": {
+      "records": "Record attributes",
+      "sources": "Source event attributes",
+      "type_hint": "Column type",
+      "db_column_hint": "Database column",
+      "db_columns_hint": "Database columns",
+      "spec_column_hint": "Specificity column (auxiliary attribute)",
+      "certainty_column_hint": "Certainty column (auxiliary attribute)",
+      "comment_column_hint": "Comment column (auxiliary attribute)",
+      "comment_columns_hint": "Comment columns (auxiliary attributes)",
+      "aux_hint": "Please refer to the end of this page for more information on and possible values of the auxiliary attributes",
+      "values": "Values",
+      "label": "Label",
+      "proxy": "Proxy",
+      "description": "Description",
+      "db_value": "Database value"
+    }
+  }
+}

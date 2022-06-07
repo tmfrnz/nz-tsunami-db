@@ -1,0 +1,86 @@
+{
+  "mapConfig" : "app/config/mapConfig.json",
+  "layersConfig" : "app/config/layersConfig.json",
+  "columnGroups" : "app/config/columnGroups.json",
+  "columns" : "app/config/columns.json",
+  "sourceColumnGroups" : "app/config/sourceColumnGroups.json",
+  "sourceColumns" : "app/config/sourceColumns.json",
+  "labels" : "app/config/labels.json",
+  "navitems" : [
+    {
+      "id":"db",
+      "route":"db",
+      "title":"Explore Data",
+      "type":"component"
+    },
+    {
+      "id":"about",
+      "title":"About",
+      "type":"group",
+      "navitems":[
+        {
+          "id":"about",
+          "title":"About"
+        },
+        {
+          "id":"attributes",
+          "title":"Framework and Attributes",
+          "format":"markdown",
+          "content":"# Framework and Attributes \n\n> The framework for the New Zealand Tsunami Database (Database) is based on a series of key data attributes which help to clarify the nature of the published and unpublished data, including records and source events. These attributes are defined below."
+        },
+        {
+          "id":"usage",
+          "title":"Data Usage"
+        },
+        {
+          "id":"contact",
+          "title":"Contact"
+        },
+        {
+          "id":"basemap",
+          "title":"Basemap"
+        }
+      ]
+    },
+    {
+      "id":"share",
+      "title":"Share",
+      "type":"modal"
+    }
+  ],
+  "records":{
+    "model": "geojson",
+    "path" : "app/data/gns_records.csv",
+    "layerOptions":{
+      "type":"point",
+      "wrap" : true,
+      "marker": "circle",
+      "style" : {
+        "color":"red",
+        "weight": 1,
+        "opacity" : 1,
+        "fillOpacity" : 0.3,
+        "radius":6
+      }
+    }
+  },
+  "sources":{
+    "model": "geojson",
+    "path" : "app/data/gns_sources.csv",
+    "layerOptions":{
+      "type":"triangle",
+      "wrap" : true,
+      "marker": "triangleIcon",
+      "class": "source-marker",
+      "style" : {
+        "color":"purple",
+        "fillOpacity": 0.3,
+        "height":12,
+        "width":12
+      }
+    }
+  },
+  "references":{
+    "path" : "app/data/gns_references.csv"
+  }
+}
