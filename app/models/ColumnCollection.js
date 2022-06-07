@@ -16,7 +16,7 @@ define([
         if (
           column.get("type") === "quantitative" ||
           column.get("type") === "date" ||
-          column.get("type") === "discrete"
+          column.get("type") === "count" 
         ) {
           if(column.getValues() === 'auto'){
             var values = records.getValuesForColumn(column)
