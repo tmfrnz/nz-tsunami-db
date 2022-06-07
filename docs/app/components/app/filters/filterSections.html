@@ -1,6 +1,7 @@
 <% _.each(sections,function(section){ %>
 <div class="form-section <%= section.classes %> form-section-<%= section.id %>">
   <div class="form-section-title">
+    <span class="section-icon icon-icon_section-<%= section.id %>"></span>
     <span class="section-title"><%= t.sections[type][section.id] %></span>
     <button type="button" class="btn btn-primary btn-round query-section-reset" data-sectionid="<%= section.id %>">
       <%= t.filters.reset_section %>
