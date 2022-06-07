@@ -27,6 +27,7 @@
       name: "main"
     }
   ],
+  optimize: "uglify",
   skipDirOptimize: false,
   optimizeCss: 'standard',
   fileExclusionRegExp: /^\./,
