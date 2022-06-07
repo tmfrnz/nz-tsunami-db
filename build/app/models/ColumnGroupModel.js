@@ -1,1 +1,0 @@
-define(["jquery","underscore","backbone"],function(e,n,i){return i.Model.extend({initialize:function(e){this.options=e||{}}})});
