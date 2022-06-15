@@ -16,7 +16,7 @@
     "hint":"Click to explore source event",
     "type":"index",
     "group":"other",
-    "multiples":0,
+    "multiple":0,
     "filterable":0,
     "sortable":0
   },
@@ -60,6 +60,7 @@
       }
     ],
     "default":1,
+    "defaultFilter":1,
     "values":{
       "range" : {
         "min" : ["auto", 86400000],
@@ -82,7 +83,8 @@
     "group":"site",
     "searchable":1,
     "blanks":1,
-    "default":1
+    "default":1,
+    "defaultFilter":1
   },
   {
     "id":"lat",
@@ -134,6 +136,7 @@
     "description":"Validity - Definite/Probable/Questionable/Very doubtful/Erroneous.",
     "type":"ordinal",
     "default":1,
+    "defaultFilter":1,
     "colorable":1,
     "group":"class",
     "values":{
@@ -201,7 +204,7 @@
     "comboType":"min",
     "specificityColumn":"time_arrival_specificity",
     "filterable":0,
-    "default":1
+    "defaultFilter":1
   },
   {
     "id":"time_arrival_to",
@@ -219,7 +222,7 @@
     "specificityColumn":"time_arrival_specificity",
     "certaintyColumn":"time_arrival_certainty",
     "commentColumn":"time_arrival_comment",
-    "default":1,
+    "defaultFilter":1,
     "values":{
       "range" : {
         "min" : ["auto", 86400000],
@@ -237,7 +240,7 @@
     "title":"Time elapsed (h)",
     "type":"quantitative",
     "group":"tg-time",
-    "default":1,
+    "defaultFilter":1,
     "certaintyColumn":"time_elapsed_certainty",
     "values":{
       "range" : {
@@ -384,11 +387,9 @@
     "title":"First motion?",
     "type":"categorical",
     "group":"tg-metrics",
-    "colorable":1,
     "values": {
       "values":["true","false","null"],
-      "labels":["Up","Down","Unknown"],
-      "colors":["#2EA563","#E34E4F","#969696"]
+      "labels":["Up","Down","Unknown"]
     }
   },
   {
@@ -707,7 +708,8 @@
     "group":"obs-metrics",
     "combo":1,
     "comboType":"min",
-    "filterable":0
+    "filterable":0,
+    "default":1
   },
   {
     "id":"obs_height_max_at-inundation_upper",
@@ -747,7 +749,8 @@
       "min" : "obs_height_at_inundation_min",
       "max" : "obs_height_at_inundation_max"
     },
-    "specified": 1
+    "specified": 1,
+    "default":1
   },
   {
     "id":"obs_waterheight_at-inundation_proxy_min",
@@ -1050,6 +1053,129 @@
     }
   },
   {
+    "id":"obs_intensity",
+    "title":"Tsunami intensity",
+    "description":"As defined by Lekkas et al. 2012",
+    "type":"ordinal",
+    "group":"obs-impacts",
+    "separator": "-",
+    "colorable":1,
+    "multiple": 1,
+    "auto-multiple": 1,
+    "defaultFilter": 1,
+    "default":1,
+    "values":{
+      "values":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","U", "multiple", "null"],
+      "labels":[
+        "I: Not felt",
+        "II: Slightly felt",
+        "III: Weak",
+        "IV: Largely observed",
+        "V: Strong",
+        "VI: Slightly damaging",
+        "VII: Damaging",
+        "VIII: Heavily damaging",
+        "IX: Destructive",
+        "X: Very destructive",
+        "XI: Devastating",
+        "XII: Completely devastating",
+        "U: Unspecified",
+        "Multiple values",
+        "No value in database"
+      ],
+      "colorGroups": [
+        {
+          "values": ["I"],
+          "label": "I: Not felt",
+          "color": "#2EA563"
+        },
+        {
+          "values": ["II"],
+          "label": "II: Slightly felt",
+          "color": "#2EA563"
+        },
+        {
+          "values": ["III"],
+          "label": "III: Weak",
+          "color": "#2EA563"
+        },
+        {
+          "values": ["IV"],
+          "label": "IV: Largely observed",
+          "color": "#FFA700"
+        },
+        {
+          "values": ["V"],
+          "label": "V: Strong",
+          "color": "#FFA700"
+        },
+        {
+          "values": ["VI"],
+          "label": "VI: Lightly damaging",
+          "color": "#FFA700"
+        },
+        {
+          "values": ["VII"],
+          "label": "VII: Damaging",
+          "color": "#E34E4F"
+        },
+        {
+          "values": ["VIII"],
+          "label": "VIII: Heavily damaging",
+          "color": "#E34E4F"
+        },
+        {
+          "values": ["IX"],
+          "label": "IX: Destructive",
+          "color": "#E34E4F"
+        },
+        {
+          "values": ["X"],
+          "label": "X: Very destructive",
+          "color": "#8165B9"
+        },
+        {
+          "values": ["XI"],
+          "label": "XI: Devastating",
+          "color": "#8165B9"
+        },
+        {
+          "values": ["XII"],
+          "label": "XII: Completely devastating",
+          "color": "#8165B9"
+        },
+        {
+          "values": ["U","null"],
+          "label": "Unspecified (U), no value in database",
+          "color": "#969696"
+        },
+        {
+          "values": ["multiple"],
+          "label": "Multiple values",
+          "color": "#222222"
+        }
+      ]
+    }
+  },
+  {
+    "id":"obs_threat_level",
+    "title":"Threat level",
+    "type":"ordinal",
+    "group":"obs-impacts",
+    "values":{
+      "values":["0","1","2","3","4","5"],
+      "labels":[
+        "Level 0: < 0.2m",
+        "Level 1: 0.2 - 1m",
+        "Level 2: 1 - 3m",
+        "Level 3: 4 - 5m",
+        "Level 4: 5 - 8m",
+        "Level 5: > 8m"
+      ]
+    },
+    "certaintyColumn":"obs_threat_level_certainty"
+  },
+  {
     "id":"obs_fatalities",
     "title":"Fatalities",
     "type":"count",
@@ -1064,7 +1190,6 @@
       "min" : "obs_fatalities_min",
       "max" : "obs_fatalities_max"
     },
-    "defaultFilter": 1,
     "specified": 1,
     "certaintyColumn":"obs_fatalities_certainty"
   },
@@ -1093,51 +1218,8 @@
     "group":"obs-impacts",
     "filterable":0,
     "searchable":1,
-    "sortable":0
-  },
-  {
-    "id":"obs_intensity",
-    "title":"Tsunami intensity",
-    "description":"As defined by Lekkas et al. 2012",
-    "type":"ordinal",
-    "group":"obs-impacts",
-    "separator": ",",
-    "values":{
-      "values":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","U"],
-      "labels":[
-        "I: Not felt",
-        "II: Slightly felt",
-        "III: Weak",
-        "IV: Largely observed",
-        "V: Strong",
-        "VI: Slightly damaging",
-        "VII: Damaging",
-        "VIII: Heavily damaging",
-        "IX: Destructive",
-        "X: Very destructive",
-        "XI: Devastating",
-        "XII: Completely devastating",
-        "U: Unspecified"
-      ]
-    }
-  },
-  {
-    "id":"obs_threat_level",
-    "title":"Threat level",
-    "type":"ordinal",
-    "group":"obs-impacts",
-    "values":{
-      "values":["0","1","2","3","4","5"],
-      "labels":[
-        "Level 0: < 0.2m",
-        "Level 1: 0.2 - 1m",
-        "Level 2: 1 - 3m",
-        "Level 3: 4 - 5m",
-        "Level 4: 5 - 8m",
-        "Level 5: > 8m"
-      ]
-    },
-    "certaintyColumn":"obs_threat_level_certainty"
+    "sortable":0,
+    "default":1
   },
   {
     "id":"completeness",
