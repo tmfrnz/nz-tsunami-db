@@ -48,7 +48,7 @@ define([
       this.listenTo(this.model, "change:outShowSources",this.handleViewUpdate);
       this.listenTo(this.model, "change:outColorColumn",this.updateViews);
       this.listenTo(this.model, "change:outSourceColorColumn",this.updateViews);
-      this.listenTo(this.model, "change:outPlotColumns",this.updateViews);
+      this.listenTo(this.model, "change:outPlotColumn",this.updateViews);
       this.listenTo(this.model, "change:outType",       this.updateViews);
 
       this.listenTo(this.model, "change:invalidateSize",this.invalidateSize);
@@ -205,16 +205,16 @@ define([
             mouseOverLayerId : "",
             selectedLayerId : "",
             active: false,
-            outPlotColumns: _.pluck(plotColumns.models,"id")
+            outPlotColumn: _.pluck(plotColumns.models,"id")
           })
         });
       }
     },
     updateMapPlotLatView:function(){
 //      console.log("MapView.updateMapPlotLatView 1", Date.now() - window.timeFromUpdate);
-      this.views.plotLat.model.set({outPlotColumns:
-        typeof this.model.getOutPlotColumns() !== "undefined"
-        ? this.model.getOutPlotColumns()
+      this.views.plotLat.model.set({outPlotColumn:
+        typeof this.model.getOutPlotColumn() !== "undefined"
+        ? this.model.getOutPlotColumn()
         : _.pluck(this.model.get("columnCollection").byAttribute("plot").models,"id")
       })
       if (typeof this.model.getCurrentRecords() !== "undefined") {

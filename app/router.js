@@ -244,6 +244,9 @@ define([
           if (typeof query.colorby === "undefined" || query.colorby === null || query.colorby === ""){
             _.extend(query,{colorby:"validity"})
           }
+          if (typeof query.plot === "undefined" || query.plot === null || query.plot === ""){
+            _.extend(query,{plot:"traveltime_firstarrival_lower"})
+          }
           if (typeof query.sourcecolorby === "undefined" || query.sourcecolorby === null || query.sourcecolorby === ""){
             _.extend(query,{sourcecolorby:"source_class"})
           }

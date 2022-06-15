@@ -76,7 +76,7 @@ define([
       recordMouseOut: "recordMouseOut",
       colorColumnChanged: "colorColumnChanged",
       sourceColorColumnChanged: "sourceColorColumnChanged",
-      plotColumnsSelected: "plotColumnsSelected",
+      plotColumnChanged: "plotColumnChanged",
 
       // map view events
       mapConfigured: "mapConfigured",
@@ -563,7 +563,7 @@ window.timeFromUpdate = Date.now()
                 outMapShowSources:    that.model.getOutMapShowSources(),
                 queryLength:          Object.keys(that.model.getRecordQuery()).length,
                 querySourcesLength:    Object.keys(that.model.getSourceQuery()).length,
-                outPlotColumns:       that.model.getOutPlotColumns(),
+                outPlotColumn:       that.model.getOutPlotColumn(),
                 tableSortColumn:      that.model.getOutTableSortColumn(),
                 tableSortOrder:       that.model.getOutTableSortOrder(),
                 tableSourceSortColumn:that.model.getOutSourceTableSortColumn(),
@@ -1154,10 +1154,10 @@ window.timeFromUpdate = Date.now()
         sourcecolorby:args.column
       })
     },
-    plotColumnsSelected : function(e,args){
-// console.log("plotColumnsSelected")
+    plotColumnChanged : function(e,args){
+      // console.log("plotColumnChanged", args)
       this.model.getRouter().queryUpdate({
-        plot:args.columns
+        plot:args.column
       })
     },
 

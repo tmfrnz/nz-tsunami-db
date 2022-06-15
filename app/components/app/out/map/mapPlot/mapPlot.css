@@ -1,27 +1,29 @@
 #map-plot-lat {
   position: absolute;
   top: 0;
-  bottom: 0;  
+  bottom: 0;
   right:0;
-  width: 160px;  
-  overflow-y: auto;
+  width: 160px;
   background-color:#F5F6F6;
   z-index: 1000;
   display: none;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 @media (min-width: 992px) {
-  #map-plot-lat {  
+  #map-plot-lat {
     width: 200px;
   }
 }
-#map-plot-header h4 {
+#map-plot-header {
+  height: 140px;
+}
+#map-plot-title h4 {
   line-height: 48px;
   margin: 0;
   vertical-align: middle;
 }
 
-#map-plot-header {
+#map-plot-title {
   min-height: 48px;
   display: block;
   width: 100%;
@@ -42,17 +44,18 @@
   padding-bottom: 10px;
   border-bottom: 1px solid #EDEEEF;
   min-height: 48px;
-  padding: 0 0 0 5px;  
-}
-
-@media (min-width: 992px) {
-  #plot-control {
-    padding: 0 15px;
-  }
 }
 
 #plot-plot {
     padding-right: 5px;
+}
+.expanded #plot-plot {
+    overflow-y: auto;
+    position: absolute;
+    bottom: 40px;
+    top: 140px;
+    left: 0;
+    right: 0;
 }
 
 
@@ -89,23 +92,23 @@ td.select-label {
     padding-left: 5px;
 }
 .table-plot th.th-marker {
-    width: 15px;    
+    width: 15px;
 }
 @media (min-width: 992px) {
   .table-plot th.th-marker {
-      width: 30px;    
+      width: 30px;
   }
 }
 .table-plot th.th-below,
 .table-plot th.th-above{
-    width: 9px;    
+    width: 9px;
 }
 .table-plot th.th-bars{
-    width: 90px;    
+    width: 90px;
 }
 @media (min-width: 992px) {
   .table-plot th.th-bars{
-    width: 130px;    
+    width: 130px;
   }
 }
 
@@ -142,7 +145,7 @@ td.select-label {
   left:100%
 }
 
-.table-plot.table-plot-lat td.bars-below, 
+.table-plot.table-plot-lat td.bars-below,
 .table-plot.table-plot-lat td.bars-above {
     padding: 3px 0px;
 }
@@ -230,7 +233,18 @@ td.select-label {
 }
 
 .plot-bottom-buttons {
-  display: none;
-  padding: 15px;
+  display: block;
+  height: 40px;
+  padding: 9px 15px;
   text-align: center;
+}
+.expanded .plot-bottom-buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #EEEFF1;
+}
+.plot-attribute-selector{
+  margin-bottom:5px
 }

@@ -26,7 +26,7 @@ define([
     events : {
       "click .expand": "expand",
       "click .select-record" : "selectRecord",
-      "click .select-column" : "selectColumn",
+      "change .select-plot-attribute" : "plotColumnChanged",
       "mouseenter .select-record" : "mouseOverRecord",
       "mouseleave .select-record" : "mouseOutRecord",
       "click .nav-link" : "handleNavLink",
@@ -39,7 +39,7 @@ define([
       this.listenTo(this.model, "change:currentRecordCollection", this.recordsUpdated);
       this.listenTo(this.model, "change:selectedRecordId", this.selectedRecordUpdated);
       this.listenTo(this.model, "change:mouseOverRecordId", this.mouseOverRecordUpdated);
-      this.listenTo(this.model, "change:outPlotColumns",this.updateOutPlotColumns);
+      this.listenTo(this.model, "change:outPlotColumn",this.updateOutPlotColumn);
       this.listenTo(this.model, "change:expanded", this.expandedUpdated);
 
       this.RECORD_NO = 30
@@ -70,30 +70,33 @@ define([
     },
     renderControl : function(){
       this.$("#plot-control").html(_.template(templateControl)({
-        t:this.model.getLabels(),
-        columns : _.map(this.model.get("columnCollection").models,function(col){
-          console.log(col.get("description") || '')
-          return {
-            id:col.id,
-            title: col.getTitle(),
-            active:this.model.get("outPlotColumns").indexOf(col.id) > -1 ,
-            color:col.get("plotColor"),
-            tooltip:col.get("description") || '',
-            tooltip_more:col.hasMoreDescription(),
+        classes: 'select-plot-attribute',
+        options:_.sortBy(
+          _.map(
+            this.model.get("columnCollection").models,
+            function(column){
+              return {
+                value:column.id,
+                label:column.get("title"),
+                selected:this.model.get("outPlotColumn") === column.id,
+              }
+          },this), function(option) {
+            return option.label
           }
-        },this)
+        )
       }))
-      this.$('[data-toggle="tooltip"]').tooltip()
+      this.$('.select-plot-attribute').select2({
+        theme: "mapcontrol",
+        minimumResultsForSearch: Infinity
+      })
     },
     renderPlot : function(){
 //        console.log("MapplotLatView.renderPlot 1");
-
       var records = this.model.getCurrentRecords()
-
       if (records.length > 0) {
 
-        var columns = _.reject(this.model.get("columnCollection").models,function(col){
-          return this.model.get("outPlotColumns").indexOf(col.id) === -1
+        var column = _.find(this.model.get("columnCollection").models,function(col){
+          return this.model.get("outPlotColumn") === col.id;
         },this)
 
 //console.log("MapplotLatView.renderPlot 2", Date.now() - window.timeFromUpdate);
@@ -112,14 +115,14 @@ define([
           } else {
             this.$('.plot-bottom-buttons').show()
           }
-//console.log("MapplotLatView.renderPlot 2a", Date.now() - window.timeFromUpdate);
-        var dataColumns = _.map(columns,function(col){
-            return {
-              cap:col.get("plotMax"),
-              color:col.get("plotColor"),
-              unit: col.getUnit() || '',
-            }
-          })
+
+        var dataColumns = [
+          {
+            cap:column.get("plotMax"),
+            color:column.get("plotColor"),
+            unit: column.getUnit() || '',
+          }
+        ]
 //console.log("MapplotLatView.renderPlot 2b", Date.now() - window.timeFromUpdate);
         var dataRows = _.map(
           recordsSorted,
@@ -127,6 +130,8 @@ define([
             var crgba = record.getColor().colorToRgb();
              // remember column ranges and record column values
             // remember record data
+            var recordColumnValue = record.getColumnValue(column.getQueryColumn())
+            var value = recordColumnValue !== null ? recordColumnValue : 0
             return _.template(templateRecord)({
               id:record.id,
               selected:record.isSelected(),
@@ -134,31 +139,24 @@ define([
                 marker_color:record.getColor(),
                 marker_fillColor:'rgba('+crgba[0]+','+crgba[1]+','+crgba[2]+',0.4)',
               }),
-              bars: _.reduce(columns, function(bars, col) {
-                var recordColumnValue = record.getColumnValue(col.getQueryColumn())
-                var value = recordColumnValue !== null ? recordColumnValue : 0
-                bars.bars.push(_.template(templateRecordBar)({
+              bars: {
+                below: [_.template(templateRecordBelow)({
                   value: value,
-                  width: Math.max(Math.min(100,(value/col.get("plotMax"))*100),0),
+                  color: column.get("plotColor")
+                })],
+                bars: [_.template(templateRecordBar)({
+                  value: value,
+                  width: Math.max(Math.min(100,(value/column.get("plotMax"))*100),0),
                   label: recordColumnValue !== null ? value : this.model.getLabels().out.map.plot.no_data,
-                  color: col.get("plotColor")
-                }))
-                bars.below.push(_.template(templateRecordBelow)({
+                  color: column.get("plotColor")
+                })],
+                above: [_.template(templateRecordAbove)({
                   value: value,
-                  color: col.get("plotColor")
-                }))
-                bars.above.push(_.template(templateRecordAbove)({
-                  value: value,
-                  color: col.get("plotColor"),
-                  cap: col.get("plotMax")
-                }))
-                return bars
-              },{
-                below: [],
-                bars: [],
-                above: [],
-              }, this)
-            })
+                  color: column.get("plotColor"),
+                  cap: column.get("plotMax")
+                })],
+              }
+            });
           }, this)
 //console.log("MapplotLatView.renderPlot 2c", Date.now() - window.timeFromUpdate);
 
@@ -210,8 +208,8 @@ define([
     },
 
 
-    updateOutPlotColumns:function(){
-//      console.log('updateOutPlotColumns')
+    updateOutPlotColumn:function(){
+//      console.log('updateOutPlotColumn')
       this.renderPlot()
       this.renderControl()
     },
@@ -230,20 +228,10 @@ define([
 
 
 
-    selectColumn:function(e){
+    plotColumnChanged:function(e){
       e.preventDefault()
-
-      var columns
-
-      var toggleColumn = $(e.currentTarget).attr("data-columnid")
-
-      if (this.model.get("outPlotColumns").indexOf(toggleColumn) > -1){
-        columns = _.without(this.model.get("outPlotColumns"),toggleColumn)
-      } else {
-        columns = _.union(this.model.get("outPlotColumns"),[toggleColumn])
-      }
-
-      this.$el.trigger('plotColumnsSelected',{columns:columns})
+      this.model.setExpanded(false)
+      this.$el.trigger('plotColumnChanged',{column:$(e.target).val()})
     },
 
     selectRecord:function(e){

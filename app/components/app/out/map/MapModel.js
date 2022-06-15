@@ -95,8 +95,8 @@ define([
     getOutSourceColorColumn:function(){
       return this.attributes.outSourceColorColumn
     },
-    getOutPlotColumns:function(){
-      return this.attributes.outPlotColumns
+    getOutPlotColumn:function(){
+      return this.attributes.outPlotColumn
     },
     getOutType:function(){
       return this.attributes.outType
