@@ -97,7 +97,7 @@ define([
           classes: 'select-color-attribute-records',
           options:_.sortBy(
             _.map(
-              this.model.get("columnCollection").byAttribute("colorable").byAttribute("multiples",0).models,
+              this.model.get("columnCollection").byAttribute("colorable").models,
               function(column){
                 return {
                   value:column.id,
@@ -129,7 +129,7 @@ define([
           classes: 'select-color-attribute-sources',
           options:_.sortBy(
             _.map(
-              this.model.get("sourceColumnCollection").byAttribute("colorable").byAttribute("multiples",0).models,
+              this.model.get("sourceColumnCollection").byAttribute("colorable").models,
               function(column){
                 return {
                   value:column.id,

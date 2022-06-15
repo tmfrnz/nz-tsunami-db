@@ -40,7 +40,7 @@ define([
         sortable :        typeof this.attributes.sortable !== "undefined" ? this.attributes.sortable : 1,
         blanks :          typeof this.attributes.blanks !== "undefined" ? this.attributes.blanks : 0,
         // column can have multiple values
-        multiples :       typeof this.attributes.multiples !== "undefined" ? this.attributes.multiples : 0,
+        multiple :       typeof this.attributes.multiple !== "undefined" ? this.attributes.multiple : 0,
         // column can be plotted in marginal plot
         plot :            typeof this.attributes.plot !== "undefined" ? this.attributes.plot : 0,
         values :          this.attributes.values || "auto",
@@ -62,9 +62,6 @@ define([
           valueDescription: false
         }
       })
-      if (this.get('isDefault') === 1) {
-        this.set('isDefaultFilter', 1);
-      }
       // set
       this.set('queryColumn', this.attributes.queryColumn || this.attributes.column)
       if (typeof this.attributes.query === "object") {
@@ -85,7 +82,7 @@ define([
       if (
         this.attributes.type === "spatial" ||
         this.attributes.type === "quantitative" ||
-        this.attributes.type === "count" 
+        this.attributes.type === "count"
       ) {
         if (this.attributes.placeholders === null){
           this.set("placeholders", {min:"Min",max:"Max"})
