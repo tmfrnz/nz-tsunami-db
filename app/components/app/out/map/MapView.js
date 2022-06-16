@@ -48,7 +48,7 @@ define([
       this.listenTo(this.model, "change:outShowSources",this.handleViewUpdate);
       this.listenTo(this.model, "change:outColorColumn",this.updateViews);
       this.listenTo(this.model, "change:outSourceColorColumn",this.updateViews);
-      this.listenTo(this.model, "change:outPlotColumns",this.updateViews);
+      this.listenTo(this.model, "change:outPlotColumn",this.updateViews);
       this.listenTo(this.model, "change:outType",       this.updateViews);
 
       this.listenTo(this.model, "change:invalidateSize",this.invalidateSize);
@@ -205,17 +205,15 @@ define([
             mouseOverLayerId : "",
             selectedLayerId : "",
             active: false,
-            outPlotColumns: _.pluck(plotColumns.models,"id")
+            outPlotColumn: this.model.getOutPlotColumn(),
           })
         });
       }
     },
     updateMapPlotLatView:function(){
 //      console.log("MapView.updateMapPlotLatView 1", Date.now() - window.timeFromUpdate);
-      this.views.plotLat.model.set({outPlotColumns:
-        typeof this.model.getOutPlotColumns() !== "undefined"
-        ? this.model.getOutPlotColumns()
-        : _.pluck(this.model.get("columnCollection").byAttribute("plot").models,"id")
+      this.views.plotLat.model.set({
+        outPlotColumn: this.model.getOutPlotColumn(),
       })
       if (typeof this.model.getCurrentRecords() !== "undefined") {
         var ne = this.model.getMap().getBounds().getNorthEast()//.wrap()

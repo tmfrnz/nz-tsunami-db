@@ -1,28 +1,22 @@
-<table>
-<% _.each(columns,function(col){ %>
-  <tr class="select-column<% if(col.active){ %> active<% } %>" data-columnid="<%= col.id %>">
-    <td class="select-checkbox">
-      <div class="select-checkbox-inner"
-            style="background-color:<%= col.color %>">
-        <span class="show-on-active show-on-active-inline icon-icon_tick"
-            aria-hidden="true"></span>
-      </div>
-    </td>
-    <td class="select-label">
-      <label><%= col.title %>
-        <% if(typeof tooltip !== 'undefined' && tooltip !== "") {%><a
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="<%= tooltip_more ? tooltip + '<div>'+ t.app.ui.tooltip_more +'</div>' : tooltip%>"
-          data-html="true"
-          href="#"
-          class="nav-link toggle-tooltip"
-          data-page-anchor="<%= col.id %>"
-          data-id="attributes">
-          <span class="icon-icon_info" aria-hidden="true"></span>
-        </a><% } %>
-      </label>
-    </td>
-  </tr>
-<% }) %>
-</table>
+<div class="plot-attribute-selector">
+  <select class="select-plot-attribute <%= classes %>"
+          class="form-control">
+    <% _.each(options,function(option){ %>
+    <option value="<%= option.value %>" <% if (option.selected) { %>selected<% } %> >
+      <%= option.label %>
+    </option>
+    <% }) %>
+  </select>
+</div>
+<div class="plot-top-button">
+  <label class="checkbox-inline">
+    <input
+      class="hide-empty-checkbox"
+      type="checkbox"
+      <% if (hideEmpty) { %>
+      checked
+      <% } %>
+    >
+    <%= t.out.map.plot.hide_no_data %>
+  </label>
+</div>

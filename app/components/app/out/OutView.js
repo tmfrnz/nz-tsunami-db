@@ -46,7 +46,7 @@ define([
       this.listenTo(this.model, "change:outMapShowSources", this.updateOutShowSources);
       this.listenTo(this.model, "change:outColorColumn", this.updateOutColorColumn);
       this.listenTo(this.model, "change:outSourceColorColumn", this.updateOutSourceColorColumn);
-      this.listenTo(this.model, "change:outPlotColumns", this.updateOutPlotColumns);
+      this.listenTo(this.model, "change:outPlotColumn", this.updateOutPlotColumn);
       this.listenTo(this.model, "change:tableSortColumn", this.updateTableSortColumn);
       this.listenTo(this.model, "change:tableSortOrder", this.updateTableSortOrder);
       this.listenTo(this.model, "change:tableSourceSortColumn", this.updateTableSourceSortColumn);
@@ -402,7 +402,7 @@ define([
 
         this.updateOutSourceColorColumn()
 
-        this.updateOutPlotColumns()
+        this.updateOutPlotColumn()
 
         this.views.map.model.setCurrentRecords(this.model.getRecords().byActive().hasLocation())
         this.views.map.model.setCurrentSources(this.model.getSources().byActive().hasLocation())
@@ -458,9 +458,9 @@ define([
         this.views.map.model.set("outSourceColorColumn",this.model.getOutSourceColorColumn())
       }
     },
-    updateOutPlotColumns:function(){
+    updateOutPlotColumn:function(){
       if (this.model.getOutType() === 'map' && typeof this.views.map !== 'undefined'){
-        this.views.map.model.set("outPlotColumns",this.model.getOutPlotColumns())
+        this.views.map.model.set("outPlotColumn",this.model.getOutPlotColumn())
       }
     },
 
