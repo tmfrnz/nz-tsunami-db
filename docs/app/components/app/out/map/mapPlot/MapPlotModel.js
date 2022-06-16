@@ -7,11 +7,12 @@ define([
     initialize : function(options){
       this.options = options || {};
 //      this.setExpanded(false)
-    },  
-    setCurrentRecords : function(currentRecords){      
-      this.set('currentRecordCollection', currentRecords) // new active layers          
-    },          
-    getCurrentRecords : function(){      
+      this.set("hideEmpty", false)
+    },
+    setCurrentRecords : function(currentRecords){
+      this.set('currentRecordCollection', currentRecords) // new active layers
+    },
+    getCurrentRecords : function(){
       return this.attributes.currentRecordCollection
     },
     getExpanded : function(){
@@ -22,6 +23,6 @@ define([
       this.set("expanded", bool)
     },
   });
-  
+
 
 });

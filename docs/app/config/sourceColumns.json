@@ -67,6 +67,7 @@
     "sortable":1,
     "table":1,
     "default":1,
+    "defaultFilter":1,
     "separator": ","
   },
   {
@@ -127,16 +128,19 @@
   {
     "id":"source_class",
     "title":"Source cause",
+    "description":"The cause of the source event",
     "type":"ordinal",
     "default":1,
+    "defaultFilter":1,
     "multiple": 1,
+    "auto-multiple": 1,
     "colorable":1,
     "separator": ",",
     "group":"class",
     "certaintyColumn":"source_class_certainty",
     "commentColumn":"source_class_comment",
     "values":{
-      "values":["1","2","6","8","9","10","11","12","13","14","0"],
+      "values":["1","2","6","8","9","10","11","12","13","14","0","multiple"],
       "labels":[
         "Earthquake",
         "Questionable Earthquake",
@@ -148,7 +152,8 @@
         "Earthquake shaking induced seiche",
         "Storm",
         "Gas emission",
-        "Unknown"
+        "Unknown",
+        "Multiple values"
       ],
       "colorGroups": [
         {
@@ -167,9 +172,9 @@
           "color": "#69321E"
         },
         {
-          "values": ["2", "9", "10", "11", "12", "13", "14"],
-          "label": "Other causes",
-          "color": "#022C5A"
+          "values": ["2", "9", "10", "11", "12", "13", "14","multiple"],
+          "label": "Other/multiple causes",
+          "color": "#222222"
         },
         {
           "values": ["0"],
@@ -184,7 +189,7 @@
     "title":"Source class",
     "description":"Source class/proximity to nearest NZ coast, incl. Chatham Islands",
     "type":"ordinal",
-    "default":0,
+    "default":1,
     "colorable":1,
     "multiple": 1,
     "auto-multiple": 1,
@@ -194,8 +199,8 @@
     "commentColumn":"class_comment",
     "values":{
       "values":["LOCAL","REGIONAL","DISTANT","UNKNOWN", "multiple", "null"],
-      "labels":["Local","Regional","Distant","Unknown", "Multiple classes", "Unspecified"],
-      "colors":["#D16800","#AA4E13","#69321E","#969696", "#222222", "#ff00ee"],
+      "labels":["Local","Regional","Distant","Unknown", "Multiple classes", "No value in database"],
+      "colors":["#D16800","#AA4E13","#69321E","#969696", "#222222", "#555555"],
       "descriptions":[
         "Local: < 1h travel time",
         "Regional: 1-3h travel time",
@@ -241,6 +246,7 @@
     "blanks":1,
     "single":1,
     "default":1,
+    "defaultFilter":1,
     "values":{
       "range" : {
         "min" : ["auto"],
@@ -263,7 +269,7 @@
     "single":1,
     "blanks":1,
     "filterable":0,
-    "default":1
+    "default":0
   },
   {
     "id":"magn_local_upper",
@@ -390,6 +396,7 @@
     "single":1,
     "filterable":1,
     "default":1,
+    "defaultFilter":1,
     "values":{
       "range" : {
         "min" : ["auto"],
