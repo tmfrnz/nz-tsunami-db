@@ -1392,7 +1392,7 @@ window.timeFromUpdate = Date.now()
 
     // filter events
     recordQuerySubmit : function(e,args){
-console.log("recordQuerySubmit")
+// console.log("recordQuerySubmit", args)
       this.views.out.model.set('recordsPopup',[]) ;
 
       // new query
@@ -1420,7 +1420,7 @@ console.log("recordQuerySubmit")
       )
     },
     sourceQuerySubmit : function(e,args){
-console.log("sourceQuerySubmit")
+// console.log("sourceQuerySubmit")
       this.views.out.model.set('recordsPopup',[]) ;
 
       // new query
@@ -1448,7 +1448,7 @@ console.log("sourceQuerySubmit")
       )
     },
     geoQueryDelete:function(e){
-console.log("geoQueryDelete")
+// console.log("geoQueryDelete")
 
       var latColumn = this.model.getColumns().get("lat")
       var lngColumn = this.model.getColumns().get("lng")
@@ -1460,7 +1460,7 @@ console.log("geoQueryDelete")
       ])
     },
     geoQuerySubmit:function(e,args){
-console.log("geoQuerySubmit")
+// console.log("geoQuerySubmit")
       var latColumn = this.model.getColumns().get("lat")
       var lngColumn = this.model.getColumns().get("lng")
 
@@ -1480,7 +1480,7 @@ console.log("geoQuerySubmit")
       )
     },
     geoQuerySourcesDelete:function(e){
-console.log("geoQuerySourcesDelete")
+// console.log("geoQuerySourcesDelete")
 
       var latColumn = this.model.getSourceColumns().get("lat")
       var lngColumn = this.model.getSourceColumns().get("lng")
@@ -1492,7 +1492,7 @@ console.log("geoQuerySourcesDelete")
       ])
     },
     geoQuerySourcesSubmit:function(e,args){
-console.log("geoQuerySourcesSubmit")
+// console.log("geoQuerySourcesSubmit")
       var latColumn = this.model.getSourceColumns().get("lat")
       var lngColumn = this.model.getSourceColumns().get("lng")
 
