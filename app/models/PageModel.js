@@ -84,7 +84,6 @@ define([
                     var classes = "source-group-" + group.id
 
                     var columnsByGroup = sourceColumnCollection.byGroup(group.id).models
-                    console.log(columnsByGroup)
                     return {
                       title:group.get("title"),
                       hint:group.get("hint"),
