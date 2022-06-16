@@ -232,6 +232,10 @@ td.select-label {
     padding: 0 15px;
 }
 
+.plot-top-button {
+  display: block;
+  padding: 9px 15px;
+}
 .plot-bottom-buttons {
   display: block;
   height: 40px;
@@ -247,4 +251,9 @@ td.select-label {
 }
 .plot-attribute-selector{
   margin-bottom:5px
+}
+
+.plot-top-button label.checkbox-inline {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
 }

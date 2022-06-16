@@ -30,6 +30,7 @@ define([
       "mouseenter .select-record" : "mouseOverRecord",
       "mouseleave .select-record" : "mouseOutRecord",
       "click .nav-link" : "handleNavLink",
+      "click .hide-empty-checkbox:checkbox": "hideEmptyCheckboxClick",
     },
     initialize : function () {
       this.handleActive()
@@ -41,6 +42,7 @@ define([
       this.listenTo(this.model, "change:mouseOverRecordId", this.mouseOverRecordUpdated);
       this.listenTo(this.model, "change:outPlotColumn",this.updateOutPlotColumn);
       this.listenTo(this.model, "change:expanded", this.expandedUpdated);
+      this.listenTo(this.model, "change:hideEmpty", this.updateOutPlotColumn);
 
       this.RECORD_NO = 30
 
@@ -69,52 +71,69 @@ define([
       return this
     },
     renderControl : function(){
-      this.$("#plot-control").html(_.template(templateControl)({
-        classes: 'select-plot-attribute',
-        options:_.sortBy(
-          _.map(
-            this.model.get("columnCollection").models,
-            function(column){
-              return {
-                value:column.id,
-                label:column.get("title"),
-                selected:this.model.get("outPlotColumn") === column.id,
-              }
-          },this), function(option) {
-            return option.label
-          }
-        )
-      }))
-      this.$('.select-plot-attribute').select2({
-        theme: "mapcontrol",
-        minimumResultsForSearch: Infinity
-      })
+      var columnId = this.model.get("outPlotColumn")
+      if (columnId)  {
+        this.$("#plot-control").html(_.template(templateControl)({
+          t:this.model.getLabels(),
+          classes: 'select-plot-attribute',
+          options:_.sortBy(
+            _.map(
+              this.model.get("columnCollection").models,
+              function(colOption){
+                return {
+                  value:colOption.id,
+                  label:colOption.get("title"),
+                  selected: columnId === colOption.id,
+                }
+            },this), function(option) {
+              return option.label
+            }
+          ),
+          hideEmpty: this.model.get('hideEmpty'),
+        }))
+        this.$('.select-plot-attribute').select2({
+          theme: "mapcontrol",
+          minimumResultsForSearch: Infinity
+        });
+      }
+    },
+    hideEmptyCheckboxClick:function(e){
+      var $target = $(e.target);
+      this.model.set('hideEmpty', $target.is(':checked'));
     },
     renderPlot : function(){
 //        console.log("MapplotLatView.renderPlot 1");
       var records = this.model.getCurrentRecords()
-      if (records.length > 0) {
-
-        var column = _.find(this.model.get("columnCollection").models,function(col){
-          return this.model.get("outPlotColumn") === col.id;
-        },this)
-
+      var column = this.model.get("columnCollection").byQueryColumn(this.model.get("outPlotColumn"));
+      // hide empty
+      if (column) {
+        records = this.model.get('hideEmpty')
+          ? _.filter(
+            records,
+            function (record) {
+              var val = record.getColumnValue(column.getQueryColumn());
+              return typeof val !== 'undefined' && val !== null && val !== '';
+            }
+          )
+          : records;
+      }
+      if (column && records.length > 0) {
 //console.log("MapplotLatView.renderPlot 2", Date.now() - window.timeFromUpdate);
         var recordsSorted = _.sortBy(records,
-            function(record){
-              return record.get('latitude')
-            }
-          ).reverse()
-
-          if (!this.model.getExpanded()) {
-            recordsSorted = recordsSorted.slice(0, this.RECORD_NO)
+          function(record){
+            return record.get('latitude')
           }
+        ).reverse()
 
-          if (recordsSorted.length < this.RECORD_NO) {
-            this.$('.plot-bottom-buttons').hide()
-          } else {
-            this.$('.plot-bottom-buttons').show()
-          }
+        if (!this.model.getExpanded()) {
+          recordsSorted = recordsSorted.slice(0, this.RECORD_NO)
+        }
+
+        if (recordsSorted.length < this.RECORD_NO) {
+          this.$('.plot-bottom-buttons').hide()
+        } else {
+          this.$('.plot-bottom-buttons').show()
+        }
 
         var dataColumns = [
           {

@@ -8,19 +8,15 @@
     <% }) %>
   </select>
 </div>
-<div class="plot-top-buttons">
-  <div class="filter-unspecified">
-    <label class="checkbox-inline">
-      <input
-        type="checkbox"
-        data-column-min="max_effective_peak-trough_min"
-        data-column-max="max_effective_peak-trough_max"
-        data-value-min-overall="0" data-value-max-overall="6.8"
-        value="specified"
-        data-column-type="quantitative"
-        class="filter-range-checkbox filter-checkbox-specified"
-      >
-      Set filter "Specified"
-    </label>
-  </div>
+<div class="plot-top-button">
+  <label class="checkbox-inline">
+    <input
+      class="hide-empty-checkbox"
+      type="checkbox"
+      <% if (hideEmpty) { %>
+      checked
+      <% } %>
+    >
+    <%= t.out.map.plot.hide_no_data %>
+  </label>
 </div>
