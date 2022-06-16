@@ -55,7 +55,7 @@ define([
         comboTitle:       this.attributes.comboTitle || this.attributes.title || this.attributes.id,
         comboDescription: this.attributes.comboDescription || this.attributes.description || "",
         plotMax:          this.attributes.plotMax || null,
-        plotColor:        this.attributes.plotColor || "#fff",
+        plotColor:        this.attributes.plotColor || "#7E0D1F",
         unit:             this.attributes.unit || null,
         showOnPage:       {
           values: false,

@@ -29,8 +29,8 @@ define([
     getOutSourceColorColumn:function(){
       return this.attributes.outSourceColorColumn
     },
-    getOutPlotColumns:function(){
-      return this.attributes.outPlotColumns
+    getOutPlotColumn:function(){
+      return this.attributes.outPlotColumn
     },
     getViews:function(){
       return this.attributes.views

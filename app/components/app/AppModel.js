@@ -243,7 +243,7 @@ define([
     getOutSourceColor: function(){
       return this.attributes.route.query.sourcecolorby
     },
-    getOutPlotColumns: function(){
+    getOutPlotColumn: function(){
       return this.attributes.route.query.plot
     },
     getOutTableSortColumn: function(){

@@ -303,6 +303,9 @@
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"tg-metrics",
+    "unit":"m",
+    "plot":1,
+    "plotMax":5,
     "combo":1,
     "comboMain":1,
     "comboType":"max",
@@ -509,7 +512,10 @@
     "combo":1,
     "comboType":"min",
     "defaultFilter":1,
-    "filterable":0
+    "filterable":0,
+    "unit":"h",
+    "plot":1,
+    "plotMax":24
   },
   {
     "id":"obs_observed_time_lapsed_upper",
@@ -543,7 +549,10 @@
     "group":"obs-time",
     "combo":1,
     "comboType":"min",
-    "filterable":0
+    "filterable":0,
+    "unit":"h",
+    "plot":1,
+    "plotMax":24
   },
   {
     "id":"traveltime_firstarrival_upper",
@@ -670,6 +679,9 @@
     "comboDescription":"Showing range when uncertain",
     "type":"quantitative",
     "group":"obs-metrics",
+    "plot": 1,
+    "plotMax":5,
+    "unit":"m",
     "combo":1,
     "comboMain":1,
     "comboType":"max",
@@ -688,7 +700,6 @@
       }
     ],
     "defaultFilter":1,
-    "unit": "m",
     "values":{
       "range" : {
         "min" : ["auto"],
@@ -737,8 +748,7 @@
     ],
     "unit": "m",
     "plot":1,
-    "plotMax":10,
-    "plotColor":"#7E0D1F",
+    "plotMax":5,
     "values":{
       "range" : {
         "min" : ["auto"],
@@ -877,6 +887,8 @@
       }
     ],
     "unit": "m",
+    "plot":1,
+    "plotMax":5,
     "values":{
       "range" : {
         "min" : ["auto"],
