@@ -205,17 +205,15 @@ define([
             mouseOverLayerId : "",
             selectedLayerId : "",
             active: false,
-            outPlotColumn: _.pluck(plotColumns.models,"id")
+            outPlotColumn: this.model.getOutPlotColumn(),
           })
         });
       }
     },
     updateMapPlotLatView:function(){
 //      console.log("MapView.updateMapPlotLatView 1", Date.now() - window.timeFromUpdate);
-      this.views.plotLat.model.set({outPlotColumn:
-        typeof this.model.getOutPlotColumn() !== "undefined"
-        ? this.model.getOutPlotColumn()
-        : _.pluck(this.model.get("columnCollection").byAttribute("plot").models,"id")
+      this.views.plotLat.model.set({
+        outPlotColumn: this.model.getOutPlotColumn(),
       })
       if (typeof this.model.getCurrentRecords() !== "undefined") {
         var ne = this.model.getMap().getBounds().getNorthEast()//.wrap()
