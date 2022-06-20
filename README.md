@@ -1,4 +1,4 @@
-## The GNS New Zealand Tsunami Database - Under Development
+## The GNS New Zealand Tsunami Database
 
 Based on the Web interface for NIWA's "The New Zealand Palaeo-tsunami Database"
 
