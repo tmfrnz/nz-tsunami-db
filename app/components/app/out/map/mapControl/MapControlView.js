@@ -23,6 +23,7 @@ define([
       "click .nav-link" : "handleNavLink",
       // "change .layer-checkbox" : "handleLayerToggled",
       "click .select-layer" : "handleLayerToggled",
+      "scroll": "onScroll"
     },
     initialize : function () {
       this.handleActive()
@@ -113,12 +114,18 @@ define([
           theme: "mapcontrol",
           minimumResultsForSearch: Infinity
         })
+        this.$('.select-color-attribute-records').on('select2:open', function (e) {
+          const evt = "scroll.select2";
+          $(e.target).parents().off(evt);
+          $(window).off(evt);
+        });
         var columnValues = outColumn.getValues()
         this.$('#type-records .color-attribute-key').show().html(_.template(templateColorKey)({
           t:this.model.getLabels(),
           title: outColumn.get("title"),
           tooltip: outColumn.get("description"),
           tooltip_more: outColumn.hasMoreDescription(),
+          hint: outColumn.get("marker-hint"),
           id:outColumn.id,
           values: this.getKeyCategorical(columnValues),
         }))
@@ -145,6 +152,11 @@ define([
           theme: "mapcontrol",
           minimumResultsForSearch: Infinity
         })
+        this.$('.select-color-attribute-records').on('select2:open', function (e) {
+          const evt = "scroll.select2";
+          $(e.target).parents().off(evt);
+          $(window).off(evt);
+        });
         var columnValues = outSourceColumn.getValues()
         // console.log('MCV', columnValues, outSourceColumn)
         this.$('#type-sources .color-attribute-key').show().html(_.template(templateColorKey)({
@@ -152,6 +164,7 @@ define([
           title: outSourceColumn.get("title"),
           tooltip: outSourceColumn.get("description"),
           tooltip_more: outSourceColumn.hasMoreDescription(),
+          hint: outSourceColumn.get("marker-hint"),
           id:outSourceColumn.id,
           values: this.getKeyCategorical(columnValues, templateTriangleIcon),
         }))

@@ -10,6 +10,8 @@
   -webkit-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);
   box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.2);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 @media (min-width: 992px) {
   #map-control {
@@ -36,7 +38,6 @@
 }
 
 #map-control-marker-control {
-  padding: 0 15px;
   margin-bottom: 25px;
 }
 .map-control-layer {
@@ -69,10 +70,8 @@
   background: #7E8083;
 }
 
-
-.color-attribute-key .attribute-title {
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: bold;
+.color-attribute-key .column-hint {
+  margin-top: 5px;
 }
 
 .color-attribute-key {
@@ -81,7 +80,7 @@
 
 .color-attribute-key ul {
   font-size: 12px;
-  padding-top: 5px;
+  margin-bottom: 5px;
 }
 
 .color-attribute-selector{

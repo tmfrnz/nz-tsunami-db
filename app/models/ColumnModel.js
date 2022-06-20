@@ -17,6 +17,7 @@ define([
         description :     this.attributes.description || null,
         descriptionMore:  this.attributes.descriptionMore || "",
         hint :            this.attributes.hint || "",
+        "marker-hint" :   this.attributes["marker-hint"] || "",
         // column type
         type :            this.attributes.type || "text",
         // content group

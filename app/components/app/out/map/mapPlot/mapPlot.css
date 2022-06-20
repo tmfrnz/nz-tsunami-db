@@ -7,27 +7,26 @@
   background-color:#F5F6F6;
   z-index: 1000;
   display: none;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 @media (min-width: 992px) {
   #map-plot-lat {
     width: 200px;
   }
 }
-#map-plot-header {
-  height: 140px;
-}
-#map-plot-title h4 {
+#map-plot-header h4 {
   line-height: 48px;
   margin: 0;
   vertical-align: middle;
 }
 
-#map-plot-title {
+#map-plot-header {
   min-height: 48px;
   display: block;
   width: 100%;
   padding: 0 15px;
+  border-bottom: 1px solid #EDEEEF;
 }
 
 #map-plot-lat h3 {
@@ -48,12 +47,9 @@
 
 #plot-plot {
   padding-right: 5px;
-  overflow-y: auto;
-  position: absolute;
-  bottom: 40px;
-  top: 140px;
-  left: 0;
-  right: 0;
+}
+#plot-plot .attribute-title {
+  padding: 0 0 5px 15px;
 }
 
 
