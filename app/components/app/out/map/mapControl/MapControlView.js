@@ -119,6 +119,7 @@ define([
           title: outColumn.get("title"),
           tooltip: outColumn.get("description"),
           tooltip_more: outColumn.hasMoreDescription(),
+          hint: outColumn.get("marker-hint"),
           id:outColumn.id,
           values: this.getKeyCategorical(columnValues),
         }))
@@ -152,6 +153,7 @@ define([
           title: outSourceColumn.get("title"),
           tooltip: outSourceColumn.get("description"),
           tooltip_more: outSourceColumn.hasMoreDescription(),
+          hint: outSourceColumn.get("marker-hint"),
           id:outSourceColumn.id,
           values: this.getKeyCategorical(columnValues, templateTriangleIcon),
         }))
