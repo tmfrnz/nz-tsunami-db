@@ -44,7 +44,7 @@ define([
       this.listenTo(this.model, "change:expanded", this.expandedUpdated);
       this.listenTo(this.model, "change:hideEmpty", this.updateOutPlotColumn);
 
-      this.RECORD_NO = 30
+      this.RECORD_NO = 999999
 
     },
     expand:function(){

@@ -50,7 +50,8 @@
   padding-right: 5px;
   overflow-y: auto;
   position: absolute;
-  bottom: 40px;
+  padding-bottom: 40px;
+  bottom: 0;
   top: 140px;
   left: 0;
   right: 0;
