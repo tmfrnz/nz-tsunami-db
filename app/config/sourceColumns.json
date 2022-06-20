@@ -200,12 +200,38 @@
     "values":{
       "values":["LOCAL","REGIONAL","DISTANT","UNKNOWN", "multiple", "null"],
       "labels":["Local","Regional","Distant","Unknown", "Multiple classes", "No value in database"],
-      "colors":["#D16800","#AA4E13","#69321E","#969696", "#222222", "#555555"],
       "descriptions":[
         "Local: < 1h travel time",
         "Regional: 1-3h travel time",
         "Distant: > 3h travel time",
         "Unknown"
+      ],
+      "colorGroups":[
+        {
+          "values": ["LOCAL"],
+          "label": "Local",
+          "color": "#D16800"
+        },
+        {
+          "values": ["REGIONAL"],
+          "label": "Regional",
+          "color": "#AA4E13"
+        },
+        {
+          "values": ["DISTANT"],
+          "label": "Distant",
+          "color": "#69321E"
+        },
+        {
+          "values": ["UNKNOWN", "null"],
+          "label": "Unknown / no value in database",
+          "color": "#969696"
+        },
+        {
+          "values": ["multiple"],
+          "label": "Multiple classes",
+          "color": "#222222"
+        }
       ]
     }
   },
