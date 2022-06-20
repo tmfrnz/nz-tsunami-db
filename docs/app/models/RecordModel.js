@@ -238,12 +238,22 @@ define([
         columnModel &&
         (columnModel.get("type") === "categorical" || columnModel.get("type") === "ordinal") &&
         columnModel.get('multiple') === 1 &&
-        columnModel.get('auto-multiple') === 1 &&
         columnModel.get('separator') &&
         this.attributes[column].indexOf(columnModel.get('separator')) > -1
       ) {
         // console.log('getColumnValue multipl', column, this.attributes[column])
-        return "multiple";
+        if (columnModel.get('auto-multiple') === 1) {
+          return "multiple";
+        } else if (columnModel.get('resolve-multiple')) {
+          var values = this.attributes[column].split(columnModel.get('separator'));
+          if (columnModel.get('resolve-multiple') === 'last') {
+            return values[values.length - 1];
+          } else {
+            return values[0];
+          }
+        } else {
+          return this.attributes[column];
+        }
       } else {
         return this.attributes[column];
       }

@@ -44,7 +44,7 @@ define([
       this.listenTo(this.model, "change:expanded", this.expandedUpdated);
       this.listenTo(this.model, "change:hideEmpty", this.updateOutPlotColumn);
 
-      this.RECORD_NO = 30
+      this.RECORD_NO = 999999
 
     },
     expand:function(){
@@ -94,6 +94,11 @@ define([
         this.$('.select-plot-attribute').select2({
           theme: "mapcontrol",
           minimumResultsForSearch: Infinity
+        });
+        this.$('.select-plot-attribute').on('select2:open', function (e) {
+          const evt = "scroll.select2";
+          $(e.target).parents().off(evt);
+          $(window).off(evt);
         });
       }
     },
@@ -180,10 +185,16 @@ define([
 //console.log("MapplotLatView.renderPlot 2c", Date.now() - window.timeFromUpdate);
 
         this.$("#plot-plot").html(_.template(templatePlot)({
+          t:this.model.getLabels(),
+          title: column.get("title"),
+          tooltip: column.get("description"),
+          tooltip_more: column.hasMoreDescription(),
+          id:column.id,
           records:dataRows,
           columns: dataColumns,
           anySelected:this.model.get("selectedLayerId") !== ""
         }))
+        this.initTooltips()
 //console.log("MapplotLatView.renderPlot 3", Date.now() - window.timeFromUpdate);
 
       } else {
@@ -193,7 +204,9 @@ define([
 
 
     },
-
+    initTooltips:function(){
+      this.$('[data-toggle="tooltip"]').tooltip()
+    },
     // event handlers for model change events
     handleActive : function(){
       if (this.model.isActive()) {

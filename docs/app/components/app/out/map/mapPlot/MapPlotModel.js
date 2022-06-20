@@ -7,7 +7,7 @@ define([
     initialize : function(options){
       this.options = options || {};
 //      this.setExpanded(false)
-      this.set("hideEmpty", false)
+      this.set("hideEmpty", true)
     },
     setCurrentRecords : function(currentRecords){
       this.set('currentRecordCollection', currentRecords) // new active layers

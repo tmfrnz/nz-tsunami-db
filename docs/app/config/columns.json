@@ -1068,16 +1068,17 @@
     "id":"obs_intensity",
     "title":"Tsunami intensity",
     "description":"As defined by Lekkas et al. 2012",
+    "marker-hint":"Note: ranges are colored according to their upper value",
     "type":"ordinal",
     "group":"obs-impacts",
     "separator": "-",
     "colorable":1,
     "multiple": 1,
-    "auto-multiple": 1,
+    "resolve-multiple": "last",
     "defaultFilter": 1,
     "default":1,
     "values":{
-      "values":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","U", "multiple", "null"],
+      "values":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","U","null"],
       "labels":[
         "I: Not felt",
         "II: Slightly felt",
@@ -1092,7 +1093,6 @@
         "XI: Devastating",
         "XII: Completely devastating",
         "U: Unspecified",
-        "Multiple values",
         "No value in database"
       ],
       "colorGroups": [
@@ -1158,13 +1158,8 @@
         },
         {
           "values": ["U","null"],
-          "label": "Unspecified (U), no value in database",
+          "label": "Unspecified (U) / no value in database",
           "color": "#969696"
-        },
-        {
-          "values": ["multiple"],
-          "label": "Multiple values",
-          "color": "#222222"
         }
       ]
     }
