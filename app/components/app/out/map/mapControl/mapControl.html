@@ -1,45 +1,44 @@
-<div id="map-control-header">
-  <h4><%= t.out.map.control.name %></h4>
-</div>
-<div id="map-control-marker-control">
-  <h3><%= t.out.map.control.marker_title %></h3>
-  <p class="hint"><%= t.out.map.control.marker_hint %></p>
-</div>
-<div id="type-records" class="map-control-layer">
-  <div class="table-wrap">
-    <table>
-      <tr class="select-layer <% if(showRecords){ %> active<% } %>" data-type="records">
-        <td class="select-label">
-          <label class="map-control-layer-label"><%= t.out.map.control.marker_records %></label>
-        </td>
-        <td class="select-checkbox">
-          <div class="select-checkbox-inner">
-            <span class="show-on-active show-on-active-inline icon-icon_tick"
-                aria-hidden="true"></span>
-          </div>
-        </td>
-      </tr>
-    </table>
+<div class="map-aside">
+  <div id="map-control-marker-control" class="map-aside-title">
+    <h3><%= t.out.map.control.marker_title %></h3>
+    <p class="hint"><%= t.out.map.control.marker_hint %></p>
   </div>
-  <div class="color-attribute-selector color-attribute-selector-records"></div>
-  <div class="color-attribute-key color-attribute-key-records"></div>
-</div>
-<div id="type-sources" class="map-control-layer">
-  <div class="table-wrap">
-    <table>
-      <tr class="select-layer <% if(showSources){ %> active<% } %>" data-type="sources">
-        <td class="select-label">
-          <label class="map-control-layer-label"><%= t.out.map.control.marker_sources %></label>
-        </td>
-        <td class="select-checkbox">
-          <div class="select-checkbox-inner">
-            <span class="show-on-active show-on-active-inline icon-icon_tick"
-                aria-hidden="true"></span>
-          </div>
-        </td>
-      </tr>
-    </table>
+  <div id="type-records" class="map-control-layer">
+    <div class="table-wrap">
+      <table>
+        <tr class="select-layer <% if(showRecords){ %> active<% } %>" data-type="records">
+          <td class="select-label">
+            <label class="map-control-layer-label"><%= t.out.map.control.marker_records %></label>
+          </td>
+          <td class="select-checkbox">
+            <div class="select-checkbox-inner">
+              <span class="show-on-active show-on-active-inline icon-icon_tick"
+                  aria-hidden="true"></span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="color-attribute-selector color-attribute-selector-records"></div>
+    <div class="color-attribute-key color-attribute-key-records"></div>
   </div>
-  <div class="color-attribute-selector color-attribute-selector-sources"></div>
-  <div class="color-attribute-key color-attribute-key-sources"></div>
+  <div id="type-sources" class="map-control-layer">
+    <div class="table-wrap">
+      <table>
+        <tr class="select-layer <% if(showSources){ %> active<% } %>" data-type="sources">
+          <td class="select-label">
+            <label class="map-control-layer-label"><%= t.out.map.control.marker_sources %></label>
+          </td>
+          <td class="select-checkbox">
+            <div class="select-checkbox-inner">
+              <span class="show-on-active show-on-active-inline icon-icon_tick"
+                  aria-hidden="true"></span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="color-attribute-selector color-attribute-selector-sources"></div>
+    <div class="color-attribute-key color-attribute-key-sources"></div>
+  </div>
 </div>
