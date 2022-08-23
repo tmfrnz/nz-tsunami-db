@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "New Zealand Tsunami Database (beta)",
+    "title": "New Zealand Tsunami Database",
     "ui": {
       "close": "Close",
       "tooltip_more": "Click for more information",
