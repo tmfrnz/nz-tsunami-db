@@ -22,8 +22,8 @@ Alternatively you can use merge the changes online by
 
 #### 2. Optimise and bundle
 Optimisation and bundling is done using requirejs optimizer (see http://requirejs.org/docs/optimization.html for installing requirejs). Once installed, run from the repository root (branch 'gh-pages')
-`r.js -o app/app.build.js`
-This will generate all files inside a `/docs` folder within the repository (the target directory is set here: https://github.com/dumparkltd/nz-tsunami-db/blob/master/app/app.build.js#L4)
+`r.js -o app/app.build.js` (or `r.js.cmd -o app/app.build.js` on Windows if it fails)
+This will generate all files inside a `/docs` folder within the repository (the target directory is set here: https://github.com/GNS-Science/nz-tsunami-db/blob/master/app/app.build.js#L4)
 
 The content of the build folder can now be deployed to any webhost or commited to gh-pages (see below)
 
