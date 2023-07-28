@@ -97,7 +97,7 @@
     "data": {
       "title": "Get the data",
       "download_title": "Download data (CSV)",
-      "download_hint": "Download data tables: get the complete lists or use the filtering options for a custom selection (please note that the attributes are not yet fully configured)",
+      "download_hint": "Download data tables: get the complete lists or use the filtering options for a custom selection",
       "all" : "All",
       "filtered" : "Filtered",
       "wfs_title": "Web Feature Service (WFS)",

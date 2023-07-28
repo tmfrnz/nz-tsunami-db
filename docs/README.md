@@ -1,4 +1,4 @@
-## The GNS New Zealand Tsunami Database - Under Development
+## The GNS New Zealand Tsunami Database
 
 Based on the Web interface for NIWA's "The New Zealand Palaeo-tsunami Database"
 
@@ -8,29 +8,26 @@ Code: https://github.com/niwa/tsunami-db
 --
 
 ### Deploy
-#### Optimise and bundle
-Optimisation and bundling is done using requirejs optimizer (see http://requirejs.org/docs/optimization.html for installing requirejs). Once installed, run from the repository root (branch master or whatever branch/tag you are seeking to deploy)
+
+This assumes that GitHub Pages is enabled for this repository and is configured to built the site from the '/docs' folder of the gh-pages branch
+
+#### 1. Bring in changes into gh-pages branch
+To bring in your changes from the 'main' branch into your 'gh-pages' branch run
+`git merge --no-ff main`
+
+Alternatively you can use merge the changes online by
+
+1. creating a Pull Request: see https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
+2. merge the Pull Request: see https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request
+
+#### 2. Optimise and bundle
+Optimisation and bundling is done using requirejs optimizer (see http://requirejs.org/docs/optimization.html for installing requirejs). Once installed, run from the repository root (branch 'gh-pages')
 `r.js -o app/app.build.js`
-This will generate all files inside a `/build` folder within the repository (you can changet the target directory here: https://github.com/dumparkltd/tsunami-db/blob/master/app/app.build.js#L4)
+This will generate all files inside a `/docs` folder within the repository (the target directory is set here: https://github.com/dumparkltd/nz-tsunami-db/blob/master/app/app.build.js#L4)
 
 The content of the build folder can now be deployed to any webhost or commited to gh-pages (see below)
 
-#### Commit to gh-pages branch
-Unfortunately there is no automated deploy script in place to deploy to GitHub pages.
-To do so manually, follow these steps
+#### Deploy to gh-pages
 
-Option A (recommended):
-_assuming you have cloned the repository twice, once for the source branch (master, etc) and once for the target branch (gh-pages)_
-1. delete content of target branch
-2. copy content of build folder to target branch
-3. commit changes (`git add --all`, `git commit -m 'update message'`)
-4. publish changes to target/gh-pages branch (`git push origin gh-pages` or to force `git push -f origin gh-pages:gh-pages`)
-
-Option B
-_assuming you have cloned the repository only once_
-1. copy content of build folder to a folder outside the repository
-2. switch to target branch (`git checkout gh-pages`)
-3. delete content of target branch
-4. copy content of folder outside repository to target branch
-5. commit changes (`git add --all`, `git commit -m 'update message'`)
-6. publish changes to target/gh-pages branch (`git push origin gh-pages` or to force `git push -f origin gh-pages:gh-pages`)
+1. commit your generated files: `git add --all`, then `git commit -m 'update message'`
+2. publish changes to online gh-pages branch: `git push origin gh-pages`
